@@ -68,7 +68,7 @@ export default function MobileMenu({
                   <ContactButton />
                 </div>
               </div>
-              <div className="absolute bottom-0 py-6">©2024 Vishal Kumar</div>
+              <div className="absolute bottom-0 py-6">©2024 Nikunj Khitha</div>
             </Dialog.Panel>
           </Transition.Child>
         </div>

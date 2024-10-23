@@ -39,7 +39,7 @@ export default function LandingHero() {
           <AnimatePresence>
             <FadeUp key="title-main" duration={0.6}>
               <h1 className="bg-accent bg-clip-text py-2 text-5xl font-bold text-transparent sm:text-6xl md:text-7xl xl:text-8xl">
-                Vishal Kumar
+                Nikunj Khitha
               </h1>
               <span className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 md:text-3xl">
               Software Engineer & Full Stack Web Developer
@@ -49,7 +49,7 @@ export default function LandingHero() {
               <div className="mt-8 max-w-3xl text-base font-semibold text-zinc-900 dark:text-zinc-200 sm:text-base md:text-2xl">
                 <span className="text-xl text-accent sm:text-3xl">Hi</span>,
                 I&apos;m
-                <span className="text-accent"> Vishal Kumar</span>, &nbsp; I transform Concepts into Seamless User Experiences
+                <span className="text-accent"> Nikunj Khitha</span>, &nbsp; I transform Concepts into Seamless User Experiences
               </div>
             </FadeUp>
           </AnimatePresence>

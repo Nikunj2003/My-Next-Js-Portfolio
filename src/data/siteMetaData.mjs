@@ -1,8 +1,8 @@
 export const siteMetadata = {
-  title: "Vishal Kumar portfolio",
-  author: "Vishal Kumar",
-  headerTitle: "Vishal Kumar",
-  description: "FullStack and MERN developer",
+  title: "Nikunj Khitha portfolio",
+  author: "Nikunj Khitha",
+  headerTitle: "Nikunj Khitha",
+  description: "FullStack & AI Developer",
   language: "en-us",
   theme: "light",
   siteName: "https://vishalkumar-v2.netlify.app",

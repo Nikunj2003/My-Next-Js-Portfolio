@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes"; // Import useTheme
 
 import MenuLogo from "@/components/utility/menu-button";
 import ThemeSwitch from "@/components/utility/theme-switch";
@@ -23,6 +24,7 @@ export interface NavbarProps {
 
 export default function Navbar(props: NavbarProps) {
   const pathName = usePathname();
+  const { resolvedTheme } = useTheme(); // Get the current theme
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -44,18 +46,22 @@ export default function Navbar(props: NavbarProps) {
             {props.routes.map((_link, index) => {
               const isActive = pathName === _link.href;
 
+              // Set text color based on the theme
+              const textColor =
+                resolvedTheme === "dark" ? "text-black" : "text-white";
+
               return (
                 <li
                   key={index}
-                  className="my-3 transition-transform duration-100 hover:scale-[1.1] relative"
+                  className="transition-transform duration-100 hover:scale-[1.1] relative"
                 >
                   <Link
                     href={_link.href}
                     className={classNames(
                       isActive
-                        ? "font-semibold text-white bg-[#56A5A9] rounded-full px-3 py-2"
-                        : "text-foreground",
-                      "relative mx-3 rounded-full transition-colors duration-200"
+                        ? `font-semibold ${textColor} bg-[#56A5A9] rounded-full px-4 py-3 sm:px-4 sm:py-3 transition-all duration-300 ease-in-out` // Active state with larger bubble size
+                        : "text-[#56A5A9] transition-colors duration-300 ease-in-out", // Inactive state
+                      "relative mx-3 rounded-full"
                     )}
                   >
                     {_link.title}

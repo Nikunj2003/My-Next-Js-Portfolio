@@ -3,17 +3,25 @@ import FloatingMailButton, {
   floatingMailButtonoptions,
 } from "@/components/contact-form/floating-mail-button";
 import ContactFormModal from "@/components/contact-form/contact-form-modal";
+import { useTheme } from "next-themes"; // Import useTheme
 
 export default function ContactButton() {
   const refSendBtn = useRef<HTMLButtonElement>(null);
 
   const [isBtnVisible, setIsBtnVisible] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [mounted, setMounted] = useState(false); // For checking if the theme is mounted
+
+  const { resolvedTheme } = useTheme(); // Get the current theme
 
   const observerCallback = (entries: IntersectionObserverEntry[]) => {
     const [entry] = entries;
     setIsBtnVisible(!entry.isIntersecting);
   };
+
+  useEffect(() => {
+    setMounted(true); // Theme has been mounted
+  }, []);
 
   useEffect(() => {
     const btn = refSendBtn.current;
@@ -27,6 +35,9 @@ export default function ContactButton() {
     };
   }, [refSendBtn]);
 
+  // Determine the button text color based on the theme
+  const buttonTextColor = mounted && resolvedTheme === "dark" ? "text-black" : "text-white";
+
   return (
     <>
       {isBtnVisible && !isOpenModal && (
@@ -35,7 +46,7 @@ export default function ContactButton() {
 
       <button
         ref={refSendBtn}
-        className="mx-3 my-3 transition-transform duration-100 hover:scale-[1.1] relative font-semibold text-white bg-[#56A5A9] rounded-full px-4 py-3 sm:px-3 sm:py-2"
+        className={`mx-3 my-3 transition-transform duration-100 hover:scale-[1.1] relative font-semibold ${buttonTextColor} bg-[#56A5A9] rounded-full px-4 py-3 sm:px-3 sm:py-2`}
         onClick={() => setIsOpenModal(true)}
       >
         Contact Me

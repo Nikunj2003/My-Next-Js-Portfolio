@@ -1,4 +1,3 @@
-
 This portfolio is crafted using [Next.js](https://nextjs.org/)
 
 ## 📸 Screenshots
@@ -12,6 +11,7 @@ This portfolio is crafted using [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org): A typed superset of JavaScript that provides enhanced tooling and developer productivity.
 - [Framer motion](https://www.framer.com/motion/): A React animation library that brings motion to your user interfaces.
 - [Nodemailer](https://nodemailer.com/): A Node.js library facilitating easy email integration with features like attachment handling, HTML content, and support for various email services.
+- [Vercel](https://vercel.com/): A platform for deploying and hosting front-end applications with seamless integration for Next.js.
 
 ### ✨ Seo
 

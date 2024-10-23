@@ -15,7 +15,7 @@ export default function Footer() {
           target="_blank"
           className="mb-6 cursor-pointer text-center text-2xl font-bold underline sm:text-4xl lg:text-7xl"
         >
-          <span>leader.vishalkumar@</span>
+          <span>njkhitha2003@</span>
           <br />
           <span>gmail.com</span>
         </a>
@@ -33,14 +33,6 @@ export default function Footer() {
             aria-label="link to Github"
           >
             <GithubIcon className="text-accent transition-colors duration-150 hover:text-accent-foreground" />
-          </a>
-          <a
-            href={siteMetadata.twitter}
-            target="_blank"
-            className="h-6 w-6"
-            aria-label="link to Twitter"
-          >
-            <TwitterIcon className="text-accent transition-colors duration-150 hover:text-accent-foreground" />
           </a>
           <a
             href={siteMetadata.linkedin}

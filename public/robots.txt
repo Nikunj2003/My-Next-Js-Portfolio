@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vishalkumar-v2.netlify.app/sitemap.xml

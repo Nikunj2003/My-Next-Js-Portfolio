@@ -16,5 +16,5 @@ export const siteMetadata = {
   github: "https://github.com/Nikunj2003",
   linkedin: "https://www.linkedin.com/in/Nikunj-Khitha/",
   locale: "en-US",
-  googleSiteVerification: "_YJlO90eSoye2AQOhbkRAzNbejzCGiTgAD4RNR3NtHc",
+  googleSiteVerification: "sUP_JfpMl2apwpLabSYWNXVMe1HTJXJVTsOLfrZArF4",
 };

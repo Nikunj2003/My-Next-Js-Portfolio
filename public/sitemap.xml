@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://vishalkumar-v2.netlify.app/about</loc>
+    <loc>https://nikunj.tech/about</loc>
   </url>
   <url>
-    <loc>https://vishalkumar-v2.netlify.app/contact</loc>
+    <loc>https://nikunj.tech/</loc>
   </url>
   <url>
-    <loc>https://vishalkumar-v2.netlify.app</loc>
+    <loc>https://nikunj.tech/projects</loc>
   </url>
   <url>
-    <loc>https://vishalkumar-v2.netlify.app/projects</loc>
-  </url>
-  <url>
-    <loc>https://vishalkumar-v2.netlify.app/resume</loc>
+    <loc>https://nikunj.tech/resume</loc>
   </url>
 </urlset>

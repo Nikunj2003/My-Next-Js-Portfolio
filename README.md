@@ -1,6 +1,9 @@
-# My-Next-Js-Portfolio
 
 This portfolio is crafted using [Next.js](https://nextjs.org/)
+
+## 📸 Screenshots
+
+![Homepage Screenshot](public/static/homepage.png)
 
 ## 🖥️ Technologies Used
 
@@ -9,7 +12,6 @@ This portfolio is crafted using [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org): A typed superset of JavaScript that provides enhanced tooling and developer productivity.
 - [Framer motion](https://www.framer.com/motion/): A React animation library that brings motion to your user interfaces.
 - [Nodemailer](https://nodemailer.com/): A Node.js library facilitating easy email integration with features like attachment handling, HTML content, and support for various email services.
-
 
 ### ✨ Seo
 

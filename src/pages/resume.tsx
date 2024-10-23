@@ -115,7 +115,10 @@ export default function Resume() {
           section {
             margin-top: 0;
             margin-bottom: 0;
-            padding: 20px;
+            padding-top: 20px;
+            padding-right: 20px;
+            padding-left: 20px;
+            padding-bottom: 0px;
           }
           .rmt {
             margin-top: 2.5rem;

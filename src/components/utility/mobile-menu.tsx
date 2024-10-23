@@ -7,8 +7,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import ThemeSwitch from "@/components/utility/theme-switch";
 import { type NavbarProps } from "@/layout/navbar";
 import { classNames } from "@/utility/classNames";
-
-// Importing the ContactButton component
 import ContactButton from "@/components/contact-form/contact-button";
 
 export interface MobileMenuProps extends NavbarProps {
@@ -35,14 +33,17 @@ export default function MobileMenu({
         <div className="fixed inset-0 flex items-center justify-center">
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0 bottom-full"
-            enterTo="opacity-100 bottom-[15%]"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100 bottom-[15%]"
-            leaveTo="opacity-0 bottom-full"
+            enter="ease-[cubic-bezier(0.23, 1, 0.32, 1)] duration-300" // Adjusted easing
+            enterFrom="opacity-0 translate-y-full scale-95" // Start slightly smaller and off-screen
+            enterTo="opacity-100 translate-y-0 scale-100" // End at full size and in view
+            leave="ease-[cubic-bezier(0.23, 1, 0.32, 1)] duration-300" // Consistent easing for leave
+            leaveFrom="opacity-100 translate-y-0 scale-100" 
+            leaveTo="opacity-0 translate-y-full scale-95" // Exit with a slight scale-down
           >
-            <Dialog.Panel className="pointer-events-none absolute flex min-h-[85%] w-full flex-col items-center justify-center overflow-y-auto rounded-b-2xl border-2 border-accent/20 bg-background px-6 py-8 text-accent shadow-lg shadow-accent/10 md:px-10 md:py-16">
+            <Dialog.Panel
+              className="pointer-events-none absolute flex min-h-[85%] w-full flex-col items-center justify-center overflow-y-auto rounded-b-2xl border-2 border-accent/20 bg-background px-6 py-8 text-accent shadow-lg shadow-accent/10 md:px-10 md:py-16"
+              style={{ willChange: 'transform, opacity' }} // Performance optimization
+            >
               <div className="pointer-events-auto flex flex-col items-center gap-6 text-center">
                 {routes.map((link, i) => (
                   <button

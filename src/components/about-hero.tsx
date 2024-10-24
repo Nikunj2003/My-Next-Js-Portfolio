@@ -58,9 +58,7 @@ export default function AboutHero() {
                 height={15}
               />
             </div>
-            <span className="text-lg font-medium text-foreground">
-              India
-            </span>
+            <span className="text-lg font-medium text-foreground">India</span>
           </FadeRight>
         </AnimatePresence>
       </div>

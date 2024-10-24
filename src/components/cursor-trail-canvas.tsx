@@ -51,7 +51,7 @@ export type CursorTrail = {
 
 export function cursorTrail(props: CursorTrail) {
   const colorRaw = getComputedStyle(document.documentElement).getPropertyValue(
-    "--accent",
+    "--accent"
   );
   const accentColor = `hsla(${
     colorRaw ? colorRaw.split(" ").join(",") : "0, 0%, 0%"
@@ -94,12 +94,18 @@ export function cursorTrail(props: CursorTrail) {
     friction: number;
     nodes: NewNode[];
 
-    constructor(e: { spring: number; cursorPosition?: { x: number; y: number } }) {
+    constructor(e: {
+      spring: number;
+      cursorPosition?: { x: number; y: number };
+    }) {
       this.spring = e.spring + 0.1 * Math.random() - 0.05;
       this.friction = AnimationFeature.friction + 0.01 * Math.random() - 0.005;
       const cursorPosition = e.cursorPosition ?? { x: 0, y: 0 };
-      this.nodes = Array.from({ length: AnimationFeature.size }, () => new NewNode());
-      this.nodes.forEach(node => {
+      this.nodes = Array.from(
+        { length: AnimationFeature.size },
+        () => new NewNode()
+      );
+      this.nodes.forEach((node) => {
         node.x = cursorPosition.x;
         node.y = cursorPosition.y;
       });
@@ -191,7 +197,9 @@ export function cursorTrail(props: CursorTrail) {
     function populateLines() {
       newLines.length = 0; // Clear previous lines
       for (let i = 0; i < AnimationFeature.trails; i++) {
-        newLines.push(new Line({ spring: 0.45 + (i / AnimationFeature.trails) * 0.025 }));
+        newLines.push(
+          new Line({ spring: 0.45 + (i / AnimationFeature.trails) * 0.025 })
+        );
       }
     }
 

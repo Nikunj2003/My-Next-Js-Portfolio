@@ -31,6 +31,6 @@ export default function CustomToast({
 
   return createPortal(
     <div className={className}>{children}</div>,
-    document.body,
+    document.body
   );
 }

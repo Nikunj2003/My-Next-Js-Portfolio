@@ -13,7 +13,7 @@ export interface ExperienceShowcaseListProps {
 }
 
 export default function ExperienceShowcaseList(
-  props: ExperienceShowcaseListProps,
+  props: ExperienceShowcaseListProps
 ) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -22,7 +22,7 @@ export default function ExperienceShowcaseList(
   });
 
   const words = ["adventure", "chapter"];
-  
+
   return (
     <div className="mx-auto my-40 max-w-7xl px-6 sm:px-14 md:my-60 md:px-20">
       <h2 className="md:mb-30 mb-16 w-full bg-gradient-to-r from-accent/70 to-accent bg-clip-text text-center text-3xl font-bold text-transparent xs:text-4xl sm:text-6xl md:text-8xl">
@@ -37,9 +37,10 @@ export default function ExperienceShowcaseList(
           {props.details.map((_details, index) => (
             <ExperienceShowcaseListItem key={index} {..._details} />
           ))}
-          <h3 className="text-base font-bold text-foreground sm:text-xl md:text-2xl mx-auto w-[60%]">
-
-          And a new<FlipWords words={words} />ahead
+          <h3 className="mx-auto w-[60%] text-base font-bold text-foreground sm:text-xl md:text-2xl">
+            And a new
+            <FlipWords words={words} />
+            ahead
           </h3>
         </ul>
       </div>

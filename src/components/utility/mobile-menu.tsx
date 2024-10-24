@@ -59,7 +59,7 @@ export default function MobileMenu({
           >
             <Dialog.Panel
               className={`pointer-events-none absolute flex min-h-[85%] w-full flex-col items-center justify-center overflow-y-auto rounded-b-2xl border-2 border-accent/20 px-6 py-8 text-accent shadow-lg shadow-accent/10 ${backgroundColor}`}
-              style={{ willChange: 'transform, opacity' }} // Performance optimization
+              style={{ willChange: "transform, opacity" }} // Performance optimization
             >
               <div className="pointer-events-auto flex flex-col items-center gap-6 text-center">
                 {routes.map((link, i) => (
@@ -71,7 +71,7 @@ export default function MobileMenu({
                     <span
                       className={classNames(
                         pathName === link.href ? "w-full" : "w-0",
-                        "absolute -bottom-1 left-0 h-1 rounded-lg bg-accent transition-[width] duration-300 group-hover:w-full",
+                        "absolute -bottom-1 left-0 h-1 rounded-lg bg-accent transition-[width] duration-300 group-hover:w-full"
                       )}
                     ></span>
                     {link.title}

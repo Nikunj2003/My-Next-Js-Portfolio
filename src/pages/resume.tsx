@@ -14,9 +14,9 @@ export default function Resume() {
     };
 
     handleResize(); // Initial check on mount
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -24,11 +24,13 @@ export default function Resume() {
     return () => clearTimeout(timer);
   }, []);
 
-  const backgroundColor = resolvedTheme === "dark" 
-    ? 'rgba(0, 0, 0, 0.2)' 
-    : 'rgba(255, 255, 255, 0.2)';
+  const backgroundColor =
+    resolvedTheme === "dark"
+      ? "rgba(0, 0, 0, 0.2)"
+      : "rgba(255, 255, 255, 0.2)";
 
-  const buttonTextColor = resolvedTheme === "dark" ? 'text-black' : 'text-white';
+  const buttonTextColor =
+    resolvedTheme === "dark" ? "text-black" : "text-white";
 
   return (
     <>
@@ -39,56 +41,68 @@ export default function Resume() {
         openGraph={{
           url: `${siteMetadata.siteUrl}/resume`,
           title: "Nikunj Khitha's Resume - FullStack & AI Developer",
-          description: "Explore the professional resume of Nikunj Khitha, a MERN and FullStack Developer with a diverse skill set in web development.",
-          images: [{
-            url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
-            alt: "Nikunj Khitha - Resume Image",
-          }],
+          description:
+            "Explore the professional resume of Nikunj Khitha, a MERN and FullStack Developer with a diverse skill set in web development.",
+          images: [
+            {
+              url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
+              alt: "Nikunj Khitha - Resume Image",
+            },
+          ],
           siteName: siteMetadata.siteName,
           type: "website",
         }}
         twitter={{ cardType: "summary_large_image" }}
-        additionalMetaTags={[{
-          property: "keywords",
-          content: "Resume, Portfolio, AI Developer, DevOps, FullStack Developer, Web Development, JavaScript, HTML, CSS",
-        }]}
+        additionalMetaTags={[
+          {
+            property: "keywords",
+            content:
+              "Resume, Portfolio, AI Developer, DevOps, FullStack Developer, Web Development, JavaScript, HTML, CSS",
+          },
+        ]}
       />
 
-      <section className="mx-auto mt-6 w-full gap-20 px-6 mb-14 sm:mt-12 sm:px-14 md:px-20">
+      <section className="mx-auto mb-14 mt-6 w-full gap-20 px-6 sm:mt-12 sm:px-14 md:px-20">
         <div className="mx-auto max-w-7xl">
-          <div className={`rmb flex justify-center mb-6 transition-transform duration-700 ${isVisible ? 'translate-y-0' : 'translate-y-10 opacity-0'}`}>
+          <div
+            className={`rmb mb-6 flex justify-center transition-transform duration-700 ${
+              isVisible ? "translate-y-0" : "translate-y-10 opacity-0"
+            }`}
+          >
             <a
               href="/Resume.pdf"
               download
-              className={`mx-3 my-3 transition-transform duration-100 hover:scale-110 relative font-semibold ${buttonTextColor} bg-[#56A5A9] rounded-full px-4 py-3 sm:px-3 sm:py-2`}
-              style={{ transition: 'background-color 0.3s ease' }}
+              className={`relative mx-3 my-3 font-semibold transition-transform duration-100 hover:scale-110 ${buttonTextColor} rounded-full bg-[#56A5A9] px-4 py-3 sm:px-3 sm:py-2`}
+              style={{ transition: "background-color 0.3s ease" }}
             >
               Download Resume
             </a>
           </div>
 
-          <div className="mt-8 flex justify-center rmt">
+          <div className="rmt mt-8 flex justify-center">
             <div
-              className={`rmt bg-white bg-opacity-30 backdrop-blur-lg p-4 rounded-lg transition-opacity duration-700 flex justify-center items-center ${
+              className={`rmt flex items-center justify-center rounded-lg bg-white bg-opacity-30 p-4 backdrop-blur-lg transition-opacity duration-700 ${
                 isVisible ? "opacity-100" : "opacity-0"
               }`}
               style={{
-                maxWidth: '900px',
-                width: '95%',
-                minHeight: '600px',
+                maxWidth: "900px",
+                width: "95%",
+                minHeight: "600px",
                 backgroundColor,
-                display: !isMobile ? 'flex' : 'none', // Hide on mobile
+                display: !isMobile ? "flex" : "none", // Hide on mobile
               }}
             >
               <img
                 src="/resume.png"
                 alt="Nikunj Khitha Resume"
                 className={`border-2 border-gray-300 transition-transform duration-700 ${
-                  isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
                 }`}
                 style={{
-                  maxWidth: '90%',
-                  height: 'auto',
+                  maxWidth: "90%",
+                  height: "auto",
                 }}
               />
             </div>
@@ -98,11 +112,13 @@ export default function Resume() {
                 src="/resume.png"
                 alt="Nikunj Khitha Resume"
                 className={`border-2 border-gray-300 transition-transform duration-700 ${
-                  isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
                 }`}
                 style={{
-                  maxWidth: '90%',
-                  height: 'auto',
+                  maxWidth: "90%",
+                  height: "auto",
                 }}
               />
             )}

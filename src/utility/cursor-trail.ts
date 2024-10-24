@@ -7,7 +7,7 @@ export type CursorTrail = {
 
 export function cursorTrail(props: CursorTrail) {
   const colorRaw = getComputedStyle(document.documentElement).getPropertyValue(
-    "--accent",
+    "--accent"
   );
   const accentColor = `hsla(${
     colorRaw ? colorRaw.split(" ").join(",") : "0, 0%, 0%"
@@ -150,7 +150,7 @@ export function cursorTrail(props: CursorTrail) {
       newLines = [];
       for (let i = 0; i < AnimationFeature.trails; i++) {
         newLines.push(
-          new Line({ spring: 0.45 + (i / AnimationFeature.trails) * 0.025 }),
+          new Line({ spring: 0.45 + (i / AnimationFeature.trails) * 0.025 })
         );
       }
     }

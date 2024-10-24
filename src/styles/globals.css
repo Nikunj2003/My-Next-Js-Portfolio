@@ -30,56 +30,56 @@
   * {
     @apply border-border;
   }
-  
+
   body {
     @apply min-h-screen bg-background text-foreground;
 
     /* Custom cursor for light theme applied globally */
-    cursor: url('../../public/icons8-select-cursor-18-light.png'), auto;
+    cursor: url("../../public/icons8-select-cursor-18-light.png"), auto;
   }
 
   /* Dark theme body cursor */
   .dark body {
-    cursor: url('../../public/icons8-select-cursor-18-dark.png'), auto;
+    cursor: url("../../public/icons8-select-cursor-18-dark.png"), auto;
   }
 
   .div {
     @apply min-h-screen bg-background text-foreground;
 
     /* Custom cursor for light theme applied globally */
-    cursor: url('../../public/icons8-select-cursor-18-light.png'), auto;
+    cursor: url("../../public/icons8-select-cursor-18-light.png"), auto;
   }
 
   /* Dark theme body cursor */
   .dark .div {
-    cursor: url('../../public/icons8-select-cursor-18-dark.png'), auto;
+    cursor: url("../../public/icons8-select-cursor-18-dark.png"), auto;
   }
   /* Cursor styles for light theme */
   a:hover {
-    cursor: url('../../public/icons8-hand-cursor-18-light.png'), pointer;
+    cursor: url("../../public/icons8-hand-cursor-18-light.png"), pointer;
   }
 
   button {
-    cursor: url('../../public/icons8-hand-cursor-18-light.png'), pointer;
+    cursor: url("../../public/icons8-hand-cursor-18-light.png"), pointer;
   }
 
   input,
   textarea {
-    cursor: url('../../public/icons8-text-cursor-19-light.png'), text;
+    cursor: url("../../public/icons8-text-cursor-19-light.png"), text;
   }
 
   /* Cursor styles for dark theme */
   .dark a:hover {
-    cursor: url('../../public/icons8-hand-cursor-18-dark.png'), pointer;
+    cursor: url("../../public/icons8-hand-cursor-18-dark.png"), pointer;
   }
 
   .dark button {
-    cursor: url('../../public/icons8-hand-cursor-18-dark.png'), pointer;
+    cursor: url("../../public/icons8-hand-cursor-18-dark.png"), pointer;
   }
 
   .dark input,
   .dark textarea {
-    cursor: url('../../public/icons8-text-cursor-19-dark.png'), text;
+    cursor: url("../../public/icons8-text-cursor-19-dark.png"), text;
   }
 
   /* If you want to remove the default cursor */

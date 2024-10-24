@@ -3,7 +3,7 @@ import { RefObject, useEffect } from "react";
 export function useAutosizeTextArea(
   ref: RefObject<HTMLTextAreaElement>,
   value: string,
-  defaultHeight: string = "auto",
+  defaultHeight: string = "auto"
 ) {
   useEffect(() => {
     if (ref.current) {

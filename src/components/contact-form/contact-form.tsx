@@ -36,7 +36,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (
     values: Yup.InferType<typeof mailValidationSchema>,
-    { resetForm }: FormikSubmitHandler,
+    { resetForm }: FormikSubmitHandler
   ) => {
     setIsSendingMail(true);
     try {
@@ -76,7 +76,10 @@ export default function ContactForm() {
           <Form className="mt-6 flex flex-col gap-3">
             {/** Email Field */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="email" className="inline font-medium text-background">
+              <label
+                htmlFor="email"
+                className="inline font-medium text-background"
+              >
                 Email
               </label>
               <Field name="email">
@@ -87,7 +90,7 @@ export default function ContactForm() {
                       {...field}
                       type="text"
                       placeholder="Email"
-                      className="bg-white dark:bg-[#1F1F23] border border-gray-300 dark:border-gray-600" // Add background and border color here
+                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">
@@ -101,7 +104,10 @@ export default function ContactForm() {
 
             {/** Name Field */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="name" className="inline font-medium text-background">
+              <label
+                htmlFor="name"
+                className="inline font-medium text-background"
+              >
                 Name
               </label>
               <Field name="name">
@@ -112,7 +118,7 @@ export default function ContactForm() {
                       {...field}
                       type="text"
                       placeholder="Name"
-                      className="bg-white dark:bg-[#1F1F23] border border-gray-300 dark:border-gray-600" // Add background and border color here
+                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">
@@ -126,7 +132,10 @@ export default function ContactForm() {
 
             {/** Subject Field */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="subject" className="inline font-medium text-background">
+              <label
+                htmlFor="subject"
+                className="inline font-medium text-background"
+              >
                 Subject
               </label>
               <Field name="subject">
@@ -137,7 +146,7 @@ export default function ContactForm() {
                       {...field}
                       type="text"
                       placeholder="Subject"
-                      className="bg-white dark:bg-[#1F1F23] border border-gray-300 dark:border-gray-600" // Add background and border color here
+                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">
@@ -151,7 +160,10 @@ export default function ContactForm() {
 
             {/** Message Field */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="message" className="inline font-medium text-background">
+              <label
+                htmlFor="message"
+                className="inline font-medium text-background"
+              >
                 Message
               </label>
               <Field name="message">
@@ -161,7 +173,7 @@ export default function ContactForm() {
                       id="message"
                       {...field}
                       placeholder="Message"
-                      className="bg-white dark:bg-[#1F1F23] border border-gray-300 dark:border-gray-600" // Add background and border color here
+                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">

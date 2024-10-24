@@ -48,7 +48,7 @@ export interface ExperienceShowcaseListItemProps {
 }
 
 export default function ExperienceShowcaseListItem(
-  props: ExperienceShowcaseListItemProps,
+  props: ExperienceShowcaseListItemProps
 ) {
   const ref = useRef(null);
 

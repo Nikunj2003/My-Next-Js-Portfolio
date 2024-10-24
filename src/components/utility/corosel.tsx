@@ -90,7 +90,7 @@ export default function Corosel({ aspectRatio = 1, images }: CoroselProps) {
               "h-2 w-2 rounded-full",
               index === imageIndex
                 ? "bg-accent"
-                : "bg-zinc-700 dark:bg-zinc-400",
+                : "bg-zinc-700 dark:bg-zinc-400"
             )}
           ></span>
         ))}

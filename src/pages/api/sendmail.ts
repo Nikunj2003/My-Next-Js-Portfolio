@@ -42,7 +42,7 @@ export type MailRequestBody = {
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse<{ status: number; message: string | string[] }>,
+  res: NextApiResponse<{ status: number; message: string | string[] }>
 ) => {
   try {
     const { method } = req;

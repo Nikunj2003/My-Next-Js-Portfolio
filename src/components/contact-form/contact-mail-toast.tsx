@@ -31,7 +31,7 @@ export default function ContactMailToast({
           ? "bg-teal-500"
           : toastState.type === "RATE_LIMIT"
           ? "bg-yellow-500"
-          : "bg-red-600",
+          : "bg-red-600"
       )}
     >
       <div className="flex w-full max-w-xs items-center gap-2">

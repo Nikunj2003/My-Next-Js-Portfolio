@@ -9,10 +9,7 @@ import {
   SiDocker,
   SiBitbucket,
 } from "react-icons/si";
-import {
-  FramerMotionIcon,
-  ReactRouterDomIcon,
-} from "@/components/icons";
+import { FramerMotionIcon, ReactRouterDomIcon } from "@/components/icons";
 import { type SkillsShowcaseProps } from "@/components/skills/skills-showcase";
 
 // Languages
@@ -20,7 +17,7 @@ import HtmlSvg from "@/public/icons/html.svg";
 import CsssSvg from "@/public/icons/css.svg";
 import SassSvg from "@/public/icons/sass.svg";
 import JavascriptSvg from "@/public/icons/javascript.svg";
-import TypescriptSvg from "@/public/icons/typescript.svg";  
+import TypescriptSvg from "@/public/icons/typescript.svg";
 
 // Libraries
 import ReactjsSvg from "@/public/icons/reactjs.svg";
@@ -67,8 +64,8 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
       },
       {
         name: "Java",
-        icon: BiLogoJava
-      }
+        icon: BiLogoJava,
+      },
     ],
   },
   {
@@ -111,9 +108,9 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
         icon: SiAntdesign,
       },
       {
-        name: 'Docker',
-        icon: SiDocker
-      }
+        name: "Docker",
+        icon: SiDocker,
+      },
     ],
   },
   {
@@ -136,9 +133,9 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
         icon: MongoDBSvg,
       },
       {
-        name: 'GraphQL',
+        name: "GraphQL",
         icon: SiGraphql,
-      }
+      },
     ],
   },
   {
@@ -166,8 +163,8 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
       },
       {
         name: "Cloudinary",
-        icon: CloudUploadIcon
-      }
+        icon: CloudUploadIcon,
+      },
     ],
   },
 ];

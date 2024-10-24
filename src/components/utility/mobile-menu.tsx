@@ -36,8 +36,8 @@ export default function MobileMenu({
   // Define background color based on theme (dark/light)
   const backgroundColor =
     resolvedTheme === "dark"
-      ? "bg-black/50 backdrop-blur-lg" // Dark theme background with blur
-      : "bg-white/50 backdrop-blur-lg"; // Light theme background with blur
+      ? "bg-black/40 backdrop-blur-lg" // Dark theme background with blur
+      : "bg-white/40 backdrop-blur-lg"; // Light theme background with blur
 
   const handleClick = (href: string) => {
     setOpenMenu(false);

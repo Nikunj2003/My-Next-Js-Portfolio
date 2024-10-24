@@ -53,6 +53,7 @@ export default function MenuLogo(props: MenuLogoProps) {
           "stroke-accent"
         )}
         animate={props.open ? "open" : "close"}
+        initial={props.open ? "open" : "close"} // Set initial state
       >
         <Path
           variants={{

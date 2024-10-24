@@ -58,7 +58,7 @@ export default function MobileMenu({
             leaveTo="opacity-0 translate-y-full scale-95" // Exit with a slight scale-down
           >
             <Dialog.Panel
-              className={`pointer-events-none absolute flex min-h-[85%] w-full flex-col items-center justify-center overflow-y-auto rounded-b-2xl border-2 border-accent/20 px-6 py-8 text-accent shadow-lg shadow-accent/10 ${backgroundColor}`}
+              className={`pointer-events-none absolute flex h-full w-full flex-col items-center justify-center overflow-y-auto rounded-b-2xl border-2 border-accent/20 px-6 py-8 text-accent shadow-lg shadow-accent/10 ${backgroundColor}`}
               style={{ willChange: "transform, opacity" }} // Performance optimization
             >
               <div className="pointer-events-auto flex flex-col items-center gap-6 text-center">

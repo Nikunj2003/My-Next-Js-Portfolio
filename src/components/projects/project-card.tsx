@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { FiExternalLink } from "react-icons/fi";
+import { FC, SVGProps, useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 import Corosel from "@/components/utility/corosel";
 import { GithubIcon } from "@/components/icons";
@@ -14,6 +16,23 @@ export interface ProjectCardProps {
 }
 
 export default function ProjectCard(props: ProjectCardProps) {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure theme is mounted to avoid mismatches on first render
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Define background color based on theme (dark/light) after the component has mounted
+  const backgroundColor =
+    resolvedTheme === "dark"
+      ? "bg-black/20 backdrop-blur-lg" // Dark theme background with blur
+      : "bg-white/20 backdrop-blur-lg"; // Light theme background with blur
+
+  // Prevent rendering before the theme is resolved (avoiding mismatched colors during SSR or initial page load)
+  if (!mounted) return null;
+
   return (
     <motion.div
       initial={{ y: 80 }}
@@ -22,7 +41,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         type: "spring",
         duration: 0.4,
       }}
-      className="w-full overflow-hidden rounded-lg border border-accent/20 bg-background shadow-md transition-shadow duration-150 hover:shadow-md hover:shadow-accent/20 dark:bg-zinc-800 dark:hover:shadow-lg"
+      className={`w-full overflow-hidden rounded-lg border border-accent/20 shadow-md transition-shadow duration-150 hover:shadow-md hover:shadow-accent/20 ${backgroundColor}`}
     >
       <Corosel images={props.imageUrl} aspectRatio={2.1} />
       <div className="p-3 text-foreground sm:p-4">
@@ -36,14 +55,15 @@ export default function ProjectCard(props: ProjectCardProps) {
           <p className="text-xs md:text-sm">{props.description}</p>
         </div>
         <div className="mt-6 flex items-center justify-end gap-6">
-          {props?.sourceCodeHref ?
+          {props?.sourceCodeHref && (
             <a
-              href={props?.sourceCodeHref}
+              href={props.sourceCodeHref}
               target="_blank"
               className="flex items-center gap-1 text-xs underline md:text-sm"
             >
               <GithubIcon className="h-5 w-5" /> Source code
-            </a> : null}
+            </a>
+          )}
           {props.liveWebsiteHref && (
             <a
               href={props.liveWebsiteHref}

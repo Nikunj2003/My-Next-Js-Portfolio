@@ -125,6 +125,10 @@ export default function Resume() {
                 style={{
                   maxWidth: "90%",
                   height: "auto",
+                  boxShadow:
+                    resolvedTheme === "light"
+                      ? "0 4px 8px rgba(0, 0, 0, 0.2)"
+                      : "none", // Add shadow only in light mode for mobile
                 }}
               />
             )}

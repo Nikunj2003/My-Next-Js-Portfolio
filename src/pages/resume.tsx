@@ -30,21 +30,6 @@ export default function Resume() {
     setMounted(true);
   }, []);
 
-  // Define background and border color based on the resolved theme after mounting
-  const backgroundColor =
-    resolvedTheme === "dark"
-      ? "rgba(0, 0, 0, 0.2)"
-      : "rgba(255, 255, 255, 0.2)";
-
-  const borderColor = resolvedTheme === "dark" ? "#1A5458" : "#D6E8E9";
-
-  const boxShadow =
-    resolvedTheme === "dark"
-      ? "none"
-      : "0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1)"; // Light mode 3D shadow
-
-  const transform3D = resolvedTheme === "dark" ? "none" : "translateY(-2px)";
-
   // Avoid rendering before theme is fully resolved to prevent flicker
   if (!mounted) return null;
 
@@ -85,15 +70,14 @@ export default function Resume() {
               isVisible ? "translate-y-0" : "translate-y-10 opacity-0"
             }`}
           >
-          <a
-            href="/Resume.pdf"
-            download
-            className={`relative mx-3 my-3 font-semibold transition-transform duration-100 hover:scale-110 text-white rounded-full bg-[#56A5A9] px-6 py-4 sm:px-5 sm:py-3`} // Increased padding for a bigger button
-            style={{ fontSize: "1.10rem", transition: "background-color 0.3s ease", marginBottom: "2.1rem" }} // Increased font size
-          >
-            Download Resume
-          </a>
-
+            <a
+              href="/Resume.pdf"
+              download
+              className={`relative mx-3 my-3 font-semibold transition-transform duration-100 hover:scale-110 ${resolvedTheme === "dark" ? "text-black" : "text-white"} rounded-full bg-[#56A5A9] px-6 py-4 sm:px-5 sm:py-3`} // Adjust text color based on theme
+              style={{ fontSize: "1.10rem", transition: "background-color 0.3s ease", marginBottom: "2.1rem" }} // Increased font size
+            >
+              Download Resume
+            </a>
           </div>
 
           <div className="rmt mt-8 flex justify-center">
@@ -107,10 +91,10 @@ export default function Resume() {
                 minHeight: "600px",
                 paddingTop: "3rem",
                 paddingBottom: "3rem",
-                backgroundColor,
-                border: `1px solid ${borderColor}`,
-                boxShadow, // Apply the 3D shadow in light mode
-                transform: transform3D, // Slight translateY for 3D effect
+                backgroundColor: resolvedTheme === "dark" ? "rgba(0, 0, 0, 0.2)" : "rgba(255, 255, 255, 0.2)",
+                border: `1px solid ${resolvedTheme === "dark" ? "#1A5458" : "#D6E8E9"}`,
+                boxShadow: resolvedTheme === "dark" ? "none" : "0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1)",
+                transform: resolvedTheme === "dark" ? "none" : "translateY(-2px)", // Slight translateY for 3D effect
                 display: !isMobile ? "flex" : "none", // Hide on mobile
               }}
             >
@@ -149,22 +133,8 @@ export default function Resume() {
       </section>
 
       <style jsx>{`
-        @media (max-width: 845px) {
-          section {
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-top: 20px;
-            padding-right: 20px;
-            padding-left: 20px;
-            padding-bottom: 0px;
-          }
-          .rmt {
-            margin-top: 2.5rem;
-            min-height: 300px;
-          }
-          .rmb {
-            margin-bottom: 0;
-          }
+        a {
+          text-decoration: none;
         }
       `}</style>
     </>

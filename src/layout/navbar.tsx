@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -24,13 +24,21 @@ export default function Navbar({ routes }: NavbarProps) {
   const pathName = usePathname();
   const { resolvedTheme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false); // Ensures theme is resolved
 
   const toggleModal = () => setIsModalOpen((prev) => !prev);
+
+  useEffect(() => {
+    // Wait until the theme is mounted before rendering
+    setMounted(true);
+  }, []);
 
   const textColor = useMemo(
     () => (resolvedTheme === "dark" ? "text-black" : "text-white"),
     [resolvedTheme]
   );
+
+  if (!mounted) return null; // Prevent rendering until theme is resolved
 
   return (
     <header className="sticky top-0 z-50 mt-2 px-6 py-8 sm:mt-8 sm:px-14 md:px-20">

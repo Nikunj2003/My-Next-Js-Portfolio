@@ -27,7 +27,19 @@ This portfolio is crafted using [Next.js](https://nextjs.org/)
 npm install
 ```
 
-### Step 2 - Run the development server
+### Step 2 - Set up Nodemailer
+
+1. Create a `.env` file in the root of your project.
+2. Add the following environment variables for Nodemailer setup:
+
+```bash
+NODEMAILER_USER=your-email@example.com
+NODEMAILER_PASS=your-email-password
+```
+
+Make sure to replace `your-email@example.com` and `your-email-password` with the actual email and password you'll use for sending emails through Nodemailer.
+
+### Step 3 - Run the development server
 
 ```bash
 npm run dev

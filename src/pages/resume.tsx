@@ -109,8 +109,8 @@ export default function Resume() {
                     ? "none"
                     : "0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1)",
                 transform:
-                  resolvedTheme === "dark" ? "none" : "translateY(-2px)", // Slight translateY for 3D effect
-                display: !isMobile ? "flex" : "none", // Hide on mobile
+                  resolvedTheme === "dark" ? "none" : "translateY(-2px)",
+                display: !isMobile ? "flex" : "none",
               }}
             >
               <img
@@ -143,7 +143,7 @@ export default function Resume() {
                   boxShadow:
                     resolvedTheme === "light"
                       ? "0 4px 8px rgba(0, 0, 0, 0.2)"
-                      : "none", // Add shadow only in light mode for mobile
+                      : "none",
                 }}
               />
             )}

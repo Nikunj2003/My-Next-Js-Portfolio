@@ -13,12 +13,12 @@ export default function Home() {
   return (
     <>
       <NextSeo
-        title="Nikunj Khitha | Full Stack Developer"
+        title="Nikunj Khitha - FullStack/A.I. Developer"
         description="Explore the professional portfolio of Nikunj Khitha, a skilled Developer with over 2 years of experience in frontend & around 6 months of hands-on experience in backend. Discover innovative projects, expertise in modern web technologies, and a passion for creating seamless user experiences."
         canonical={siteMetadata.siteUrl}
         openGraph={{
           url: siteMetadata.siteUrl,
-          title: "Nikunj Khitha - FullStack Developer Portfolio",
+          title: "Nikunj Khitha - FullStack/A.I. Developer Portfolio",
           description:
             "Dive into the world of web development with Nikunj Khitha. Discover skilled Developer with over 2 years of experience in frontend & around 6 months of hands-on experience in backend., showcasing cutting-edge projects and a commitment to crafting exceptional user interfaces.",
           images: [

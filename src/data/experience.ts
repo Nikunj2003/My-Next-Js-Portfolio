@@ -8,7 +8,8 @@ export const EXPERIENCE: ExperienceShowcaseListItemProps[] = [
       href: "https://cea.nic.in/?lang=en",
     },
     date: "May 2023 - July 2023",
-    description: "I enhanced data accuracy by 34% on a Renewable Dashboard that monitors over 150 power stations by integrating it with the National Power Portal using Spring Boot (Java). Additionally, I developed a server file management system using PHP and SQL with Role-Based Access Control (RBAC), optimizing storage for over 5,000 files and reducing retrieval time by 25%. Furthermore, I built a MERN-based Conference Room Booking System that reduced booking time by 60% and decreased errors by 40% across 10+ rooms, significantly improving employee efficiency.",
+    description:
+      "I enhanced data accuracy by 34% on a Renewable Dashboard that monitors over 150 power stations by integrating it with the National Power Portal using Spring Boot (Java). Additionally, I developed a server file management system using PHP and SQL with Role-Based Access Control (RBAC), optimizing storage for over 5,000 files and reducing retrieval time by 25%. Furthermore, I built a MERN-based Conference Room Booking System that reduced booking time by 60% and decreased errors by 40% across 10+ rooms, significantly improving employee efficiency.",
   },
   {
     title: "Full Stack/A.I. Developer (Apprenticeship)",

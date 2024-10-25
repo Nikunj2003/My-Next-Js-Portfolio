@@ -76,7 +76,9 @@ export default function ExperienceShowcaseListItem(
           duration: 0.4,
         }}
         style={{
-          border: `1px solid ${resolvedTheme === "dark" ? "#1A5458" : "#D6E8E9"}`, // Theme-based border color
+          border: `1px solid ${
+            resolvedTheme === "dark" ? "#1A5458" : "#D6E8E9"
+          }`, // Theme-based border color
         }}
         className={`rounded-lg p-6 shadow-md ${backgroundColor}`}
       >

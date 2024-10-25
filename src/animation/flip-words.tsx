@@ -1,6 +1,6 @@
 "use client";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
+import React, { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export const FlipWords = ({
   words,
@@ -57,8 +57,9 @@ export const FlipWords = ({
           position: "absolute",
         }}
         className={`
-          relative z-[-1] inline-block px-2 text-left text-neutral-900 dark:text-neutral-100 
+          relative z-[-1] inline-block px-2 text-left 
           ${className}`}
+        style={{ color: "#208D93" }}
         key={currentWord}
       >
         {currentWord.split("").map((letter, index) => (

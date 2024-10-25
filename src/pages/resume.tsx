@@ -73,8 +73,14 @@ export default function Resume() {
             <a
               href="/Resume.pdf"
               download
-              className={`relative mx-3 my-3 font-semibold transition-transform duration-100 hover:scale-110 ${resolvedTheme === "dark" ? "text-black" : "text-white"} rounded-full bg-[#56A5A9] px-6 py-4 sm:px-5 sm:py-3`} // Adjust text color based on theme
-              style={{ fontSize: "1.10rem", transition: "background-color 0.3s ease", marginBottom: "2.1rem" }} // Increased font size
+              className={`relative mx-3 my-3 font-semibold transition-transform duration-100 hover:scale-110 ${
+                resolvedTheme === "dark" ? "text-black" : "text-white"
+              } rounded-full bg-[#56A5A9] px-6 py-4 sm:px-5 sm:py-3`} // Adjust text color based on theme
+              style={{
+                fontSize: "1.10rem",
+                transition: "background-color 0.3s ease",
+                marginBottom: "2.1rem",
+              }} // Increased font size
             >
               Download Resume
             </a>
@@ -91,10 +97,19 @@ export default function Resume() {
                 minHeight: "600px",
                 paddingTop: "3rem",
                 paddingBottom: "3rem",
-                backgroundColor: resolvedTheme === "dark" ? "rgba(0, 0, 0, 0.2)" : "rgba(255, 255, 255, 0.2)",
-                border: `1px solid ${resolvedTheme === "dark" ? "#1A5458" : "#D6E8E9"}`,
-                boxShadow: resolvedTheme === "dark" ? "none" : "0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1)",
-                transform: resolvedTheme === "dark" ? "none" : "translateY(-2px)", // Slight translateY for 3D effect
+                backgroundColor:
+                  resolvedTheme === "dark"
+                    ? "rgba(0, 0, 0, 0.2)"
+                    : "rgba(255, 255, 255, 0.2)",
+                border: `1px solid ${
+                  resolvedTheme === "dark" ? "#1A5458" : "#D6E8E9"
+                }`,
+                boxShadow:
+                  resolvedTheme === "dark"
+                    ? "none"
+                    : "0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1)",
+                transform:
+                  resolvedTheme === "dark" ? "none" : "translateY(-2px)", // Slight translateY for 3D effect
                 display: !isMobile ? "flex" : "none", // Hide on mobile
               }}
             >

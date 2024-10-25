@@ -8,7 +8,7 @@ export type SkillPillProps = {
 
 export default function SkillPill(props: SkillPillProps) {
   const { name, icon: Icon } = props;
-  const { resolvedTheme, theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   // Ensure theme is mounted to avoid mismatches on first render

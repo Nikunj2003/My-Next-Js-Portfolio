@@ -48,10 +48,7 @@ export default function MenuLogo(props: MenuLogoProps) {
         width="100%"
         height="100%"
         viewBox="0 0 23 23"
-        className={classNames(
-          "mt-1",
-          "stroke-accent"
-        )}
+        className={classNames("mt-1", "stroke-accent")}
         animate={props.open ? "open" : "close"}
         initial={props.open ? "open" : "close"} // Set initial state
       >

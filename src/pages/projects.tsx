@@ -8,19 +8,18 @@ export default function Projects() {
   return (
     <>
       <NextSeo
-        title="Projects by Nikunj Khitha - FullStack & A.I. Developer"
-        description="Explore a collection of projects by Nikunj Khitha, an AI Specialist and Full Stack Developer with expertise in crafting intelligent and responsive web applications. From AI-driven solutions to seamless user interfaces, delve into the depth and diversity of my work, showcasing skills in MERN Stack, DevOps, Azure AI, microservices, and mobile app development using Flutter."
+        title="Projects by Nikunj Khitha - FullStack & AI Developer"
+        description="Explore a diverse collection of projects by Nikunj Khitha, an AI Specialist and Full Stack Developer. Discover innovative AI-driven solutions, responsive web applications, and seamless user interfaces showcasing skills in MERN Stack, DevOps, Azure AI, microservices, and Flutter mobile app development."
         canonical={`${siteMetadata.siteUrl}/projects`}
         openGraph={{
           url: `${siteMetadata.siteUrl}/projects`,
-          title:
-            "Discover Projects by Nikunj Khitha - FullStack & A.I. Developer",
+          title: "Explore Nikunj Khitha's Projects - FullStack & AI Developer",
           description:
-            "Showcasing projects crafted by Nikunj Khitha, an AI Specialist and Full Stack Developer. Experience the synergy of innovation and expertise in web and mobile app development, AI, MERN Stack, DevOps, and cloud solutions, highlighting a commitment to creating cutting-edge applications and intelligent digital experiences.",
+            "Showcasing an array of projects crafted by Nikunj Khitha, highlighting expertise in AI, web development, and mobile app development. Experience innovation through the MERN Stack, DevOps practices, Azure AI solutions, and cloud technologies that enhance digital experiences.",
           images: [
             {
               url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
-              alt: "Nikunj Khitha - Portfolio Image",
+              alt: "Nikunj Khitha - Project Showcase",
             },
           ],
           siteName: siteMetadata.siteName,
@@ -33,7 +32,7 @@ export default function Projects() {
           {
             property: "keywords",
             content:
-              "Projects, Portfolio, MERN stack Developer, FullStack Developer, Web Development, AI Developer, DevOps, Cloud, Flutter Developer, Mobile App Developer, Typescript, JavaScript, HTML, CSS, Web Applications, Responsive Design",
+              "Projects, Portfolio, AI Specialist, FullStack Developer, MERN Stack, Web Development, Mobile App Development, DevOps, Azure AI, Cloud Solutions, Flutter, JavaScript, TypeScript, HTML, CSS, Responsive Design",
           },
         ]}
       />
@@ -44,7 +43,7 @@ export default function Projects() {
           </h1>
           <div className="my-2">
             <span className="text-sm text-muted-foreground">
-              Here are some of the projects I&apos;d worked on
+              Here are some of the projects I’ve worked on
             </span>
           </div>
           <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-2">
@@ -54,13 +53,14 @@ export default function Projects() {
           </div>
           <div className="mx-auto mt-16 max-w-5xl text-center text-foreground md:mt-28">
             <p className="mt-10 text-base md:text-xl">
-              Visit my github to see some of the latest projects{" "}
+              Visit my GitHub to see some of the latest projects{" "}
               <a
                 href={`${siteMetadata.github}?tab=repositories`}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="font-semibold text-accent underline underline-offset-2 hover:text-accent/70"
               >
-                Github
+                GitHub
               </a>
             </p>
           </div>

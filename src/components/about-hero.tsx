@@ -32,15 +32,12 @@ export default function AboutHero() {
           </FadeUp>
           <FadeUp key="description-1" duration={0.6} delay={0.2}>
             <p className="mt-8 text-base font-medium text-zinc-900 dark:text-zinc-300 sm:text-lg md:text-lg">
-              I turn vision into reality with code. Whether I&apos;m working on
-              a website or any digital product, I bring my commitment to design
-              excellence and user-centered thinking to every project I work on.
+            I turn visions into reality with code. Whether developing a web application, mobile app using Flutter, or an AI-driven solution, I apply my expertise in Full Stack development, Azure AI, and user-centered design to ensure excellence in every project.
             </p>
           </FadeUp>
           <FadeUp key="description-2" duration={0.6} delay={0.4}>
             <p className="mt-8 text-base font-medium text-zinc-900 dark:text-zinc-300 sm:text-lg md:text-lg">
-              Explore my latest projects showcasing my expertise in Reactjs,
-              Nextjs, Javascript, Typescript and web development.
+            Explore my latest projects showcasing my expertise in Next.js, Node.js, JavaScript, TypeScript, AI solutions, cloud development, and web and mobile development using Flutter.
             </p>
           </FadeUp>
           <FadeRight

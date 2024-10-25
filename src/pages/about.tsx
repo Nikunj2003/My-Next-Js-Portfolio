@@ -9,18 +9,18 @@ export default function About() {
   return (
     <>
       <NextSeo
-        title="About Nikunj Khitha | FullStack/A.I. Developer"
-        description="Learn more about Nikunj Khitha, a dedicated AI Specialist and Full Stack Developer. Discover the journey, skills, and passion that drive me to create innovative and user-friendly web and mobile solutions, leveraging expertise in MERN Stack, DevOps, Azure AI, microservices, and Flutter to deliver exceptional digital experiences."
+        title="About Nikunj Khitha - FullStack & AI Developer"
+        description="Discover the journey and skills of Nikunj Khitha, a passionate AI Specialist and Full Stack Developer. Explore my commitment to creating innovative web and mobile solutions, leveraging the MERN Stack, DevOps, and Azure AI expertise."
         canonical={`${siteMetadata.siteUrl}/about`}
         openGraph={{
           url: `${siteMetadata.siteUrl}/about`,
-          title: "Learn About Nikunj Khitha - MERN and FullStack Developer",
+          title: "Learn About Nikunj Khitha - MERN & FullStack Developer",
           description:
-            "Dive into the story of Nikunj Khitha, an AI Specialist and Full Stack Developer proficient in MERN Stack. Uncover the experiences, skills, and passion that fuel my commitment to delivering exceptional web solutions, utilizing expertise in DevOps, Azure AI, microservices, and mobile development to create innovative and user-friendly applications.",
+            "Dive into the story of Nikunj Khitha, an AI Specialist and Full Stack Developer. Uncover my experiences and skills in delivering exceptional web solutions through DevOps, Azure AI, microservices, and mobile development.",
           images: [
             {
               url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
-              alt: "Nikunj Khitha - Portfolio Image",
+              alt: "Nikunj Khitha - Professional Developer Portfolio",
             },
           ],
           siteName: siteMetadata.siteName,
@@ -33,7 +33,7 @@ export default function About() {
           {
             property: "keywords",
             content:
-              "About Me, FullStack Developer, Projects, Portfolio, MERN stack Developer, FullStack Developer, Web Development, AI Developer, DevOps, Cloud, Flutter Developer, Mobile App Developer, Typescript, JavaScript, HTML, CSS, Web Applications, Responsive Design",
+              "About Me, FullStack Developer, Portfolio, MERN Stack, AI Developer, Web Development, DevOps, Flutter Developer, Mobile App Development, Typescript, JavaScript, HTML, CSS, Responsive Design",
           },
         ]}
       />

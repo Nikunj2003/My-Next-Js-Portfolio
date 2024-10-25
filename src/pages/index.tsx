@@ -1,5 +1,4 @@
 import Head from "next/head";
-
 import { NextSeo } from "next-seo";
 
 import LandingHero from "@/components/landing-hero";
@@ -13,18 +12,18 @@ export default function Home() {
   return (
     <>
       <NextSeo
-        title="Nikunj Khitha - FullStack/A.I. Developer"
-        description="Explore the professional portfolio of Nikunj Khitha, an AI Specialist and Full Stack Developer. Discover innovative projects showcasing expertise in Next Js, MERN Stack, Flutter, DevOps, Azure AI, microservices, and a passion for crafting seamless user experiences across web and mobile applications."
+        title="Nikunj Khitha - FullStack & AI Developer"
+        description="Explore the portfolio of Nikunj Khitha, an innovative AI Specialist and Full Stack Developer. Discover projects showcasing expertise in Next.js, MERN Stack, Flutter, DevOps, Azure AI, and microservices, all designed to enhance user experiences on web and mobile applications."
         canonical={siteMetadata.siteUrl}
         openGraph={{
           url: siteMetadata.siteUrl,
-          title: "Nikunj Khitha - FullStack/A.I. Developer Portfolio",
+          title: "Nikunj Khitha - Portfolio of a FullStack & AI Developer",
           description:
-            "Dive into the world of web development with Nikunj Khitha. Discover a skilled AI Specialist and Full Stack Developer, showcasing cutting-edge projects that highlight expertise in Next Js, MERN Stack, Flutter, DevOps, Azure AI, microservices, and a commitment to crafting web and mobile applications.",
+            "Delve into the world of web development with Nikunj Khitha. Explore a portfolio featuring advanced projects that highlight skills in Next.js, MERN Stack, Flutter, DevOps, Azure AI, and microservices, reflecting a dedication to creating impactful web and mobile applications.",
           images: [
             {
               url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
-              alt: "Nikunj Khitha - Portfolio Image",
+              alt: "Nikunj Khitha - Professional Developer Portfolio",
             },
           ],
           siteName: siteMetadata.siteName,
@@ -37,7 +36,7 @@ export default function Home() {
           {
             property: "keywords",
             content:
-              "Projects, Portfolio, MERN stack Developer, FullStack Developer, Web Development, AI Developer, Open AI, LLaMa AI, Azure, DevOps, Cloud, Flutter Developer, Mobile App Developer, Typescript, JavaScript, HTML, CSS, Web Applications, Responsive Design",
+              "Nikunj Khitha, FullStack Developer, AI Specialist, Portfolio, Projects, MERN Stack, Next.js, Flutter Developer, DevOps, Azure AI, Microservices, Web Development, Responsive Design, JavaScript, TypeScript, HTML, CSS",
           },
         ]}
       />

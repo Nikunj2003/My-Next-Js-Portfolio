@@ -2,7 +2,7 @@ This portfolio is crafted using [Next.js](https://nextjs.org/)
 
 ## 📸 Screenshots
 
-![Homepage Screenshot](public/static/homepage.png)
+![Homepage Screenshot](public/static/home.png)
 
 ## 🖥️ Technologies Used
 

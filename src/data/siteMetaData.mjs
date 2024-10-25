@@ -1,8 +1,8 @@
 export const siteMetadata = {
-  title: "Nikunj Khitha portfolio",
+  title: "Nikunj Khitha Portfolio",
   author: "Nikunj Khitha",
   headerTitle: "Nikunj Khitha",
-  description: "FullStack & AI Developer",
+  description: "FullStack & A.I. Developer",
   language: "en-us",
   theme: "light",
   siteName: "https://nikunj.tech/",

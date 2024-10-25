@@ -8,15 +8,15 @@ export default function Projects() {
   return (
     <>
       <NextSeo
-        title="Projects by Nikunj Khitha - MERN and FullStack Developer Portfolio"
-        description="Explore a collection of projects by Nikunj Khitha, a seasoned MERN and FullStack Developer. From innovative web applications to responsive interfaces, discover the depth and diversity of my work."
+        title="Projects by Nikunj Khitha - FullStack & A.I. Developer"
+        description="Explore a collection of projects by Nikunj Khitha, an AI Specialist and Full Stack Developer with expertise in crafting intelligent and responsive web applications. From AI-driven solutions to seamless user interfaces, delve into the depth and diversity of my work, showcasing skills in MERN Stack, DevOps, Azure AI, microservices, and mobile app development using Flutter."
         canonical={`${siteMetadata.siteUrl}/projects`}
         openGraph={{
           url: `${siteMetadata.siteUrl}/projects`,
           title:
-            "Discover Projects by Nikunj Khitha - MERN and FullStack Developer",
+            "Discover Projects by Nikunj Khitha - FullStack & A.I. Developer",
           description:
-            "Explore a showcase of projects crafted by Nikunj Khitha, a MERN and FullStack Developer. Witness the fusion of creativity and technology in web development.",
+            "Showcasing projects crafted by Nikunj Khitha, an AI Specialist and Full Stack Developer. Experience the synergy of innovation and expertise in web and mobile app development, AI, MERN Stack, DevOps, and cloud solutions, highlighting a commitment to creating cutting-edge applications and intelligent digital experiences.",
           images: [
             {
               url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
@@ -33,7 +33,7 @@ export default function Projects() {
           {
             property: "keywords",
             content:
-              "Projects, Portfolio, MERN stack Developer, FullStack Developer, Web Development, JavaScript, HTML, CSS, UI/UX, Web Applications, Responsive Design",
+              "Projects, Portfolio, MERN stack Developer, FullStack Developer, Web Development, AI Developer, DevOps, Cloud, Flutter Developer, Mobile App Developer, Typescript, JavaScript, HTML, CSS, Web Applications, Responsive Design",
           },
         ]}
       />

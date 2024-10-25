@@ -14,13 +14,13 @@ export default function Home() {
     <>
       <NextSeo
         title="Nikunj Khitha - FullStack/A.I. Developer"
-        description="Explore the professional portfolio of Nikunj Khitha, a skilled Developer with over 2 years of experience in frontend & around 6 months of hands-on experience in backend. Discover innovative projects, expertise in modern web technologies, and a passion for creating seamless user experiences."
+        description="Explore the professional portfolio of Nikunj Khitha, an AI Specialist and Full Stack Developer. Discover innovative projects showcasing expertise in Next Js, MERN Stack, Flutter, DevOps, Azure AI, microservices, and a passion for crafting seamless user experiences across web and mobile applications."
         canonical={siteMetadata.siteUrl}
         openGraph={{
           url: siteMetadata.siteUrl,
           title: "Nikunj Khitha - FullStack/A.I. Developer Portfolio",
           description:
-            "Dive into the world of web development with Nikunj Khitha. Discover skilled Developer with over 2 years of experience in frontend & around 6 months of hands-on experience in backend., showcasing cutting-edge projects and a commitment to crafting exceptional user interfaces.",
+            "Dive into the world of web development with Nikunj Khitha. Discover a skilled AI Specialist and Full Stack Developer, showcasing cutting-edge projects that highlight expertise in Next Js, MERN Stack, Flutter, DevOps, Azure AI, microservices, and a commitment to crafting web and mobile applications.",
           images: [
             {
               url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
@@ -37,7 +37,7 @@ export default function Home() {
           {
             property: "keywords",
             content:
-              "React Developer, FullStack Developer, Web Developer, JavaScript, HTML, CSS, Portfolio, UI/UX, React.js, MERN Development, Web Development, JavaScript Developer, Responsive Design",
+              "Projects, Portfolio, MERN stack Developer, FullStack Developer, Web Development, AI Developer, Open AI, LLaMa AI, Azure, DevOps, Cloud, Flutter Developer, Mobile App Developer, Typescript, JavaScript, HTML, CSS, Web Applications, Responsive Design",
           },
         ]}
       />

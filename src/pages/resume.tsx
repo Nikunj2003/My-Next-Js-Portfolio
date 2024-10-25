@@ -36,14 +36,14 @@ export default function Resume() {
   return (
     <>
       <NextSeo
-        title="Resume of Nikunj Khitha - FullStack & AI Developer"
-        description="Download the resume of Nikunj Khitha, a seasoned FullStack Developer with expertise in MERN Stack, DevOps, AI, Mobile and Web App development."
+        title="Resume of Nikunj Khitha - FullStack & A.I. Developer"
+        description="Download the resume of Nikunj Khitha, an AI Specialist and FullStack Developer with expertise in MERN Stack, Flutter, DevOps, Azure AI, Microservices, Cloud, and Web App development."
         canonical={`${siteMetadata.siteUrl}/resume`}
         openGraph={{
           url: `${siteMetadata.siteUrl}/resume`,
           title: "Nikunj Khitha's Resume - FullStack & AI Developer",
           description:
-            "Explore the professional resume of Nikunj Khitha, a MERN and FullStack Developer with a diverse skill set in web development.",
+            "Explore the professional resume of Nikunj Khitha, an AI Specialist and Full-Stack Developer with expertise in building intelligent web and mobile applications, cloud-based solutions, and AI-powered microservices.",
           images: [
             {
               url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
@@ -58,7 +58,7 @@ export default function Resume() {
           {
             property: "keywords",
             content:
-              "Resume, Portfolio, AI Developer, DevOps, FullStack Developer, Web Development, JavaScript, HTML, CSS",
+              "Resume, Portfolio, Projects, MERN stack Developer, FullStack Developer, Web Development, AI Developer, DevOps, Cloud, Flutter Developer, Mobile App Developer, Typescript, JavaScript, HTML, CSS, Web Applications, Responsive Design",
           },
         ]}
       />

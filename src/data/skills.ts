@@ -1,59 +1,51 @@
 import {
   SiExpress,
-  SiSocketdotio,
   SiNextdotjs,
   SiGithub,
-  SiJira,
-  SiAntdesign,
-  SiGraphql,
-  SiDocker,
-  SiBitbucket,
+  SiOpenai,
+  SiSpringboot,
+  SiPhp,
+  SiVercel
 } from "react-icons/si";
-import { FramerMotionIcon, ReactRouterDomIcon } from "@/components/icons";
 import { type SkillsShowcaseProps } from "@/components/skills/skills-showcase";
-
-// Languages
-import HtmlSvg from "@/public/icons/html.svg";
-import CsssSvg from "@/public/icons/css.svg";
-import SassSvg from "@/public/icons/sass.svg";
 import JavascriptSvg from "@/public/icons/javascript.svg";
 import TypescriptSvg from "@/public/icons/typescript.svg";
-
-// Libraries
+import NodeSvg from "@/public/icons/nodejs.svg";
 import ReactjsSvg from "@/public/icons/reactjs.svg";
-import ReduxSvg from "@/public/icons/redux.svg";
+import FlutterSvg from "@/public/icons/Flutter.svg";
 import TailwindcssSvg from "@/public/icons/tailwindcss.svg";
-import MuiSvg from "@/public/icons/mui.svg";
-import ViteSvg from "@/public/icons/vite.svg";
-
-// Backend
-import NodejsSvg from "@/public/icons/nodejs.svg";
-
-// Database and ORMS
+import PythonSvg from "@/public/icons/python.svg";
+import AzureSvg from "@/public/icons/azure.svg";
 import MongoDBSvg from "@/public/icons/mongodb.svg";
-
-// Tools and Tech
 import GitSvg from "@/public/icons/git.svg";
 import PostmanSvg from "@/public/icons/postman.svg";
-import { CloudUploadIcon, Kanban } from "lucide-react";
-import { BiLogoJava } from "react-icons/bi";
+import AuthSvg from "@/public/icons/auth0.svg";
+import DartSvg from "@/public/icons/dart.svg";
+import FirebaseSvg from "@/public/icons/firebase.svg";
+import FastSvg from "@/public/icons/fastapi.svg";
+import MysqlSvg from "@/public/icons/mysql.svg";
+import JavaSvg from "@/public/icons/java.svg";
+import AzureAiSvg from "@/public/icons/azureai.svg";
+import LLaMaSvg from "@/public/icons/llama.svg";
+import PromptSvg from "@/public/icons/prompt.svg";
+import LangSvg from "@/public/icons/langchain-seeklogo.svg";
+import CiCdSvg from "@/public/icons/cicd.svg";
+import DockerSvg from "@/public/icons/docker.svg";
+import GithubactionsSvg from "@/public/icons/actions.svg";
+import JenkinsSvg from "@/public/icons/jenkins.svg";
+import KubernetesSvg from "@/public/icons/kubernetes.svg";
+import ApimSvg from "@/public/icons/api-management.svg";
+import ADevOpsSvg from "@/public/icons/devops.svg";
+import JiraSvg from "@/public/icons/jira.svg";
+import NpmSvg from "@/public/icons/npm.svg";
+import SwaggerSvg from "@/public/icons/swagger.svg";
+import PiSvg from "@/public/icons/pi.svg"
+import ArduinoSvg from "@/public/icons/arduino.svg";
 
 export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
   {
     sectionName: "Languages",
     skills: [
-      {
-        name: "HTML",
-        icon: HtmlSvg,
-      },
-      {
-        name: "CSS",
-        icon: CsssSvg,
-      },
-      {
-        name: "SASS",
-        icon: SassSvg,
-      },
       {
         name: "Javascript",
         icon: JavascriptSvg,
@@ -64,15 +56,27 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
       },
       {
         name: "Java",
-        icon: BiLogoJava,
+        icon: JavaSvg,
+      },
+      {
+        name: "Dart",
+        icon: DartSvg,
+      },
+      {
+        name: "PHP",
+        icon: SiPhp,
+      },
+      {
+        name: "Python",
+        icon: PythonSvg,
       },
     ],
   },
   {
-    sectionName: "Libraries and Frameworks",
+    sectionName: "Fullstack & Databases",
     skills: [
       {
-        name: "Reactjs",
+        name: "React",
         icon: ReactjsSvg,
       },
       {
@@ -80,66 +84,107 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
         icon: SiNextdotjs,
       },
       {
-        name: "React Router Dom",
-        icon: ReactRouterDomIcon,
-      },
-      {
-        name: "Redux",
-        icon: ReduxSvg,
-      },
-      {
-        name: "Tailwindcss",
-        icon: TailwindcssSvg,
-      },
-      {
-        name: "MUI",
-        icon: MuiSvg,
-      },
-      {
-        name: "Framer motion",
-        icon: FramerMotionIcon,
-      },
-      {
-        name: "Vite",
-        icon: ViteSvg,
-      },
-      {
-        name: "Ant Design",
-        icon: SiAntdesign,
-      },
-      {
-        name: "Docker",
-        icon: SiDocker,
-      },
-    ],
-  },
-  {
-    sectionName: "Backend",
-    skills: [
-      {
         name: "Nodejs",
-        icon: NodejsSvg,
+        icon: NodeSvg,
       },
       {
         name: "Express",
         icon: SiExpress,
       },
       {
-        name: "Socket.io",
-        icon: SiSocketdotio,
+        name: "FastAPI",
+        icon: FastSvg,
+      },
+      {
+        name: "Tailwindcss",
+        icon: TailwindcssSvg,
+      },
+      {
+        name: "Spring Boot",
+        icon: SiSpringboot,
+      },
+      {
+        name: "Flutter",
+        icon: FlutterSvg,
+      },
+      {
+        name: "Auth0",
+        icon: AuthSvg,
       },
       {
         name: "MongoDB",
         icon: MongoDBSvg,
       },
       {
-        name: "GraphQL",
-        icon: SiGraphql,
+        name: "MySql",
+        icon: MysqlSvg,
+      },
+      {
+        name: "Firebase",
+        icon: FirebaseSvg,
       },
     ],
   },
   {
-    sectionName: "Tools and Technologies",
+    sectionName: "AI/ML",
+    skills: [
+      {
+        name: "OpenAI",
+        icon: SiOpenai,
+      },
+      {
+        name: "Azure AI",
+        icon: AzureAiSvg,
+      },
+      {
+        name: "Vercel AI SDK",
+        icon: SiVercel,
+      },
+      {
+        name: "LLaMa AI",
+        icon: LLaMaSvg,
+      },
+      {
+        name: "Prompt Engineering",
+        icon: PromptSvg,
+      },
+      {
+        name: "LangChain",
+        icon: LangSvg,
+      },
+    ],
+  },
+  {
+    sectionName: "DevOps",
+    skills: [
+      {
+        name: "CI/CD",
+        icon: CiCdSvg,
+      },
+      {
+        name: "Docker",
+        icon: DockerSvg,
+      },
+      {
+        name: "GitHub Actions",
+        icon: GithubactionsSvg,
+      },
+      {
+        name: "API Gateway",
+        icon: ApimSvg,
+      },
+      {
+        name: "Kubernetes",
+        icon: KubernetesSvg,
+      },
+      {
+        name: "Jenkins",
+        icon: JenkinsSvg,
+      },
+    ],
+  },
+  {
+    sectionName: "Tools & Cloud Platforms",
     skills: [
       {
         name: "Git",
@@ -150,20 +195,40 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
         icon: SiGithub,
       },
       {
+        name: "Azure DevOps",
+        icon: ADevOpsSvg,
+      },
+      {
+        name: "Jira",
+        icon: JiraSvg,
+      },
+      {
+        name: "Npm",
+        icon: NpmSvg,
+      },
+      {
         name: "Postman",
         icon: PostmanSvg,
       },
       {
-        name: "Bitbucket",
-        icon: SiBitbucket,
+        name: "Swagger",
+        icon: SwaggerSvg,
       },
       {
-        name: "Bitrix 24",
-        icon: Kanban,
+        name: "Microsoft Azure",
+        icon: AzureSvg,
       },
       {
-        name: "Cloudinary",
-        icon: CloudUploadIcon,
+        name: "Vercel",
+        icon: SiVercel,
+      },
+      {
+        name: "Raspberry PI",
+        icon: PiSvg,
+      },
+      {
+        name: "Arduino",
+        icon: ArduinoSvg,
       },
     ],
   },

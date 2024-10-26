@@ -44,35 +44,6 @@ import ArduinoSvg from "@/public/icons/arduino.svg";
 
 export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
   {
-    sectionName: "Languages",
-    skills: [
-      {
-        name: "Javascript",
-        icon: JavascriptSvg,
-      },
-      {
-        name: "Typescript",
-        icon: TypescriptSvg,
-      },
-      {
-        name: "Java",
-        icon: JavaSvg,
-      },
-      {
-        name: "Dart",
-        icon: DartSvg,
-      },
-      {
-        name: "PHP",
-        icon: SiPhp,
-      },
-      {
-        name: "Python",
-        icon: PythonSvg,
-      },
-    ],
-  },
-  {
     sectionName: "Fullstack & Databases",
     skills: [
       {
@@ -232,4 +203,33 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
       },
     ],
   },
+  {
+    sectionName: "Languages",
+    skills: [
+      {
+        name: "Javascript",
+        icon: JavascriptSvg,
+      },
+      {
+        name: "Typescript",
+        icon: TypescriptSvg,
+      },
+      {
+        name: "Java",
+        icon: JavaSvg,
+      },
+      {
+        name: "Dart",
+        icon: DartSvg,
+      },
+      {
+        name: "PHP",
+        icon: SiPhp,
+      },
+      {
+        name: "Python",
+        icon: PythonSvg,
+      },
+    ],
+  }
 ];

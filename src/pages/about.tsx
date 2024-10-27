@@ -14,7 +14,7 @@ export default function About() {
         canonical={`${siteMetadata.siteUrl}/about`}
         openGraph={{
           url: `${siteMetadata.siteUrl}/about`,
-          title: "Learn About Nikunj Khitha - MERN & FullStack Developer",
+          title: "Learn About Nikunj Khitha - FullStack & AI Developer",
           description:
             "Dive into the story of Nikunj Khitha, an AI Specialist and Full Stack Developer. Uncover my experiences and skills in delivering exceptional web solutions through DevOps, Azure AI, microservices, and mobile development.",
           images: [

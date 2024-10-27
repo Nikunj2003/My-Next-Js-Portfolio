@@ -174,10 +174,6 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
         icon: JiraSvg,
       },
       {
-        name: "Npm",
-        icon: NpmSvg,
-      },
-      {
         name: "Postman",
         icon: PostmanSvg,
       },
@@ -186,20 +182,12 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
         icon: SwaggerSvg,
       },
       {
-        name: "Microsoft Azure",
-        icon: AzureSvg,
-      },
-      {
         name: "Vercel",
         icon: SiVercel,
       },
       {
-        name: "Raspberry PI",
-        icon: PiSvg,
-      },
-      {
-        name: "Arduino",
-        icon: ArduinoSvg,
+        name: "Microsoft Azure",
+        icon: AzureSvg,
       },
     ],
   },

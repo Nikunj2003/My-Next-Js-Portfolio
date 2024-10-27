@@ -61,7 +61,7 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
     description:
       "EarthLink is an American Internet service provider.  The New York Times described Earthlink as the 'second largest Internet service provider after America Online.'",
     sourceCodeHref: "",
-    liveWebsiteHref: "https://www.earthlink.net/",
+    liveWebsiteHref: "",
   },
   {
     name: "Rapid Store",
@@ -69,8 +69,8 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
     imageUrl: ["/images/projects/store.png", "/images/projects/store2.png"],
     description:
       "Rapid Store is an e-commerce platform based on theme Electronics & Gadgets. It's for shoppers who want best deal in small amount of time at fast speed. You can buy products in your favourite category on Rapid Store.",
-    sourceCodeHref: "https://github.com/VLeads/Rapid-Store-React",
-    liveWebsiteHref: "https://rapidstore-dev.netlify.app/",
+    sourceCodeHref: "",
+    liveWebsiteHref: "",
   },
   {
     name: "DigiMantra Labs site",
@@ -79,15 +79,15 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
     description:
       "I've worked on making landing page pixel-perfect design and integrated chatbot. Integrated GraphQL to show data coming from backend",
     sourceCodeHref: "",
-    liveWebsiteHref: "https://digimantralabs.com/",
+    liveWebsiteHref: "",
   },
   {
     name: "Rapid Fire (Social Media app)",
     favicon: "🐤",
     imageUrl: ["/images/projects/fire1.png", "/images/projects/fire.png"],
     description: "Share moments, Connect, Know the World",
-    sourceCodeHref: "https://github.com/vleads/rapidfire",
-    liveWebsiteHref: "https://rapidfire.vercel.app/",
+    sourceCodeHref: "",
+    liveWebsiteHref: "",
   },
   {
     name: "Rapid UI",
@@ -99,8 +99,8 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
     ],
     description:
       "Rapid UI is an Open Source CSS library, integrated with pre-defined styled classes, and Utilites, for a quick creation of websites, with much focus on Functionality.",
-    sourceCodeHref: "https://github.com/VLeads/rapid-ui",
-    liveWebsiteHref: "https://rapidui.netlify.app/",
+    sourceCodeHref: "",
+    liveWebsiteHref: "",
   },
   {
     name: "Rapid TV",
@@ -108,8 +108,8 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
     imageUrl: ["/images/projects/tv.png", "/images/projects/tv1.png"],
     description:
       "Rapid TV is a video library for tech enthusiast. It shows videos based on New gadgets arriving in the market, product reviews, tech news and whats overall happening in the market revolving around this theme.",
-    sourceCodeHref: "https://github.com/vleads/rapidtv",
-    liveWebsiteHref: "https://rapidtv.vercel.app/",
+    sourceCodeHref: "",
+    liveWebsiteHref: "",
   },
 ];
 
@@ -122,7 +122,7 @@ export const BLOGS_CARD: ProjectCardProps[] = [
       "In this article, we will discuss and understand debouncing and throttling in javascript, which are very useful when it comes to the performance of a website.",
     sourceCodeHref: "",
     liveWebsiteHref:
-      "https://thisisvishal.hashnode.dev/understand-debouncing-and-throttling-in-javascript-with-examples",
+      "",
   },
   {
     name: "How to create your own custom Hooks in React (extensive guide)",
@@ -132,7 +132,7 @@ export const BLOGS_CARD: ProjectCardProps[] = [
       "Hooks are reusable functions. When you have component logic that needs to be used by multiple components, we can extract that logic to a custom Hook. Custom Hooks start with 'use'. Example...",
     sourceCodeHref: "",
     liveWebsiteHref:
-      "https://thisisvishal.hashnode.dev/how-to-create-your-own-custom-hooks-in-react-extensive-guide",
+      "",
   },
   {
     name: "10 Important productivity tools to make developer life easier 👨‍💻👨‍💻",
@@ -142,7 +142,7 @@ export const BLOGS_CARD: ProjectCardProps[] = [
       "Developing is not only about getting your device and start coding directly for all day long. Right tools & guidance is all we need. If you're a developer these tools will definitely make your life hassle free. Let's dive in !!",
     sourceCodeHref: "",
     liveWebsiteHref:
-      "https://thisisvishal.hashnode.dev/10-important-productivity-tools-to-make-developer-life-easier",
+      "",
   },
   {
     name: "map, filter, reduce functions in JavaScript made easy 🔥",
@@ -151,6 +151,6 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     description: `Let's understand some important functions of them, that are "map", "filter" and "reduce". You definitely have heard about them. You probably know about them. But are they still confusing to you? Let's make them beautifully more clearer to you via beautiful examples.`,
     sourceCodeHref: "",
     liveWebsiteHref:
-      "https://thisisvishal.hashnode.dev/how-to-create-your-own-custom-hooks-in-react-extensive-guidehttps://thisisvishal.hashnode.dev/map-filter-reduce-functions-in-javascript-made-easy",
+      "",
   },
 ];

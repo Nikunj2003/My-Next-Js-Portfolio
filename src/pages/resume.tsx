@@ -45,7 +45,7 @@ export default function Resume() {
             "Explore the professional resume of Nikunj Khitha, an AI Specialist and Full-Stack Developer with expertise in building intelligent web and mobile applications, cloud-based solutions, and AI-powered microservices.",
           images: [
             {
-              url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
+              url: `${siteMetadata.siteUrl}${siteMetadata.image}`,
               alt: "Nikunj Khitha - Resume Image",
             },
           ],

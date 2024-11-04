@@ -19,7 +19,7 @@ export default function About() {
             "Dive into the story of Nikunj Khitha, an AI Specialist and Full Stack Developer. Uncover my experiences and skills in delivering exceptional web solutions through DevOps, Azure AI, microservices, and mobile development.",
           images: [
             {
-              url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
+              url: `${siteMetadata.siteUrl}${siteMetadata.image}`,
               alt: "Nikunj Khitha - Professional Developer Portfolio",
             },
           ],

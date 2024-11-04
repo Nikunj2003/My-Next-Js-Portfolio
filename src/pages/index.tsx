@@ -22,7 +22,7 @@ export default function Home() {
             "Delve into the world of web development with Nikunj Khitha. Explore a portfolio featuring advanced projects that highlight skills in Next.js, MERN Stack, Flutter, DevOps, Azure AI, and microservices, reflecting a dedication to creating impactful web and mobile applications.",
           images: [
             {
-              url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
+              url: `${siteMetadata.siteUrl}${siteMetadata.image}`,
               alt: "Nikunj Khitha - Professional Developer Portfolio",
             },
           ],

@@ -18,7 +18,7 @@ export default function Projects() {
             "Showcasing an array of projects crafted by Nikunj Khitha, highlighting expertise in AI, web development, and mobile app development. Experience innovation through the MERN Stack, DevOps practices, Azure AI solutions, and cloud technologies that enhance digital experiences.",
           images: [
             {
-              url: `${siteMetadata.siteUrl}${siteMetadata.twitterImage}`,
+              url: `${siteMetadata.siteUrl}${siteMetadata.image}`,
               alt: "Nikunj Khitha - Project Showcase",
             },
           ],

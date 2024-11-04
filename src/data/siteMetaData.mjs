@@ -6,7 +6,7 @@ export const siteMetadata = {
   language: "en-us",
   theme: "light",
   siteName: "https://nikunj.tech/",
-  siteUrl: "https://nikunj.tech/",
+  siteUrl: "https://nikunj.tech",
   siteRepo: "https://github.com/Nikunj2003/My-Next-Js-Portfolio",
   siteLogo: "/favicon.ico",
   image: "/static/home.png",

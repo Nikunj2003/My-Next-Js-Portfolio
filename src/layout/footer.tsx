@@ -24,7 +24,7 @@ export default function Footer() {
         </div> */}
       </div>
       <div className="flex w-full flex-col items-center justify-between gap-8 text-center  md:flex-row md:justify-between lg:mx-auto lg:max-w-7xl">
-        <span className="text-foreground">©2024 Nikunj Khitha</span>
+        <span className="text-foreground">©2025 Nikunj Khitha</span>
         <div className="flex gap-8">
           <a
             href={siteMetadata.github}

@@ -14,10 +14,8 @@ export default function Resume() {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 845);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -61,14 +59,13 @@ export default function Resume() {
           },
         ]}
       />
-
       <section className="mx-auto mb-14 mt-6 w-full gap-20 px-6 sm:mt-12 sm:px-14 md:px-20">
         <div className="mx-auto max-w-7xl">
           <div
             className={`rmb mb-6 flex justify-center transition-transform duration-700 ${isVisible ? "translate-y-0" : "translate-y-10 opacity-0"}`}
           >
             <a
-              href="/Resume.pdf"
+              href={`/Nikunj_Resume.pdf`}
               download
               aria-label="Download Nikunj Khitha's Resume"
               className={`relative mx-3 my-3 font-semibold transition-transform duration-100 hover:scale-110 ${
@@ -79,7 +76,6 @@ export default function Resume() {
               Download Resume
             </a>
           </div>
-
           <div className="rmt mt-8 flex justify-center">
             <div
               className={`rmt flex items-center justify-center rounded-lg p-4 backdrop-blur-lg transition-opacity duration-700 ${isVisible ? "opacity-100" : "opacity-0"}`}
@@ -95,36 +91,53 @@ export default function Resume() {
                 display: !isMobile ? "flex" : "none",
               }}
             >
-              <Image
-                src="/resume.png"
-                alt="Nikunj Khitha Resume"
-                layout="responsive"
-                width={900}
-                height={600}
-                className={`transition-transform duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
-              />
+              <a
+                href={`/Nikunj_Resume.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Resume in new tab"
+                className="block w-full h-full"
+              >
+                <Image
+                  src="/Nikunj_Resume.png"
+                  alt="Nikunj Khitha Resume"
+                  layout="responsive"
+                  width={900}
+                  height={600}
+                  className={`transition-transform duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+                />
+              </a>
             </div>
-
             {isMobile && (
-              <Image
-                src="/resume.png"
-                alt="Nikunj Khitha Resume"
-                layout="responsive"
-                width={900}
-                height={600}
-                className={`transition-transform duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
-                style={{
-                  boxShadow: resolvedTheme === "light" ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
-                }}
-              />
+              <a
+                href={`/Nikunj_Resume.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Resume in new tab"
+                className="block w-full h-full"
+              >
+                <Image
+                  src="/Nikunj_Resume.png"
+                  alt="Nikunj Khitha Resume"
+                  layout="responsive"
+                  width={900}
+                  height={600}
+                  className={`transition-transform duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+                  style={{
+                    boxShadow: resolvedTheme === "light" ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+                  }}
+                />
+              </a>
             )}
           </div>
         </div>
       </section>
-
       <style jsx>{`
         a {
           text-decoration: none;
+        }
+        .block {
+          display: block; /* Ensure the link covers the entire image area */
         }
       `}</style>
     </>

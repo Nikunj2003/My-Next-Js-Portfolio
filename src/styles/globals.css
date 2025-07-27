@@ -9,8 +9,13 @@
     --border: 240 5.9% 90%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
+
+    /* Updated Accent Colors */
+    --accent-light: 183 65% 45%; /* Lighter shade for hover */
     --accent: 183 65% 35%;
+    --accent-dark: 183 65% 25%; /* Darker shade for active/focus */
     --accent-foreground: 240 5.9% 10%;
+
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
   }
@@ -21,8 +26,13 @@
     --border: 240 3.7% 15.9%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
+
+    /* Updated Accent Colors */
+    --accent-light: 183 63% 50%; /* Lighter shade for hover */
     --accent: 183 63% 40%;
+    --accent-dark: 183 63% 30%; /* Darker shade for active/focus */
     --accent-foreground: 0 0% 98%;
+
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
   }
@@ -33,6 +43,11 @@
 
   body {
     @apply min-h-screen bg-background text-foreground;
+
+    /* Improved typography for readability */
+    font-feature-settings: "liga" 1, "calt" 1;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
 
     /* Custom cursor for light theme applied globally */
     cursor: url("../../public/icons8-select-cursor-18-light.png"), auto;
@@ -55,7 +70,8 @@
     cursor: url("../../public/icons8-select-cursor-18-dark.png"), auto;
   }
   /* Cursor styles for light theme */
-  a:hover {
+  a:hover,
+  button:hover {
     cursor: url("../../public/icons8-hand-cursor-18-light.png"), pointer;
   }
 
@@ -69,7 +85,8 @@
   }
 
   /* Cursor styles for dark theme */
-  .dark a:hover {
+  .dark a:hover,
+  .dark button:hover {
     cursor: url("../../public/icons8-hand-cursor-18-dark.png"), pointer;
   }
 

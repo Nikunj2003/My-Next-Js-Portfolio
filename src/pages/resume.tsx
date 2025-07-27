@@ -28,6 +28,11 @@ export default function Resume() {
     setMounted(true);
   }, []);
 
+  const backgroundColor =
+    mounted && resolvedTheme === "dark"
+      ? "bg-black/20 backdrop-blur-lg"
+      : "bg-white/20 backdrop-blur-lg";
+
   if (!mounted) return null;
 
   return (
@@ -78,16 +83,11 @@ export default function Resume() {
           </div>
           <div className="rmt mt-8 flex justify-center">
             <div
-              className={`rmt flex items-center justify-center rounded-lg p-4 backdrop-blur-lg transition-opacity duration-700 ${isVisible ? "opacity-100" : "opacity-0"}`}
+              className={`rmt flex items-center justify-center rounded-lg border border-accent/20 p-4 shadow-md transition-all duration-700 hover:shadow-lg hover:shadow-accent/20 ${backgroundColor} ${isVisible ? "opacity-100" : "opacity-0"}`}
               style={{
                 maxWidth: "900px",
                 width: "95%",
                 minHeight: "600px",
-                padding: "3rem",
-                backgroundColor: resolvedTheme === "dark" ? "rgba(0, 0, 0, 0.2)" : "rgba(255, 255, 255, 0.2)",
-                border: `1px solid ${resolvedTheme === "dark" ? "#1A5458" : "#D6E8E9"}`,
-                boxShadow: resolvedTheme === "dark" ? "none" : "0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1)",
-                transform: resolvedTheme === "dark" ? "none" : "translateY(-2px)",
                 display: !isMobile ? "flex" : "none",
               }}
             >
@@ -104,7 +104,7 @@ export default function Resume() {
                   layout="responsive"
                   width={900}
                   height={600}
-                  className={`transition-transform duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+                  className={`rounded-md transition-transform duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
                 />
               </a>
             </div>

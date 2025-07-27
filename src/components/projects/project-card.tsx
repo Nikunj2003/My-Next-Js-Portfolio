@@ -35,29 +35,33 @@ export default function ProjectCard(props: ProjectCardProps) {
 
   return (
     <motion.div
-      initial={{ y: 80 }}
-      whileInView={{ y: 0 }}
+      initial={{ y: 80, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
       transition={{
         type: "spring",
         duration: 0.4,
       }}
-      className={`w-full overflow-hidden rounded-lg border border-accent/20 shadow-md transition-shadow duration-150 hover:shadow-md hover:shadow-accent/20 ${backgroundColor}`}
+      className={`w-full overflow-hidden rounded-lg border border-accent/20 shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-1 ${backgroundColor}`}
     >
-      <Corosel images={props.imageUrl} aspectRatio={2.1} />
-      <div className="p-3 text-foreground sm:p-4">
+      <Corosel images={props.imageUrl} aspectRatio={1.9} />
+      <div className="p-4 text-foreground sm:p-6">
         <div className="flex items-center gap-3">
-          <span className="relative h-5 w-5">{props.favicon}</span>
-          <span className="text-sm font-semibold">{props.name}</span>
+          <span className="relative h-6 w-6 text-2xl">{props.favicon}</span>
+          <span className="text-lg font-semibold">{props.name}</span>
         </div>
         <div className="mt-3">
-          <p className="text-xs md:text-sm">{props.description}</p>
+          <p className="text-sm md:text-base text-muted-foreground">
+            {props.description}
+          </p>
         </div>
         <div className="mt-6 flex items-center justify-end gap-6">
           {props?.sourceCodeHref && (
             <a
               href={props.sourceCodeHref}
               target="_blank"
-              className="flex items-center gap-1 text-xs underline md:text-sm"
+              rel="noopener noreferrer"
+              aria-label={`View source code for ${props.name}`}
+              className="flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-accent"
             >
               <GithubIcon className="h-5 w-5" /> Source code
             </a>
@@ -66,7 +70,9 @@ export default function ProjectCard(props: ProjectCardProps) {
             <a
               href={props.liveWebsiteHref}
               target="_blank"
-              className="flex items-center gap-1 text-xs underline md:text-sm"
+              rel="noopener noreferrer"
+              aria-label={`View live website for ${props.name}`}
+              className="flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-accent"
             >
               <FiExternalLink className="h-5 w-5" /> Live
             </a>

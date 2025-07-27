@@ -1,5 +1,6 @@
 import { FC, SVGProps, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
 
 export type SkillPillProps = {
   name: string;
@@ -18,20 +19,16 @@ export default function SkillPill(props: SkillPillProps) {
 
   // Define background color based on theme (dark/light) after the component has mounted
   const backgroundColor =
-    resolvedTheme === "dark"
-      ? "bg-black/10 backdrop-blur-lg" // Dark theme background with blur
-      : "bg-white/10 backdrop-blur-lg"; // Light theme background with blur
+    mounted && resolvedTheme === "dark"
+      ? "bg-black/20 backdrop-blur-lg" // Dark theme background with blur
+      : "bg-white/20 backdrop-blur-lg"; // Light theme background with blur
 
-  // Set border color based on theme
-  const borderColor = resolvedTheme === "dark" ? "#1A5458" : "#D6E8E9";
-
-  // Prevent rendering before the theme is resolved (avoiding mismatched colors during SSR or initial page load)
+  // Prevent rendering before the theme is resolved
   if (!mounted) return null;
 
   return (
     <div
-      className={`flex w-max items-center gap-2 overflow-hidden rounded-lg px-4 py-3 text-sm shadow-sm sm:text-base md:px-6 md:py-3 md:text-lg ${backgroundColor}`}
-      style={{ border: `1px solid ${borderColor}` }}
+      className={`flex w-max items-center gap-2 overflow-hidden rounded-lg border border-accent/20 px-4 py-3 text-sm shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 sm:text-base md:px-6 md:py-3 md:text-lg ${backgroundColor}`}
     >
       <Icon className="h-5 w-5 sm:h-8 sm:w-8" />
       <span className="font-medium">{name}</span>

@@ -9,7 +9,9 @@ module.exports = {
         foreground: "hsl(var(--foreground))",
         border: "hsl(var(--border))",
         accent: {
+          light: "hsl(var(--accent-light))",
           DEFAULT: "hsl(var(--accent))",
+          dark: "hsl(var(--accent-dark))",
           foreground: "hsl(var(--accent-foreground))",
         },
         destructive: {

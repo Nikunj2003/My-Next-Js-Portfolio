@@ -37,12 +37,10 @@ export default function ExperienceShowcaseList(
           {props.details.map((_details, index) => (
             <ExperienceShowcaseListItem key={index} {..._details} />
           ))}
-          <h3 className="mx-auto w-[60%] text-base font-bold text-foreground sm:text-xl md:text-2xl">
-            And a new
-            <FlipWords words={words} />
-            ahead
-          </h3>
         </ul>
+        <h3 className="mx-auto mt-8 w-[60%] text-center text-base font-bold text-foreground sm:text-xl md:text-2xl">
+          And a new <FlipWords words={words} /> ahead
+        </h3>
       </div>
     </div>
   );

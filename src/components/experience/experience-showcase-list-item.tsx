@@ -39,7 +39,7 @@ function ShowCaseLiIcon(props: ExperienceListIconProps) {
 
 export interface ExperienceShowcaseListItemProps {
   title: string;
-  organisation: {
+  organisation?: {
     name: string;
     href: string;
   };
@@ -60,8 +60,8 @@ export default function ExperienceShowcaseListItem(
 
   const backgroundColor =
     resolvedTheme === "dark"
-      ? "bg-black/10 backdrop-blur-lg" // Dark theme background with blur
-      : "bg-white/10 backdrop-blur-lg"; // Light theme background with blur
+      ? "bg-black/20 backdrop-blur-lg" // Dark theme background with blur
+      : "bg-white/20 backdrop-blur-lg"; // Light theme background with blur
 
   if (!mounted) return null;
 
@@ -75,23 +75,20 @@ export default function ExperienceShowcaseListItem(
           type: "spring",
           duration: 0.4,
         }}
-        style={{
-          border: `1px solid ${
-            resolvedTheme === "dark" ? "#1A5458" : "#D6E8E9"
-          }`, // Theme-based border color
-        }}
-        className={`rounded-lg p-6 shadow-md ${backgroundColor}`}
+        className={`rounded-lg border border-accent/20 p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 ${backgroundColor}`}
       >
         <h3 className="text-base font-bold text-foreground sm:text-xl md:text-2xl">
           {props.title}{" "}
-          <Link
-            href={props.organisation.href}
-            className="cursor-pointer text-accent"
-            target="_blank"
-            rel="nofollow"
-          >
-            @{props.organisation.name}
-          </Link>
+          {props.organisation && (
+            <Link
+              href={props.organisation.href}
+              className="cursor-pointer text-accent transition-colors hover:text-accent-light"
+              target="_blank"
+              rel="nofollow"
+            >
+              @{props.organisation.name}
+            </Link>
+          )}
         </h3>
         <span className="text-sm font-medium text-foreground xs:text-base">
           {props.date}

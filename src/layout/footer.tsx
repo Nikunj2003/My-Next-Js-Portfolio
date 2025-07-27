@@ -49,7 +49,7 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="border-t border-border bg-muted/20">
+      <div className="border-t border-border bg-muted/20 backdrop-blur-lg shadow-md ring-1 ring-zinc-200 dark:ring-accent/50">
         <div className="mx-auto max-w-7xl px-6 py-12 sm:px-14 md:px-20">
           <div className="grid gap-12 md:grid-cols-3 lg:gap-16">
 

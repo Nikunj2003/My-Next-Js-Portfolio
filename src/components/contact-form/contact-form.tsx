@@ -73,14 +73,14 @@ export default function ContactForm() {
         validateOnChange
       >
         {({ isValid }) => (
-          <Form className="mt-6 flex flex-col gap-3">
+          <Form className="mt-8 flex flex-col gap-6">
             {/** Email Field */}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               <label
                 htmlFor="email"
-                className="inline font-medium text-background"
+                className="text-sm font-semibold text-foreground uppercase tracking-wider"
               >
-                Email
+                Email Address
               </label>
               <Field name="email">
                 {({ field, meta }: FormiKInputFieldProps<string>) => (
@@ -88,12 +88,12 @@ export default function ContactForm() {
                     <CustomInput
                       id="email"
                       {...field}
-                      type="text"
-                      placeholder="Email"
-                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
+                      type="email"
+                      placeholder="Enter your email address"
+                      className="h-12 border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors"
                     />
                     {Boolean(meta.touched && meta.error) && (
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">
+                      <span className="mt-1 text-xs font-medium text-destructive">
                         {meta.error}
                       </span>
                     )}
@@ -103,12 +103,12 @@ export default function ContactForm() {
             </div>
 
             {/** Name Field */}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               <label
                 htmlFor="name"
-                className="inline font-medium text-background"
+                className="text-sm font-semibold text-foreground uppercase tracking-wider"
               >
-                Name
+                Full Name
               </label>
               <Field name="name">
                 {({ field, meta }: FormiKInputFieldProps<string>) => (
@@ -117,11 +117,11 @@ export default function ContactForm() {
                       id="name"
                       {...field}
                       type="text"
-                      placeholder="Name"
-                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
+                      placeholder="Enter your full name"
+                      className="h-12 border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors"
                     />
                     {Boolean(meta.touched && meta.error) && (
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">
+                      <span className="mt-1 text-xs font-medium text-destructive">
                         {meta.error}
                       </span>
                     )}
@@ -131,10 +131,10 @@ export default function ContactForm() {
             </div>
 
             {/** Subject Field */}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               <label
                 htmlFor="subject"
-                className="inline font-medium text-background"
+                className="text-sm font-semibold text-foreground uppercase tracking-wider"
               >
                 Subject
               </label>
@@ -145,11 +145,11 @@ export default function ContactForm() {
                       id="subject"
                       {...field}
                       type="text"
-                      placeholder="Subject"
-                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
+                      placeholder="What would you like to discuss?"
+                      className="h-12 border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors"
                     />
                     {Boolean(meta.touched && meta.error) && (
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">
+                      <span className="mt-1 text-xs font-medium text-destructive">
                         {meta.error}
                       </span>
                     )}
@@ -159,10 +159,10 @@ export default function ContactForm() {
             </div>
 
             {/** Message Field */}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               <label
                 htmlFor="message"
-                className="inline font-medium text-background"
+                className="text-sm font-semibold text-foreground uppercase tracking-wider"
               >
                 Message
               </label>
@@ -172,11 +172,12 @@ export default function ContactForm() {
                     <CustomTextarea
                       id="message"
                       {...field}
-                      placeholder="Message"
-                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
+                      placeholder="Tell me about your project or idea..."
+                      rows={5}
+                      className="border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors resize-none"
                     />
                     {Boolean(meta.touched && meta.error) && (
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">
+                      <span className="mt-1 text-xs font-medium text-destructive">
                         {meta.error}
                       </span>
                     )}
@@ -187,9 +188,9 @@ export default function ContactForm() {
 
             {/** Submit Button */}
             <button
-              aria-label="open send mail modal"
+              aria-label="Send message"
               type="submit"
-              className="mt-4 w-full rounded-full bg-background px-4 py-3 text-center text-lg font-semibold text-accent transition-colors duration-150 hover:bg-background/90 dark:bg-[#1F1F23] dark:text-white" // Adjust background color for dark mode
+              className="mt-6 w-full rounded-xl bg-accent px-6 py-4 text-center text-lg font-semibold text-accent-foreground transition-all duration-200 hover:bg-accent/90 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               disabled={!isValid || isSendingMail}
             >
               {isSendingMail ? (

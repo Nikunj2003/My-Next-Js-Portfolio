@@ -131,10 +131,10 @@ export default function ContactForm() {
             </div>
 
             {/** Subject Field */}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               <label
                 htmlFor="subject"
-                className="inline font-medium text-background"
+                className="text-sm font-semibold text-foreground uppercase tracking-wider"
               >
                 Subject
               </label>
@@ -145,11 +145,11 @@ export default function ContactForm() {
                       id="subject"
                       {...field}
                       type="text"
-                      placeholder="Subject"
-                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
+                      placeholder="What would you like to discuss?"
+                      className="h-12 border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors"
                     />
                     {Boolean(meta.touched && meta.error) && (
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">
+                      <span className="mt-1 text-xs font-medium text-destructive">
                         {meta.error}
                       </span>
                     )}

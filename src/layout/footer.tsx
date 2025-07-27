@@ -14,7 +14,7 @@ export default function Footer() {
   return (
     <footer className="w-full bg-transparent">
       {/* Contact CTA Section */}
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:px-14 md:px-20">
+      <div className="mx-auto max-w-7xl px-6 py-8 sm:px-14 md:px-20">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent to-accent/80 p-6 text-background sm:p-8 lg:p-12">
           <div className="relative z-10">
             <div className="text-center">

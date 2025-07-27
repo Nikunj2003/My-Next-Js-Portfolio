@@ -75,12 +75,12 @@ export default function ContactForm() {
         {({ isValid }) => (
           <Form className="mt-8 flex flex-col gap-6">
             {/** Email Field */}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               <label
                 htmlFor="email"
-                className="inline font-medium text-background"
+                className="text-sm font-semibold text-foreground uppercase tracking-wider"
               >
-                Email
+                Email Address
               </label>
               <Field name="email">
                 {({ field, meta }: FormiKInputFieldProps<string>) => (
@@ -88,12 +88,12 @@ export default function ContactForm() {
                     <CustomInput
                       id="email"
                       {...field}
-                      type="text"
-                      placeholder="Email"
-                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
+                      type="email"
+                      placeholder="Enter your email address"
+                      className="h-12 border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors"
                     />
                     {Boolean(meta.touched && meta.error) && (
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">
+                      <span className="mt-1 text-xs font-medium text-destructive">
                         {meta.error}
                       </span>
                     )}

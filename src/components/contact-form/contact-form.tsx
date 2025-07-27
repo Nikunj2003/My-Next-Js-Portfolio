@@ -188,9 +188,9 @@ export default function ContactForm() {
 
             {/** Submit Button */}
             <button
-              aria-label="open send mail modal"
+              aria-label="Send message"
               type="submit"
-              className="mt-4 w-full rounded-full bg-background px-4 py-3 text-center text-lg font-semibold text-accent transition-colors duration-150 hover:bg-background/90 dark:bg-[#1F1F23] dark:text-white" // Adjust background color for dark mode
+              className="mt-6 w-full rounded-xl bg-accent px-6 py-4 text-center text-lg font-semibold text-accent-foreground transition-all duration-200 hover:bg-accent/90 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               disabled={!isValid || isSendingMail}
             >
               {isSendingMail ? (

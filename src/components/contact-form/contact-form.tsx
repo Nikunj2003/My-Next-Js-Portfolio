@@ -159,10 +159,10 @@ export default function ContactForm() {
             </div>
 
             {/** Message Field */}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               <label
                 htmlFor="message"
-                className="inline font-medium text-background"
+                className="text-sm font-semibold text-foreground uppercase tracking-wider"
               >
                 Message
               </label>
@@ -172,11 +172,12 @@ export default function ContactForm() {
                     <CustomTextarea
                       id="message"
                       {...field}
-                      placeholder="Message"
-                      className="border border-gray-300 bg-white dark:border-gray-600 dark:bg-[#1F1F23]" // Add background and border color here
+                      placeholder="Tell me about your project or idea..."
+                      rows={5}
+                      className="border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors resize-none"
                     />
                     {Boolean(meta.touched && meta.error) && (
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 md:text-sm">
+                      <span className="mt-1 text-xs font-medium text-destructive">
                         {meta.error}
                       </span>
                     )}

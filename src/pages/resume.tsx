@@ -89,6 +89,7 @@ export default function Resume() {
                 width: "95%",
                 minHeight: "600px",
                 display: !isMobile ? "flex" : "none",
+                padding: "3rem",
               }}
             >
               <a

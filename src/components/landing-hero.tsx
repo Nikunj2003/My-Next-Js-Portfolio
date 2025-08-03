@@ -53,7 +53,7 @@ export default function LandingHero() {
                 Nikunj Khitha
               </h1>
               <span className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 md:text-3xl">
-                Full Stack & A.I. Developer
+                Software Development Engineer
               </span>
             </FadeUp>
             <FadeUp key="description" duration={0.6} delay={0.2}>

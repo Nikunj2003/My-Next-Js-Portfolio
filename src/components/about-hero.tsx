@@ -32,12 +32,12 @@ export default function AboutHero() {
               </FadeUp>
               <FadeUp key="description-1" duration={0.6} delay={0.2}>
                 <p className="mt-8 text-base font-medium text-zinc-900 dark:text-zinc-300 sm:text-lg md:text-lg">
-                  I turn visions into reality with code. Whether developing a web application, mobile app using Flutter, or an AI-driven solution, I apply my expertise in Full Stack development, Azure AI, and user-centered design to ensure excellence in every project.
+                  I&apos;m a software engineer passionate about building intelligent, end-to-end solutions at the intersection of AI and automation. My experience ranges from developing enterprise-grade testing frameworks with Spring Boot to engineering sophisticated AI agents using AWS Bedrock, Azure AI, and Crew AI.
                 </p>
               </FadeUp>
               <FadeUp key="description-2" duration={0.6} delay={0.4}>
                 <p className="mt-8 text-base font-medium text-zinc-900 dark:text-zinc-300 sm:text-lg md:text-lg">
-                  Explore my latest projects showcasing my expertise in Next.js, Node.js, JavaScript, TypeScript, AI solutions, cloud development, and web and mobile development using Flutter.
+                  Explore my portfolio to see how I apply my expertise. From creating AI-powered chatbots with Node.js and FastAPI to implementing robust CI/CD pipelines and developing resilient mobile apps with Flutter, I am dedicated to delivering high-impact, production-ready code.
                 </p>
               </FadeUp>
               <FadeRight

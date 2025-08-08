@@ -6,18 +6,8 @@ import ResumeDisplay from "@/components/resume-display";
 
 export default function Resume() {
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 845);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
@@ -27,11 +17,6 @@ export default function Resume() {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const backgroundColor =
-    mounted && resolvedTheme === "dark"
-      ? "bg-black/20 backdrop-blur-lg"
-      : "bg-white/20 backdrop-blur-lg";
 
   if (!mounted) return null;
 

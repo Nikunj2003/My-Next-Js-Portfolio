@@ -43,6 +43,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
   };
 
   const staggerChildren = {
+    initial: {},
     animate: {
       transition: {
         staggerChildren: 0.1
@@ -61,7 +62,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
       <motion.div
         variants={fadeInUp}
         initial="initial"
-        animate="animate"
+        animate={isVisible ? "animate" : "initial"}
         className="text-center mb-8 pb-6 border-b border-accent/20"
       >
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-accent bg-clip-text text-transparent mb-2">
@@ -95,7 +96,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
       <motion.section
         variants={staggerChildren}
         initial="initial"
-        animate="animate"
+        animate={isVisible ? "animate" : "initial"}
         className="mb-8"
       >
         <motion.h2
@@ -160,7 +161,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
       <motion.section
         variants={staggerChildren}
         initial="initial"
-        animate="animate"
+        animate={isVisible ? "animate" : "initial"}
         className="mb-8"
       >
         <motion.h2
@@ -255,7 +256,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
       <motion.section
         variants={staggerChildren}
         initial="initial"
-        animate="animate"
+        animate={isVisible ? "animate" : "initial"}
         className="mb-8"
       >
         <motion.h2
@@ -324,7 +325,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
       <motion.section
         variants={staggerChildren}
         initial="initial"
-        animate="animate"
+        animate={isVisible ? "animate" : "initial"}
         className="mb-8"
       >
         <motion.h2
@@ -378,7 +379,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
       <motion.section
         variants={staggerChildren}
         initial="initial"
-        animate="animate"
+        animate={isVisible ? "animate" : "initial"}
         className="mb-8"
       >
         <motion.h2
@@ -431,7 +432,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
       <motion.section
         variants={staggerChildren}
         initial="initial"
-        animate="animate"
+        animate={isVisible ? "animate" : "initial"}
         className="mb-8"
       >
         <motion.h2
@@ -457,13 +458,13 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
               description: "Learn more about me"
             },
             {
-              href: "/#skills",
+              href: "/",
               icon: <Award size={20} />,
               label: "Skills",
               description: "Technical expertise"
             },
             {
-              href: "/#experience",
+              href: "/about",
               icon: <Briefcase size={20} />,
               label: "Experience",
               description: "Professional journey"

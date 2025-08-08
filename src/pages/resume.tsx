@@ -2,7 +2,7 @@ import { siteMetadata } from "@/data/siteMetaData.mjs";
 import { NextSeo } from "next-seo";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import Image from 'next/image';
+import ResumeDisplay from "@/components/resume-display";
 
 export default function Resume() {
   const [isVisible, setIsVisible] = useState(false);

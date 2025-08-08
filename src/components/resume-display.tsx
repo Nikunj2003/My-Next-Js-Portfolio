@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
-import { Mail, Phone, Globe, Github, Linkedin, MapPin, Calendar, ExternalLink } from "lucide-react";
+import { Mail, Phone, Globe, Github, Linkedin, MapPin, Calendar, ExternalLink, Award, GraduationCap, Briefcase, Code, User } from "lucide-react";
 
 interface ResumeDisplayProps {
   className?: string;
+}
+
+interface NavigationLinkProps {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  description: string;
 }
 
 export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
@@ -291,50 +298,178 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
         </div>
       </motion.section>
 
-      {/* Hackathons & Achievements and Education */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Hackathons & Achievements */}
-        <motion.section
+      {/* Hackathons & Achievements */}
+      <motion.section
+        variants={staggerChildren}
+        initial="initial"
+        animate="animate"
+        className="mb-8"
+      >
+        <motion.h2
           variants={fadeInUp}
-          initial="initial"
-          animate="animate"
+          className="text-2xl md:text-3xl font-bold text-accent mb-6 flex items-center gap-3"
         >
-          <h2 className="text-2xl md:text-3xl font-bold text-accent mb-6">
-            Hackathons & Achievements
-          </h2>
-          <div className={`${sectionBackgroundColor} rounded-xl p-5 md:p-6 border border-accent/10`}>
-            <h3 className="text-lg font-bold text-accent mb-2">IBC2024</h3>
-            <p className="text-sm text-muted-foreground mb-2 italic">IBC Convention Amsterdam</p>
-            <p className="text-muted-foreground leading-relaxed">
-              Showcased AIKO to 500+ attendees, collaborating with Verizon, AMD, HP, and Al Jazeera at a leading media tech event.
-            </p>
-            <div className="flex items-center gap-1 mt-3 text-sm text-accent">
-              <Calendar size={14} />
-              <span>Sep 2024 | Amsterdam, Netherlands</span>
-            </div>
-          </div>
-        </motion.section>
+          <Award className="text-accent" size={32} />
+          Hackathons & Achievements
+        </motion.h2>
 
-        {/* Education */}
-        <motion.section
+        <motion.div
           variants={fadeInUp}
-          initial="initial"
-          animate="animate"
+          className={`${sectionBackgroundColor} rounded-xl p-6 md:p-8 border border-accent/10 hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10`}
         >
-          <h2 className="text-2xl md:text-3xl font-bold text-accent mb-6">
-            Education
-          </h2>
-          <div className={`${sectionBackgroundColor} rounded-xl p-5 md:p-6 border border-accent/10`}>
-            <h3 className="text-lg font-bold text-foreground mb-2">The NorthCap University</h3>
-            <p className="text-accent font-semibold mb-2">B.Tech CSE in Full Stack Development</p>
-            <p className="text-muted-foreground mb-2">CGPA: 8.16</p>
-            <div className="flex items-center gap-1 text-sm text-accent">
-              <Calendar size={14} />
-              <span>2021 – 2025 | Gurugram, India</span>
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
+                <Award className="text-accent" size={20} />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-accent mb-1">IBC2024</h3>
+                <p className="text-sm font-medium text-muted-foreground italic">IBC Convention Amsterdam</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1 text-sm text-accent bg-accent/10 px-3 py-1 rounded-full">
+              <MapPin size={12} />
+              <span>Amsterdam</span>
             </div>
           </div>
-        </motion.section>
-      </div>
+
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            🎯 Showcased <strong className="text-accent">AIKO</strong> to <strong>500+ attendees</strong>, collaborating with industry giants including <strong className="text-accent">Verizon, AMD, HP, and Al Jazeera</strong> at a leading international media technology event.
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-4">
+            {["Media Tech", "AI Innovation", "International Showcase", "Industry Collaboration"].map((tag) => (
+              <span key={tag} className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-medium border border-accent/20">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2 text-sm text-accent">
+            <Calendar size={14} />
+            <span className="font-medium">September 2024 | Amsterdam, Netherlands</span>
+          </div>
+        </motion.div>
+      </motion.section>
+
+      {/* Education */}
+      <motion.section
+        variants={staggerChildren}
+        initial="initial"
+        animate="animate"
+        className="mb-8"
+      >
+        <motion.h2
+          variants={fadeInUp}
+          className="text-2xl md:text-3xl font-bold text-accent mb-6 flex items-center gap-3"
+        >
+          <GraduationCap className="text-accent" size={32} />
+          Education
+        </motion.h2>
+
+        <motion.div
+          variants={fadeInUp}
+          className={`${sectionBackgroundColor} rounded-xl p-6 md:p-8 border border-accent/10 hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10`}
+        >
+          <div className="flex items-start gap-4 mb-4">
+            <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center flex-shrink-0">
+              <GraduationCap className="text-accent" size={24} />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-bold text-foreground mb-2">The NorthCap University</h3>
+              <p className="text-lg font-semibold text-accent mb-2">B.Tech CSE in Full Stack Development</p>
+              <div className="flex flex-wrap gap-4 text-sm">
+                <div className="flex items-center gap-1 text-muted-foreground">
+                  <span className="font-medium">CGPA:</span>
+                  <span className="text-accent font-bold">8.16</span>
+                </div>
+                <div className="flex items-center gap-1 text-muted-foreground">
+                  <Calendar size={14} />
+                  <span>2021 – 2025</span>
+                </div>
+                <div className="flex items-center gap-1 text-muted-foreground">
+                  <MapPin size={14} />
+                  <span>Gurugram, India</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {["Computer Science", "Full Stack Development", "Software Engineering", "Data Structures", "Algorithms"].map((subject) => (
+              <span key={subject} className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-medium border border-accent/20">
+                {subject}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      </motion.section>
+
+      {/* Navigation Links */}
+      <motion.section
+        variants={staggerChildren}
+        initial="initial"
+        animate="animate"
+        className="mb-8"
+      >
+        <motion.h2
+          variants={fadeInUp}
+          className="text-2xl md:text-3xl font-bold text-accent mb-6 flex items-center gap-3"
+        >
+          <ExternalLink className="text-accent" size={32} />
+          Explore More
+        </motion.h2>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            {
+              href: "/projects",
+              icon: <Code size={20} />,
+              label: "Projects",
+              description: "View my latest work"
+            },
+            {
+              href: "/about",
+              icon: <User size={20} />,
+              label: "About Me",
+              description: "Learn more about me"
+            },
+            {
+              href: "/#skills",
+              icon: <Award size={20} />,
+              label: "Skills",
+              description: "Technical expertise"
+            },
+            {
+              href: "/#experience",
+              icon: <Briefcase size={20} />,
+              label: "Experience",
+              description: "Professional journey"
+            }
+          ].map((link, index) => (
+            <motion.a
+              key={link.href}
+              href={link.href}
+              variants={fadeInUp}
+              className={`${sectionBackgroundColor} rounded-xl p-4 border border-accent/10 hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 hover:scale-105 group block`}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-all duration-300">
+                  {link.icon}
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors">
+                    {link.label}
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    {link.description}
+                  </p>
+                </div>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+      </motion.section>
     </motion.div>
   );
 }

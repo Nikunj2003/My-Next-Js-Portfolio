@@ -59,12 +59,12 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="rounded-2xl border border-border bg-muted/20 p-6 backdrop-blur-lg shadow-lg ring-1 ring-zinc-200/50 dark:ring-accent/20 sm:p-8 md:p-12">
             <AnimatePresence>
-              <FadeUp key="about-title" duration={0.6}>
+              <FadeUp key="about-title" duration={0.6} whileInView={true}>
                 <h2 className="text-3xl font-bold text-accent sm:text-4xl md:text-5xl">
                   About Me
                 </h2>
               </FadeUp>
-              <FadeUp key="about-description" duration={0.6} delay={0.2}>
+              <FadeUp key="about-description" duration={0.6} delay={0.2} whileInView={true}>
                 <p className="mt-6 text-lg font-medium leading-relaxed text-zinc-900 dark:text-zinc-300 sm:text-xl">
                   I&apos;m a passionate software engineer who specializes in building intelligent, 
                   end-to-end solutions at the intersection of{" "}
@@ -73,7 +73,7 @@ export default function Home() {
                   to sophisticated AI agents using AWS Bedrock, Azure AI, and Crew AI.
                 </p>
               </FadeUp>
-              <FadeUp key="about-highlights" duration={0.6} delay={0.4}>
+              <FadeUp key="about-highlights" duration={0.6} delay={0.4} whileInView={true}>
                 <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   <div className="rounded-lg bg-accent/10 p-4 backdrop-blur-sm">
                     <h3 className="font-semibold text-accent">Full Stack Development</h3>

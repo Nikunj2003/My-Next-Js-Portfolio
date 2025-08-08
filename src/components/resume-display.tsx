@@ -29,9 +29,12 @@ const smoothScrollToSection = (href: string, e: React.MouseEvent) => {
 export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    const timer = setTimeout(() => setIsVisible(true), 150);
+    return () => clearTimeout(timer);
   }, []);
 
   const backgroundColor = mounted && resolvedTheme === "dark"

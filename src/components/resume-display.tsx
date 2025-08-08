@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { Mail, Phone, Globe, Github, Linkedin, MapPin, Calendar, ExternalLink, Award, GraduationCap, Briefcase, Code, User } from "lucide-react";
-import FadeUp from "@/animation/fade-up";
 
 interface ResumeDisplayProps {
   className?: string;

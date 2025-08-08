@@ -88,7 +88,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
       variants={containerVariants}
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
-      className={`${backgroundColor} border border-accent/20 rounded-2xl shadow-xl shadow-accent/10 p-6 md:p-8 lg:p-10 max-w-5xl mx-auto ${className}`}
+      className={`${backgroundColor} border border-accent/20 rounded-2xl shadow-xl shadow-accent/10 p-4 sm:p-6 md:p-8 lg:p-10 max-w-6xl mx-auto ${className}`}
     >
       {/* Content Container with Stagger Animation */}
       <motion.div
@@ -101,30 +101,60 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
           variants={itemVariants}
           className="text-center mb-8 pb-6 border-b border-accent/20"
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-accent bg-clip-text text-transparent mb-2">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-accent bg-clip-text text-transparent mb-2">
             Nikunj Khitha
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-4">
+          <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-4">
             Software Development Engineer
           </p>
           
-          <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base">
-            <div className="flex items-center gap-2 text-accent">
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-sm md:text-base">
+            <a
+              href="mailto:njkhitha2003@gmail.com"
+              className="flex items-center gap-2 text-accent hover:underline underline-offset-4"
+              aria-label="Email Nikunj"
+            >
               <Mail size={16} />
-              <span>njkhitha2003@gmail.com</span>
-            </div>
-            <div className="flex items-center gap-2 text-accent">
+              <span className="truncate">njkhitha2003@gmail.com</span>
+            </a>
+            <a
+              href="tel:+919540234616"
+              className="flex items-center gap-2 text-accent hover:underline underline-offset-4"
+              aria-label="Call Nikunj"
+            >
               <Phone size={16} />
               <span>+91 9540234616</span>
-            </div>
-            <div className="flex items-center gap-2 text-accent">
+            </a>
+            <a
+              href="https://nikunj.tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-accent hover:underline underline-offset-4"
+              aria-label="Visit website"
+            >
               <Globe size={16} />
-              <span>nikunj.tech</span>
-            </div>
-            <div className="flex items-center gap-2 text-accent">
+              <span className="truncate">nikunj.tech</span>
+            </a>
+            <a
+              href="https://github.com/Nikunj2003"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-accent hover:underline underline-offset-4"
+              aria-label="Visit GitHub profile"
+            >
               <Github size={16} />
-              <span>Nikunj2003</span>
-            </div>
+              <span className="truncate">GitHub</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/nikunj-khitha/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-accent hover:underline underline-offset-4"
+              aria-label="Visit LinkedIn profile"
+            >
+              <Linkedin size={16} />
+              <span className="truncate">LinkedIn</span>
+            </a>
           </div>
         </motion.div>
 
@@ -135,7 +165,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
             Technical Skills
           </h2>
           
-          <div className="grid gap-4 md:gap-6">
+          <div className="grid gap-4 sm:grid-cols-2 md:gap-6">
             {[
               {
                 category: "Languages & Databases",
@@ -170,7 +200,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
                 <h3 className="font-semibold text-lg text-accent mb-3">
                   {skillGroup.category}
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 max-w-full">
                   {skillGroup.skills.map((skill, skillIndex) => (
                     <span
                       key={skillIndex}

@@ -2,22 +2,12 @@ import { siteMetadata } from "@/data/siteMetaData.mjs";
 import { NextSeo } from "next-seo";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import Image from 'next/image';
+import ResumeDisplay from "@/components/resume-display";
 
 export default function Resume() {
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 845);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
@@ -27,11 +17,6 @@ export default function Resume() {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const backgroundColor =
-    mounted && resolvedTheme === "dark"
-      ? "bg-black/20 backdrop-blur-lg"
-      : "bg-white/20 backdrop-blur-lg";
 
   if (!mounted) return null;
 
@@ -81,55 +66,8 @@ export default function Resume() {
               Download Resume
             </a>
           </div>
-          <div className="rmt mt-8 flex justify-center">
-            <div
-              className={`rmt flex items-center justify-center rounded-lg border border-accent/20 p-4 shadow-md transition-all duration-700 hover:shadow-lg hover:shadow-accent/20 ${backgroundColor} ${isVisible ? "opacity-100" : "opacity-0"}`}
-              style={{
-                maxWidth: "900px",
-                width: "95%",
-                minHeight: "600px",
-                display: !isMobile ? "flex" : "none",
-                padding: "3rem",
-              }}
-            >
-              <a
-                href={`/Nikunj_Resume.pdf`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open Resume in new tab"
-                className="block w-full h-full"
-              >
-                <Image
-                  src="/Nikunj_Resume.png"
-                  alt="Nikunj Khitha Resume"
-                  layout="responsive"
-                  width={900}
-                  height={600}
-                  className={`rounded-md transition-transform duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
-                />
-              </a>
-            </div>
-            {isMobile && (
-              <a
-                href={`/Nikunj_Resume.pdf`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open Resume in new tab"
-                className="block w-full h-full"
-              >
-                <Image
-                  src="/Nikunj_Resume.png"
-                  alt="Nikunj Khitha Resume"
-                  layout="responsive"
-                  width={900}
-                  height={600}
-                  className={`transition-transform duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
-                  style={{
-                    boxShadow: resolvedTheme === "light" ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
-                  }}
-                />
-              </a>
-            )}
+          <div className="rmt mt-8">
+            <ResumeDisplay />
           </div>
         </div>
       </section>

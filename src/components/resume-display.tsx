@@ -458,13 +458,13 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
               description: "Learn more about me"
             },
             {
-              href: "/",
+              href: "/#skills",
               icon: <Award size={20} />,
               label: "Skills",
               description: "Technical expertise"
             },
             {
-              href: "/about",
+              href: "/about#experience",
               icon: <Briefcase size={20} />,
               label: "Experience",
               description: "Professional journey"

@@ -117,7 +117,7 @@ export default function Home() {
       <FadeUp key="cta-title" duration={0.6} whileInView={true}>
       <section className="px-6 py-16 sm:px-14 md:px-20">
         <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-border bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5 p-6 backdrop-blur-lg shadow-lg ring-1 ring-accent/20 sm:p-8 md:p-12">
+          <div className="rounded-2xl border border-border bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5 p-6 backdrop-blur-lg shadow-lg ring-1 ring-accent/20 sm:p-8 md:p-12 mb-16 sm:mb-20">
 
                 <h2 className="text-center text-3xl font-bold text-accent sm:text-4xl md:text-5xl">
                   Let&apos;s Build Something Amazing

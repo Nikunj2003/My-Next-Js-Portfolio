@@ -6,30 +6,12 @@ import { useTheme } from "next-themes";
 import FadeUp from "@/animation/fade-up";
 
 export default function LandingHero() {
-  const [scrollY, setScrollY] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
-
-  let progress = 0;
-  const { current: elContainer } = ref;
-
-  if (elContainer) {
-    progress = Math.min(1, scrollY / elContainer.clientHeight);
-  }
-
-  const handleScroll = () => {
-    setScrollY(window.scrollY);
-  };
-
-  useEffect(() => {
-    document.addEventListener("scroll", handleScroll);
-
-    return () => document.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Determine the button text color based on the theme

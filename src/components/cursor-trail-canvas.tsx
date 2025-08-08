@@ -63,8 +63,8 @@ export function cursorTrail(props: CursorTrail) {
   const isMobile = window.innerWidth < 768; // Example breakpoint for mobile
   const AnimationFeature = {
     friction: 0.5,
-    trails: isMobile ? 20 : 40, // Fewer trails on mobile
-    size: isMobile ? 20 : 40, // Smaller size on mobile
+    trails: isMobile ? 8 : 16, // Fewer trails on mobile/desktop to improve perf
+    size: isMobile ? 16 : 24, // Smaller size for smoother rendering
     dampening: 0.2,
     tension: 0.98,
   };

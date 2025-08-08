@@ -1,4 +1,3 @@
-import { AnimatePresence } from "framer-motion";
 import SkillPill, { type SkillPillProps } from "@/components/skills/skills-pill";
 import FadeRight from "@/animation/fade-right";
 import { useScreenBreakpoint } from "@/hooks/useScreenBreakpoint";
@@ -27,7 +26,6 @@ export default function SkillsShowcase({ skills }: SkillsShowcaseProps) {
               </span>
               <div className="mt-3 flex flex-wrap gap-4 text-xl text-accent-foreground">
                 {section.skills.map((pill, index) => (
-                  <AnimatePresence key={`pill-${index}`}>
                     <FadeRight
                       key={`lang-${index}`}
                       duration={isMobileDebounced ? 0.2 : 0.4}
@@ -36,7 +34,6 @@ export default function SkillsShowcase({ skills }: SkillsShowcaseProps) {
                     >
                       <SkillPill {...pill} />
                     </FadeRight>
-                  </AnimatePresence>
                 ))}
               </div>
             </div>

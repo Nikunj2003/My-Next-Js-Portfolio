@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { AnimatePresence, AnimationProps, motion, wrap } from "framer-motion";
+import { AnimatePresence, AnimationProps, motion, wrap, useReducedMotion } from "framer-motion";
 import { BiSolidLeftArrow } from "react-icons/bi";
 
 import { classNames } from "@/utility/classNames";
@@ -38,6 +38,7 @@ export type CoroselProps = {
 
 export default function Corosel({ aspectRatio = 1, images }: CoroselProps) {
   const [[page, direction], setPage] = useState([0, 0]);
+  const prefersReducedMotion = useReducedMotion();
 
   const imageIndex = wrap(0, images.length, page);
 
@@ -59,14 +60,15 @@ export default function Corosel({ aspectRatio = 1, images }: CoroselProps) {
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
+          transition={prefersReducedMotion ? { opacity: { duration: 0.2 } } : {
+            x: { type: "spring", stiffness: 220, damping: 28 },
             opacity: { duration: 0.2 },
           }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={1}
           onDragEnd={(e, { offset, velocity }) => {
+            if (prefersReducedMotion) return;
             const swipe = swipePower(offset.x, velocity.x);
             if (swipe < -swipeConfidenceThreshold) {
               paginate(1);

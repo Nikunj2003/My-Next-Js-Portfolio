@@ -1,13 +1,12 @@
-import { FC, SVGProps, useEffect, useState } from "react";
+import { FC, SVGProps, useEffect, useState, memo } from "react";
 import { useTheme } from "next-themes";
-import { motion } from "framer-motion";
 
 export type SkillPillProps = {
   name: string;
   icon: FC<SVGProps<SVGSVGElement>>;
 };
 
-export default function SkillPill(props: SkillPillProps) {
+function SkillPillComponent(props: SkillPillProps) {
   const { name, icon: Icon } = props;
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -35,3 +34,5 @@ export default function SkillPill(props: SkillPillProps) {
     </div>
   );
 }
+
+export default memo(SkillPillComponent);

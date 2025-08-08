@@ -70,7 +70,8 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
                       width={640}
                       height={360}
                       className="h-full w-full object-cover transition-transform duration-500 dark:hidden group-hover:scale-[1.03]"
-                      unoptimized
+                      priority={false}
+                      loading="lazy"
                     />
                     {proj.image.DARK && (
                       <Image
@@ -79,7 +80,8 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
                         width={640}
                         height={360}
                         className="hidden h-full w-full object-cover transition-transform duration-500 dark:block group-hover:scale-[1.03]"
-                        unoptimized
+                        priority={false}
+                        loading="lazy"
                       />
                     )}
                   </div>

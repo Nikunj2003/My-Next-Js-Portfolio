@@ -7,6 +7,8 @@ import ProjectShowcase from "@/components/projects/project-showcase";
 import { PROJECT_SHOWCASE } from "@/data/projects";
 import { SKILLS_DATA } from "@/data/skills";
 import { siteMetadata } from "@/data/siteMetaData.mjs";
+import FadeUp from "@/animation/fade-up";
+import { AnimatePresence } from "framer-motion";
 
 export default function Home() {
   return (
@@ -48,9 +50,97 @@ export default function Home() {
           />
         )}
       </Head>
+      
+      {/* Enhanced Hero Section */}
       <LandingHero />
+      
+      {/* About Summary Section */}
+      <section className="px-6 py-16 sm:px-14 md:px-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-2xl border border-border bg-muted/20 p-6 backdrop-blur-lg shadow-lg ring-1 ring-zinc-200/50 dark:ring-accent/20 sm:p-8 md:p-12">
+            <AnimatePresence>
+              <FadeUp key="about-title" duration={0.6}>
+                <h2 className="text-3xl font-bold text-accent sm:text-4xl md:text-5xl">
+                  About Me
+                </h2>
+              </FadeUp>
+              <FadeUp key="about-description" duration={0.6} delay={0.2}>
+                <p className="mt-6 text-lg font-medium leading-relaxed text-zinc-900 dark:text-zinc-300 sm:text-xl">
+                  I&apos;m a passionate software engineer who specializes in building intelligent, 
+                  end-to-end solutions at the intersection of{" "}
+                  <span className="text-accent font-semibold">AI and automation</span>. 
+                  With expertise spanning from enterprise-grade testing frameworks with Spring Boot 
+                  to sophisticated AI agents using AWS Bedrock, Azure AI, and Crew AI.
+                </p>
+              </FadeUp>
+              <FadeUp key="about-highlights" duration={0.6} delay={0.4}>
+                <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="rounded-lg bg-accent/10 p-4 backdrop-blur-sm">
+                    <h3 className="font-semibold text-accent">Full Stack Development</h3>
+                    <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
+                      MERN Stack, Next.js, Flutter, and modern web technologies
+                    </p>
+                  </div>
+                  <div className="rounded-lg bg-accent/10 p-4 backdrop-blur-sm">
+                    <h3 className="font-semibold text-accent">AI & Machine Learning</h3>
+                    <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
+                      Azure AI, OpenAI, LangChain, and intelligent automation
+                    </p>
+                  </div>
+                  <div className="rounded-lg bg-accent/10 p-4 backdrop-blur-sm sm:col-span-2 lg:col-span-1">
+                    <h3 className="font-semibold text-accent">DevOps & Cloud</h3>
+                    <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
+                      CI/CD pipelines, Docker, Kubernetes, and Azure services
+                    </p>
+                  </div>
+                </div>
+              </FadeUp>
+            </AnimatePresence>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section with Enhanced Styling */}
       <SkillsShowcase skills={SKILLS_DATA} />
+      
+      {/* Featured Projects Section */}
       <ProjectShowcase projects={PROJECT_SHOWCASE} />
+      
+      {/* Call to Action Section */}
+      <section className="px-6 py-16 sm:px-14 md:px-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-2xl border border-border bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5 p-6 backdrop-blur-lg shadow-lg ring-1 ring-accent/20 sm:p-8 md:p-12">
+            <AnimatePresence>
+              <FadeUp key="cta-title" duration={0.6}>
+                <h2 className="text-center text-3xl font-bold text-accent sm:text-4xl md:text-5xl">
+                  Let&apos;s Build Something Amazing
+                </h2>
+              </FadeUp>
+              <FadeUp key="cta-description" duration={0.6} delay={0.2}>
+                <p className="mt-6 text-center text-lg font-medium text-zinc-900 dark:text-zinc-300 sm:text-xl">
+                  Ready to transform your ideas into reality? Let&apos;s collaborate on your next project.
+                </p>
+              </FadeUp>
+              <FadeUp key="cta-buttons" duration={0.6} delay={0.4}>
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
+                  <a
+                    href="/projects"
+                    className="rounded-full bg-accent px-8 py-3 text-center text-lg font-semibold text-white transition-all duration-300 hover:bg-accent-light hover:scale-105 active:scale-95"
+                  >
+                    View My Work
+                  </a>
+                  <a
+                    href="/about"
+                    className="rounded-full border-2 border-accent px-8 py-3 text-center text-lg font-semibold text-accent transition-all duration-300 hover:bg-accent hover:text-white hover:scale-105 active:scale-95"
+                  >
+                    Learn More About Me
+                  </a>
+                </div>
+              </FadeUp>
+            </AnimatePresence>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

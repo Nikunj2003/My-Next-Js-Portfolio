@@ -37,11 +37,7 @@ export default function LandingHero() {
     mounted && resolvedTheme === "dark" ? "text-black" : "text-white";
 
   return (
-    <motion.section
-      animate={{
-        transform: `translateY(${progress * 20}vh)`,
-      }}
-      transition={{ type: "spring", stiffness: 100 }}
+    <section
       ref={ref}
       className="pointer-events-auto relative flex h-[calc(100vh-112px)] items-center overflow-hidden px-6 sm:px-14 md:px-20"
     >
@@ -154,6 +150,6 @@ export default function LandingHero() {
           </AnimatePresence>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

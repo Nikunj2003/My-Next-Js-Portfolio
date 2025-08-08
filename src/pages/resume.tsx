@@ -81,55 +81,8 @@ export default function Resume() {
               Download Resume
             </a>
           </div>
-          <div className="rmt mt-8 flex justify-center">
-            <div
-              className={`rmt flex items-center justify-center rounded-lg border border-accent/20 p-4 shadow-md transition-all duration-700 hover:shadow-lg hover:shadow-accent/20 ${backgroundColor} ${isVisible ? "opacity-100" : "opacity-0"}`}
-              style={{
-                maxWidth: "900px",
-                width: "95%",
-                minHeight: "600px",
-                display: !isMobile ? "flex" : "none",
-                padding: "3rem",
-              }}
-            >
-              <a
-                href={`/Nikunj_Resume.pdf`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open Resume in new tab"
-                className="block w-full h-full"
-              >
-                <Image
-                  src="/Nikunj_Resume.png"
-                  alt="Nikunj Khitha Resume"
-                  layout="responsive"
-                  width={900}
-                  height={600}
-                  className={`rounded-md transition-transform duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
-                />
-              </a>
-            </div>
-            {isMobile && (
-              <a
-                href={`/Nikunj_Resume.pdf`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open Resume in new tab"
-                className="block w-full h-full"
-              >
-                <Image
-                  src="/Nikunj_Resume.png"
-                  alt="Nikunj Khitha Resume"
-                  layout="responsive"
-                  width={900}
-                  height={600}
-                  className={`transition-transform duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
-                  style={{
-                    boxShadow: resolvedTheme === "light" ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
-                  }}
-                />
-              </a>
-            )}
+          <div className="rmt mt-8">
+            <ResumeDisplay />
           </div>
         </div>
       </section>

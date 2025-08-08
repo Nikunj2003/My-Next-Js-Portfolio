@@ -105,7 +105,7 @@ export default function LandingHero() {
               </div>
             </FadeUp>
             
-            <FadeUp key="cta-buttons" duration={0.6} delay={0.6} whileInView={true}>
+            <FadeUp key="cta-buttons" duration={0.6} delay={0.6}>
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
                 <Link href="/projects">
                   <button

@@ -47,6 +47,42 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
 
   if (!mounted) return null;
 
+  // Subtle animation variants - only animate once on load
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const staggerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <FadeUp duration={0.6} delay={0.1} whileInView={true}>
       <div className={`${backgroundColor} border border-accent/20 rounded-2xl shadow-xl shadow-accent/10 p-6 md:p-8 lg:p-10 max-w-5xl mx-auto ${className}`}>

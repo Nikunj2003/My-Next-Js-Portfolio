@@ -2,6 +2,7 @@ import { NextSeo } from "next-seo";
 
 import ProjectCard from "@/components/projects/project-card";
 import { PROJECTS_CARD } from "@/data/projects";
+import SectionDivider from "@/components/section-divider";
 import { siteMetadata } from "@/data/siteMetaData.mjs";
 
 export default function Projects() {
@@ -51,6 +52,9 @@ export default function Projects() {
               <ProjectCard key={index} {...card} />
             ))}
           </div>
+
+          <SectionDivider />
+
           <div className="mx-auto mt-16 max-w-5xl text-center text-foreground md:mt-28">
             <p className="mt-10 text-base md:text-xl">
               Visit my GitHub to see some of the latest projects{" "}

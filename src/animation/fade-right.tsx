@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export interface FadeRightProps {
   children: ReactNode;
@@ -17,20 +17,27 @@ export default function FadeRight({
   className,
   whileInView = false,
 }: FadeRightProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   const animation = {
     opacity: 1,
     x: 0,
     transition: {
       duration,
-      ease: "easeInOut",
+      ease: "easeOut",
       delay,
     },
-  };
+  } as const;
+
+  const initial = prefersReducedMotion ? { opacity: 0 } : { x: -100, opacity: 0 };
+  const animate = prefersReducedMotion ? { opacity: 1 } : animation;
+
   return (
     <motion.div
-      initial={{ x: -100, opacity: 0 }}
-      whileInView={whileInView ? animation : undefined}
-      animate={!whileInView ? animation : undefined}
+      initial={initial}
+      whileInView={whileInView ? animate : {}}
+      animate={!whileInView ? animate : {}}
+      viewport={{ once: true, amount: 0.25 }}
       className={className}
     >
       {children}

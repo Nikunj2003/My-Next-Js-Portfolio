@@ -3,6 +3,7 @@ import { NextSeo } from "next-seo";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import ResumeDisplay from "@/components/resume-display";
+import SectionDivider from "@/components/section-divider";
 
 export default function Resume() {
   const [isVisible, setIsVisible] = useState(false);
@@ -69,6 +70,8 @@ export default function Resume() {
           <div className="rmt mt-8">
             <ResumeDisplay />
           </div>
+
+          <SectionDivider />
         </div>
       </section>
       <style jsx>{`

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export interface FadeUpProps {
   children: ReactNode;
@@ -15,20 +15,25 @@ export default function FadeUp({
   delay,
   whileInView = false,
 }: FadeUpProps) {
+  const prefersReducedMotion = useReducedMotion();
   const animation = {
     opacity: 1,
     y: 0,
     transition: {
       duration,
-      ease: "easeInOut",
+      ease: "easeOut",
       delay,
     },
-  };
+  } as const;
+
+  const initial = prefersReducedMotion ? { opacity: 0 } : { y: 80, opacity: 0 };
+  const animate = prefersReducedMotion ? { opacity: 1 } : animation;
   return (
     <motion.div
-      initial={{ y: 200, opacity: 0 }}
-      whileInView={whileInView ? animation : {}}
-      animate={!whileInView ? animation : {}}
+      initial={initial}
+      whileInView={whileInView ? animate : {}}
+      animate={!whileInView ? animate : {}}
+      viewport={{ once: true, amount: 0.25 }}
     >
       {children}
     </motion.div>

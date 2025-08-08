@@ -69,12 +69,10 @@ export default function ExperienceShowcaseListItem(
     <li ref={ref} className="mx-auto mb-14 flex w-[60%] flex-col gap-1">
       <ShowCaseLiIcon iconRef={ref} />
       <motion.div
-        initial={{ y: 50 }}
-        whileInView={{ y: 0 }}
-        transition={{
-          type: "spring",
-          duration: 0.4,
-        }}
+        initial={{ y: 50, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ ease: "easeOut", duration: 0.4 }}
         className={`rounded-lg border border-accent/20 p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 ${backgroundColor}`}
       >
         <h3 className="text-base font-bold text-foreground sm:text-xl md:text-2xl">

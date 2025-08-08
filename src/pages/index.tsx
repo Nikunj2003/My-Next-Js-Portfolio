@@ -9,6 +9,7 @@ import { SKILLS_DATA } from "@/data/skills";
 import { siteMetadata } from "@/data/siteMetaData.mjs";
 import FadeUp from "@/animation/fade-up";
 import { AnimatePresence } from "framer-motion";
+import SectionDivider from "@/components/section-divider";
 
 export default function Home() {
   return (
@@ -53,6 +54,8 @@ export default function Home() {
       
       {/* Enhanced Hero Section */}
       <LandingHero />
+
+      <SectionDivider />
       
       {/* About Summary Section */}
       <AnimatePresence>
@@ -97,11 +100,17 @@ export default function Home() {
         </FadeUp>
     </AnimatePresence>
 
+     <SectionDivider />
+
       {/* Skills Section with Enhanced Styling */}
       <SkillsShowcase skills={SKILLS_DATA} />
+
+      <SectionDivider />
       
       {/* Featured Projects Section */}
       <ProjectShowcase projects={PROJECT_SHOWCASE} />
+
+      <SectionDivider />
       
       {/* Call to Action Section */}
     <AnimatePresence>

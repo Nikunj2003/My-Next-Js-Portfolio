@@ -37,10 +37,8 @@ export default function ProjectCard(props: ProjectCardProps) {
     <motion.div
       initial={{ y: 80, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
-      transition={{
-        type: "spring",
-        duration: 0.4,
-      }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ ease: "easeOut", duration: 0.4 }}
       className={`w-full overflow-hidden rounded-lg border border-accent/20 shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-1 ${backgroundColor}`}
     >
       <Corosel images={props.imageUrl} aspectRatio={1.9} />

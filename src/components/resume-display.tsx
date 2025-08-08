@@ -97,10 +97,11 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
         animate="animate"
         className="mb-8"
       >
-        <motion.h2 
+        <motion.h2
           variants={fadeInUp}
-          className="text-2xl md:text-3xl font-bold text-accent mb-6"
+          className="text-2xl md:text-3xl font-bold text-accent mb-6 flex items-center gap-3"
         >
+          <Code className="text-accent" size={32} />
           Technical Skills
         </motion.h2>
         
@@ -161,10 +162,11 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
         animate="animate"
         className="mb-8"
       >
-        <motion.h2 
+        <motion.h2
           variants={fadeInUp}
-          className="text-2xl md:text-3xl font-bold text-accent mb-6"
+          className="text-2xl md:text-3xl font-bold text-accent mb-6 flex items-center gap-3"
         >
+          <Briefcase className="text-accent" size={32} />
           Professional Experience
         </motion.h2>
         
@@ -211,21 +213,28 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
             <motion.div
               key={index}
               variants={fadeInUp}
-              className={`${sectionBackgroundColor} rounded-xl p-5 md:p-6 border border-accent/10`}
+              className={`${sectionBackgroundColor} rounded-xl p-6 md:p-8 border border-accent/10 hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10`}
             >
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
-                <div>
-                  <h3 className="text-xl font-bold text-foreground">{job.company}</h3>
-                  <p className="text-lg font-semibold text-accent">{job.role}</p>
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center flex-shrink-0">
+                  <Briefcase className="text-accent" size={20} />
                 </div>
-                <div className="flex flex-col md:items-end text-sm text-muted-foreground mt-2 md:mt-0">
-                  <div className="flex items-center gap-1">
-                    <Calendar size={14} />
-                    <span>{job.period}</span>
-                  </div>
-                  <div className="flex items-center gap-1 mt-1">
-                    <MapPin size={14} />
-                    <span>{job.location}</span>
+                <div className="flex-1">
+                  <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start">
+                    <div>
+                      <h3 className="text-xl font-bold text-foreground mb-1">{job.company}</h3>
+                      <p className="text-lg font-semibold text-accent mb-2">{job.role}</p>
+                    </div>
+                    <div className="flex flex-col lg:items-end text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1 bg-accent/10 px-3 py-1 rounded-full mb-1">
+                        <Calendar size={12} />
+                        <span className="font-medium">{job.period}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MapPin size={12} />
+                        <span>{job.location}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -248,11 +257,12 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
         animate="animate"
         className="mb-8"
       >
-        <motion.h2 
+        <motion.h2
           variants={fadeInUp}
-          className="text-2xl md:text-3xl font-bold text-accent mb-6"
+          className="text-2xl md:text-3xl font-bold text-accent mb-6 flex items-center gap-3"
         >
-          Projects
+          <ExternalLink className="text-accent" size={32} />
+          Featured Projects
         </motion.h2>
         
         <div className="space-y-6">
@@ -277,15 +287,26 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
             <motion.div
               key={index}
               variants={fadeInUp}
-              className={`${sectionBackgroundColor} rounded-xl p-5 md:p-6 border border-accent/10`}
+              className={`${sectionBackgroundColor} rounded-xl p-6 md:p-8 border border-accent/10 hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 group cursor-pointer`}
             >
-              <div className="flex items-start justify-between mb-3">
-                <h3 className="text-xl font-bold text-accent">{project.name}</h3>
-                <ExternalLink size={18} className="text-accent mt-1" />
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center flex-shrink-0">
+                  <Code className="text-accent" size={20} />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-start justify-between">
+                    <h3 className="text-xl font-bold text-accent group-hover:text-accent-light transition-colors">{project.name}</h3>
+                    <ExternalLink size={18} className="text-accent mt-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
               </div>
-              <p className="text-sm font-medium text-muted-foreground mb-4 italic">
-                {project.technologies}
-              </p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.technologies.split(", ").map((tech, techIndex) => (
+                  <span key={techIndex} className="bg-accent/10 text-accent px-2 py-1 rounded-md text-xs font-medium border border-accent/20">
+                    {tech}
+                  </span>
+                ))}
+              </div>
               <ul className="space-y-2">
                 {project.achievements.map((achievement, achievementIndex) => (
                   <li key={achievementIndex} className="text-muted-foreground leading-relaxed">

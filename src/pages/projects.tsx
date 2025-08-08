@@ -39,18 +39,19 @@ export default function Projects() {
       />
       <section className="mx-auto mb-40 mt-6 w-full gap-20 px-6 sm:mt-12 sm:px-14 md:px-20">
         <div className="mx-auto max-w-7xl">
-          <h1 className="text-2xl font-semibold text-foreground md:text-4xl">
-            Projects
-          </h1>
-          <div className="my-2">
-            <span className="text-sm text-muted-foreground">
-              Here are some of the projects I’ve worked on
-            </span>
-          </div>
-          <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-2">
-            {PROJECTS_CARD.map((card, index) => (
-              <ProjectCard key={index} {...card} />
-            ))}
+          <div className="rounded-2xl border border-border bg-muted/20 p-6 backdrop-blur-lg shadow-lg ring-1 ring-zinc-200/50 dark:ring-accent/20 sm:p-8 md:p-12">
+            <div className="mb-6 flex flex-col items-center justify-between gap-3 sm:mb-8 sm:flex-row">
+              <h1 className="bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
+                Projects
+              </h1>
+              <span className="text-sm text-muted-foreground">Curated work showcasing engineering, AI, and product craft</span>
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 gap-6 sm:mt-6 sm:grid-cols-2 lg:grid-cols-2">
+              {PROJECTS_CARD.map((card, index) => (
+                <ProjectCard key={index} {...card} />
+              ))}
+            </div>
           </div>
 
           <SectionDivider />

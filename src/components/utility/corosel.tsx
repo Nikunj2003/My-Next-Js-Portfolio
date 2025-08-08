@@ -52,6 +52,9 @@ export default function Corosel({ aspectRatio = 1, images }: CoroselProps) {
         <motion.img
           key={page}
           loading="lazy"
+          decoding="async"
+          draggable={false}
+          alt={`Project image ${imageIndex + 1}`}
           className="h-full w-full bg-cover"
           style={{ aspectRatio }}
           src={images[imageIndex]}

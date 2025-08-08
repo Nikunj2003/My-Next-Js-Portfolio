@@ -72,7 +72,7 @@ export default function LandingHero() {
             <FadeUp key="stats" duration={0.6} delay={0.4} whileInView={true}>
               <div className="mt-8 grid max-w-lg grid-cols-2 gap-4 sm:grid-cols-3">
                 <div className="rounded-lg border border-accent/20 bg-white/10 p-4 backdrop-blur-sm">
-                  <div className="text-2xl font-bold text-accent">5+</div>
+                  <div className="text-2xl font-bold text-accent">1+</div>
                   <div className="text-sm text-zinc-600 dark:text-zinc-400">Years Experience</div>
                 </div>
                 <div className="rounded-lg border border-accent/20 bg-white/10 p-4 backdrop-blur-sm">

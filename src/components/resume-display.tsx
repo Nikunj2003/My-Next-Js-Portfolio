@@ -469,26 +469,29 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
               description: "Professional journey"
             }
           ].map((link, index) => (
-            <motion.a
+            <motion.div
               key={link.href}
-              href={link.href}
               variants={fadeInUp}
-              className={`${sectionBackgroundColor} rounded-xl p-4 border border-accent/10 hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 hover:scale-105 group block`}
             >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-all duration-300">
-                  {link.icon}
+              <Link
+                href={link.href}
+                className={`${sectionBackgroundColor} rounded-xl p-4 border border-accent/10 hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 hover:scale-105 group block`}
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-all duration-300">
+                    {link.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors">
+                      {link.label}
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      {link.description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors">
-                    {link.label}
-                  </h3>
-                  <p className="text-xs text-muted-foreground">
-                    {link.description}
-                  </p>
-                </div>
-              </div>
-            </motion.a>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </motion.section>

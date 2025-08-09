@@ -11,9 +11,9 @@ export default function PageTransitionAnimation() {
         animate={{ clipPath: "circle(100% at 50% 50%)" }}
         exit={{ clipPath: "circle(0% at 50% 50%)" }}
         transition={{
-          duration: 1.0,
+          duration: 0.6,
           ease: [0.76, 0, 0.24, 1],
-          clipPath: { duration: 1.2 }
+          clipPath: { duration: 0.8 }
         }}
       >
         {/* Central Star Logo */}
@@ -23,12 +23,12 @@ export default function PageTransitionAnimation() {
           animate={{ scale: 1, rotate: 0, opacity: 1 }}
           exit={{ scale: 0, rotate: 180, opacity: 0 }}
           transition={{
-            delay: 0.3,
-            duration: 0.8,
+            delay: 0.1,
+            duration: 0.5,
             ease: [0.76, 0, 0.24, 1],
             type: "spring",
-            stiffness: 100,
-            damping: 15
+            stiffness: 120,
+            damping: 12
           }}
         >
           <motion.div
@@ -58,7 +58,7 @@ export default function PageTransitionAnimation() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
         >
           {[...Array(3)].map((_, i) => (
             <motion.div
@@ -88,7 +88,7 @@ export default function PageTransitionAnimation() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
+          transition={{ delay: 0.25, duration: 0.3 }}
         >
           {[...Array(12)].map((_, i) => {
             const angle = (i * 30) * (Math.PI / 180);
@@ -129,8 +129,8 @@ export default function PageTransitionAnimation() {
         animate={{ clipPath: "circle(120% at 30% 70%)" }}
         exit={{ clipPath: "circle(0% at 30% 70%)" }}
         transition={{
-          delay: 0.1,
-          duration: 1.1,
+          delay: 0.05,
+          duration: 0.7,
           ease: [0.76, 0, 0.24, 1]
         }}
       />
@@ -142,8 +142,8 @@ export default function PageTransitionAnimation() {
         animate={{ clipPath: "circle(130% at 70% 30%)" }}
         exit={{ clipPath: "circle(0% at 70% 30%)" }}
         transition={{
-          delay: 0.2,
-          duration: 1.2,
+          delay: 0.1,
+          duration: 0.8,
           ease: [0.76, 0, 0.24, 1]
         }}
       />

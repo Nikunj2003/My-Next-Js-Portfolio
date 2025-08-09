@@ -49,7 +49,7 @@ export default function App({ Component, pageProps }: AppProps) {
       // Add a small delay to ensure the transition completes
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 1200); // Matches the transition duration
+      }, 800); // Matches the faster transition duration
     };
 
     router.events.on('routeChangeStart', handleRouteChangeStart);

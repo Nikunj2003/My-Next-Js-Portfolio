@@ -13,13 +13,13 @@ export default function WelcomeScreen() {
   ];
 
   useEffect(() => {
-    // Check if user has visited before
-    const hasVisited = localStorage.getItem("hasVisitedPortfolio");
+    // Always show welcome screen for now (for testing - can be changed later)
+    // const hasVisited = localStorage.getItem("hasVisitedPortfolio");
 
-    if (!hasVisited) {
+    // if (!hasVisited) {
       setIsVisible(true);
-      localStorage.setItem("hasVisitedPortfolio", "true");
-    }
+    //   localStorage.setItem("hasVisitedPortfolio", "true");
+    // }
   }, []);
 
   useEffect(() => {
@@ -28,6 +28,7 @@ export default function WelcomeScreen() {
     const handleScroll = () => {
       if (window.scrollY > 50) {
         setIsVisible(false);
+        localStorage.setItem("hasVisitedPortfolio", "true");
       }
     };
 
@@ -50,6 +51,7 @@ export default function WelcomeScreen() {
 
   const handleClose = () => {
     setIsVisible(false);
+    localStorage.setItem("hasVisitedPortfolio", "true");
   };
 
   const containerVariants = {

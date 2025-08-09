@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "next-themes";
 import { AnimatePresence, motion } from "framer-motion";
@@ -37,6 +38,30 @@ const pageTransition = {
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    const handleRouteChangeStart = () => {
+      setIsTransitioning(true);
+    };
+
+    const handleRouteChangeComplete = () => {
+      // Add a small delay to ensure the transition completes
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 1200); // Matches the transition duration
+    };
+
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+    router.events.on('routeChangeError', handleRouteChangeComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+      router.events.off('routeChangeComplete', handleRouteChangeComplete);
+      router.events.off('routeChangeError', handleRouteChangeComplete);
+    };
+  }, [router]);
 
   return (
     <>
@@ -60,10 +85,10 @@ export default function App({ Component, pageProps }: AppProps) {
               <Component {...pageProps} />
             </motion.div>
           </AnimatePresence>
-          
-          {/* Page transition overlay */}
-          <AnimatePresence mode="wait">
-            <PageTransitionAnimation key={router.asPath} />
+
+          {/* Page transition overlay - only show when transitioning */}
+          <AnimatePresence>
+            {isTransitioning && <PageTransitionAnimation />}
           </AnimatePresence>
         </MainLayout>
       </ThemeProvider>

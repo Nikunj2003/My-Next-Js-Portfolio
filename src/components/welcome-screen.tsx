@@ -15,12 +15,28 @@ export default function WelcomeScreen() {
   useEffect(() => {
     // Check if user has visited before
     const hasVisited = localStorage.getItem("hasVisitedPortfolio");
-    
+
     if (!hasVisited) {
       setIsVisible(true);
       localStorage.setItem("hasVisitedPortfolio", "true");
     }
   }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isVisible]);
 
   useEffect(() => {
     if (isVisible) {

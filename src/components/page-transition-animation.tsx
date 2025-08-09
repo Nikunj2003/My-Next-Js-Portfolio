@@ -93,8 +93,8 @@ export default function PageTransitionAnimation() {
           {[...Array(12)].map((_, i) => {
             const angle = (i * 30) * (Math.PI / 180);
             const radius = 150;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
+            const x = Math.round(Math.cos(angle) * radius * 100) / 100; // Round to 2 decimal places
+            const y = Math.round(Math.sin(angle) * radius * 100) / 100; // Round to 2 decimal places
 
             return (
               <motion.div

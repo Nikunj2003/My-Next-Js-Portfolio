@@ -5,7 +5,7 @@ export const siteMetadata = {
   description: "Software Development Engineer",
   language: "en-us",
   theme: "light",
-  siteName: "https://nikunj.tech/",
+  siteName: "Nikunj Khitha",
   siteUrl: "https://nikunj.tech",
   siteRepo: "https://github.com/Nikunj2003/My-Next-Js-Portfolio",
   siteLogo: "/favicon.ico",

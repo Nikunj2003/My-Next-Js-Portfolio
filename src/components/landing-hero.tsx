@@ -88,24 +88,24 @@ export default function LandingHero() {
 
             <FadeUp key="cta-buttons" duration={0.6} delay={0.6}>
               <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row">
-                <Link href="/projects">
-                  <button
-                    className={`group relative overflow-hidden rounded-full bg-accent px-7 py-3 text-base font-semibold ${buttonTextColor} transition-all duration-300 hover:scale-105 hover:bg-accent-light active:scale-95 sm:px-8 sm:py-4 sm:text-lg`}
-                  >
-                    <span className="relative z-10">View My Work</span>
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-accent-light to-accent"
-                      initial={{ x: "-100%" }}
-                      whileHover={{ x: "0%" }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </button>
+                <Link
+                  href="/projects"
+                  className={`group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-accent px-7 py-3 text-base font-semibold ${buttonTextColor} transition-all duration-300 hover:scale-105 hover:bg-accent-light active:scale-95 sm:px-8 sm:py-4 sm:text-lg`}
+                >
+                  <span className="relative z-10">View My Work</span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-accent-light to-accent"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "0%" }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </Link>
 
-                <Link href="/about">
-                  <button className="rounded-full border-2 border-accent bg-accent/10 px-7 py-3 text-base font-semibold text-accent backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-accent hover:text-white active:scale-95 sm:px-8 sm:py-4 sm:text-lg">
-                    Learn More
-                  </button>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center justify-center rounded-full border-2 border-accent bg-accent/10 px-7 py-3 text-base font-semibold text-accent backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-accent hover:text-white active:scale-95 sm:px-8 sm:py-4 sm:text-lg"
+                >
+                  Learn More
                 </Link>
               </div>
             </FadeUp>

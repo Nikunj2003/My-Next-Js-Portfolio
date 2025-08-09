@@ -78,11 +78,12 @@ function AppContent({ Component, pageProps }: AppProps) {
   return (
     <>
       {/* Cursor trail effect - only render on desktop for performance */}
-      {typeof window !== 'undefined' && window.innerWidth >= 1024 ? (
+      {typeof window !== 'undefined' && window.innerWidth >= 1024 && !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? (
         <CursorTrailCanvas className="pointer-events-none fixed inset-0 -z-10 h-full w-full" />
       ) : null}
 
-      <ThemeProvider attribute="class" defaultTheme="light">
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+
         <MainLayout onWelcomeFinished={() => setAnimationsReady(true)}>
           <AnimatePresence mode="wait" initial={false} onExitComplete={() => setAnimationsReady(true)}>
             <motion.div

@@ -24,7 +24,7 @@ export default function Resume() {
   return (
     <>
       <NextSeo
-        title="Resume of Nikunj Khitha - FullStack & AI Developer"
+        title="Resume of Nikunj Khitha - Software Development Engineer"
         description="Download the resume of Nikunj Khitha, an AI Specialist and FullStack Developer with expertise in MERN Stack, Flutter, DevOps, Azure AI, Microservices, Cloud, and Web App development."
         canonical={`${siteMetadata.siteUrl}/resume`}
         openGraph={{

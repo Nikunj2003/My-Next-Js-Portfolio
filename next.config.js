@@ -10,6 +10,16 @@ const nextConfig = withBundleAnalyzer({
   images: {
     domains: ["flagcdn.com"],
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*\\.(png|jpg|jpeg|webp|avif|svg|ico|woff2)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+    ];
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/i,

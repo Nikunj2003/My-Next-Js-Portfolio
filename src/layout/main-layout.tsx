@@ -21,9 +21,16 @@ export default function MainLayout(props: MainLayoutProps) {
   return (
     <>
       <WelcomeScreen onFinished={props.onWelcomeFinished} />
+      {/* Skip to content link for accessibility */}
+      <a
+        href="#content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-foreground"
+      >
+        Skip to content
+      </a>
       <div className={classNames("min-h-screen", montserrat.className)}>
         <Navbar routes={routes} />
-        <main>{props.children}</main>
+        <main id="content">{props.children}</main>
       </div>
       <Footer />
     </>

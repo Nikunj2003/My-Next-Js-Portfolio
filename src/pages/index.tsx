@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <>
       <NextSeo
-        title="Nikunj Khitha - FullStack & AI Developer"
+        title="Nikunj Khitha - Software Development Engineer"
         description="Explore the portfolio of Nikunj Khitha, an innovative AI Specialist and Full Stack Developer. Discover projects showcasing expertise in Next.js, MERN Stack, Flutter, DevOps, Azure AI, and microservices, all designed to enhance user experiences on web and mobile applications."
         canonical={siteMetadata.siteUrl}
         openGraph={{
@@ -50,6 +50,37 @@ export default function Home() {
             content={siteMetadata.googleSiteVerification}
           />
         )}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: siteMetadata.siteName,
+              url: siteMetadata.siteUrl,
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: `${siteMetadata.siteUrl}/?q={search_term_string}`,
+                'query-input': 'required name=search_term_string',
+              },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: siteMetadata.author,
+              url: siteMetadata.siteUrl,
+              sameAs: [siteMetadata.github, siteMetadata.linkedin],
+              jobTitle: siteMetadata.description,
+              image: `${siteMetadata.siteUrl}${siteMetadata.image}`,
+              email: siteMetadata.email,
+            }),
+          }}
+        />
       </Head>
       
       {/* Enhanced Hero Section */}

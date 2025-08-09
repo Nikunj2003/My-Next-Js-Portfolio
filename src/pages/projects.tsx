@@ -9,7 +9,7 @@ export default function Projects() {
   return (
     <>
       <NextSeo
-        title="Projects by Nikunj Khitha - FullStack & AI Developer"
+        title="Projects by Nikunj Khitha - Software Development Engineer"
         description="Explore a diverse collection of projects by Nikunj Khitha, an AI Specialist and Full Stack Developer. Discover innovative AI-driven solutions, responsive web applications, and seamless user interfaces showcasing skills in MERN Stack, DevOps, Azure AI, microservices, and Flutter mobile app development."
         canonical={`${siteMetadata.siteUrl}/projects`}
         openGraph={{

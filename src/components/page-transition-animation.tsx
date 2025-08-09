@@ -1,7 +1,9 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
 export default function PageTransitionAnimation() {
+  const prefersReducedMotion = useReducedMotion();
+  if (prefersReducedMotion) return null;
   return (
     <>
       {/* Full screen overlay - covers entire viewport */}

@@ -16,6 +16,8 @@ export const mailValidationSchema = Yup.object({
   name: Yup.string().required("Name required"),
   subject: Yup.string().required("Subject required"),
   message: Yup.string().required("Message required"),
+  // Honeypot: must remain empty; bots filling it will fail validation
+  website: Yup.string().max(0),
 });
 
 export type ContactFormValues = Yup.InferType<typeof mailValidationSchema>;
@@ -25,6 +27,7 @@ const initialFormValues: ContactFormValues = {
   name: "",
   message: "",
   subject: "",
+  website: "", // honeypot
 };
 
 export default function ContactForm() {
@@ -74,6 +77,11 @@ export default function ContactForm() {
       >
         {({ isValid }) => (
           <Form className="mt-8 flex flex-col gap-6">
+            {/* Hidden honeypot field for spam mitigation */}
+            <div className="hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <Field id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+            </div>
             {/** Email Field */}
             <div className="flex flex-col gap-2">
               <label

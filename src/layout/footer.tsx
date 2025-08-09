@@ -1,5 +1,6 @@
 import { GithubIcon, LinkedinIcon, MailIcon } from "@/components/icons";
 import { siteMetadata } from "@/data/siteMetaData.mjs";
+import Link from "next/link";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -65,13 +66,13 @@ export default function Footer() {
               <h4 className="text-lg font-semibold text-foreground">Quick Links</h4>
               <nav className="flex flex-col space-y-3">
                 {quickLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.href}
                     href={link.href}
                     className="inline-flex items-center text-muted-foreground transition-colors duration-200 hover:text-accent"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>

@@ -21,7 +21,7 @@ export default function LandingHero() {
   return (
     <section
       ref={ref}
-      className="pointer-events-auto relative flex min-h-[calc(100vh-80px)] items-center px-6 sm:px-14 md:px-20"
+      className="pointer-events-auto relative flex min-h-[calc(100vh-80px)] items-center sm:-mt-8 md:-mt-14 px-6 sm:px-14 md:px-20"
     >
       {/* Background gradient effects */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -29,7 +29,7 @@ export default function LandingHero() {
         <div className="absolute bottom-1/4 right-1/4 h-72 w-72 rounded-full bg-accent/10 blur-3xl sm:h-96 sm:w-96"></div>
       </div>
 
-      <div className="w-full pt-6 sm:pt-0">
+      <div className="w-full sm:pt-0">
         <div className="mx-auto max-w-7xl">
           <AnimatePresence>
             <FadeUp key="title-main" duration={0.6} whileInView={true}>
@@ -110,7 +110,6 @@ export default function LandingHero() {
               </div>
             </FadeUp>
 
-            <FadeUp key="scroll-indicator" duration={0.6} delay={0.8}>
               <motion.div
                 className="absolute bottom-6 left-1/2 -translate-x-1/2 transform sm:bottom-8 sm:block"
                 animate={{ y: [0, 10, 0] }}
@@ -127,7 +126,6 @@ export default function LandingHero() {
                   </div>
                 </div>
               </motion.div>
-            </FadeUp>
           </AnimatePresence>
         </div>
       </div>

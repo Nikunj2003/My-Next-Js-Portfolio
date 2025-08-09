@@ -34,7 +34,7 @@ export default function PageTransitionAnimation() {
           <motion.svg
             width="100%"
             height="100%"
-            viewBox="0 0 100 100"
+            viewBox="0 0 120 100"
             className="fill-background drop-shadow-lg"
             xmlns="http://www.w3.org/2000/svg"
             animate={{
@@ -50,11 +50,44 @@ export default function PageTransitionAnimation() {
               repeatType: "reverse"
             }}
           >
-            {/* Stylish NK Logo */}
-            {/* N Letter */}
-            <path d="M10 15 L10 85 L20 85 L20 45 L35 85 L45 85 L45 15 L35 15 L35 55 L20 15 Z" />
-            {/* K Letter */}
-            <path d="M55 15 L55 85 L65 85 L65 55 L75 85 L87 85 L75 50 L85 15 L73 15 L65 42 L65 15 Z" />
+            {/* Stylish NK Logo Design */}
+            <defs>
+              <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="currentColor" stopOpacity="1"/>
+                <stop offset="100%" stopColor="currentColor" stopOpacity="0.8"/>
+              </linearGradient>
+            </defs>
+
+            {/* Background Circle */}
+            <circle cx="60" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
+
+            {/* Stylized N - with modern geometric design */}
+            <g transform="translate(20, 25)">
+              {/* N left vertical */}
+              <rect x="0" y="0" width="6" height="50" rx="3"/>
+              {/* N diagonal - curved connection */}
+              <path d="M6 40 Q15 30 24 10 Q27 7 30 10 L30 15 Q25 25 18 35 Q12 45 6 50" />
+              {/* N right vertical */}
+              <rect x="24" y="0" width="6" height="50" rx="3"/>
+            </g>
+
+            {/* Stylized K - with intersecting design */}
+            <g transform="translate(65, 25)">
+              {/* K vertical */}
+              <rect x="0" y="0" width="6" height="50" rx="3"/>
+              {/* K upper arm - angled */}
+              <path d="M6 20 L20 8 Q23 6 25 9 L22 12 L10 22 Q8 24 6 22" />
+              {/* K lower arm - angled */}
+              <path d="M6 30 L22 42 Q25 44 23 47 L20 45 L8 35 Q6 33 6 30" />
+              {/* K center connector */}
+              <circle cx="12" cy="25" r="3"/>
+            </g>
+
+            {/* Decorative elements */}
+            <circle cx="25" cy="20" r="2" opacity="0.6"/>
+            <circle cx="95" cy="30" r="1.5" opacity="0.4"/>
+            <circle cx="30" cy="80" r="1" opacity="0.5"/>
+            <circle cx="90" cy="75" r="1.5" opacity="0.3"/>
           </motion.svg>
         </motion.div>
       </motion.div>
@@ -95,7 +128,7 @@ export default function PageTransitionAnimation() {
           <motion.svg
             width="100%"
             height="100%"
-            viewBox="0 0 100 100"
+            viewBox="0 0 120 100"
             className="fill-background/80"
             xmlns="http://www.w3.org/2000/svg"
             animate={{
@@ -108,11 +141,35 @@ export default function PageTransitionAnimation() {
               repeatType: "reverse"
             }}
           >
-            {/* Stylish NK Logo - smaller version */}
-            {/* N Letter */}
-            <path d="M10 15 L10 85 L20 85 L20 45 L35 85 L45 85 L45 15 L35 15 L35 55 L20 15 Z" />
-            {/* K Letter */}
-            <path d="M55 15 L55 85 L65 85 L65 55 L75 85 L87 85 L75 50 L85 15 L73 15 L65 42 L65 15 Z" />
+            {/* Stylish NK Logo Design - Secondary */}
+            <defs>
+              <linearGradient id="logoGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="currentColor" stopOpacity="0.8"/>
+                <stop offset="100%" stopColor="currentColor" stopOpacity="0.6"/>
+              </linearGradient>
+            </defs>
+
+            {/* Background Circle */}
+            <circle cx="60" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.2"/>
+
+            {/* Simplified N */}
+            <g transform="translate(25, 30)">
+              <rect x="0" y="0" width="4" height="40" rx="2"/>
+              <path d="M4 32 Q12 22 20 8 Q22 6 24 8 L24 12 Q20 20 14 28 Q8 36 4 40" />
+              <rect x="20" y="0" width="4" height="40" rx="2"/>
+            </g>
+
+            {/* Simplified K */}
+            <g transform="translate(70, 30)">
+              <rect x="0" y="0" width="4" height="40" rx="2"/>
+              <path d="M4 16 L16 6 Q18 5 19 7 L17 9 L7 17 Q5 19 4 17" />
+              <path d="M4 24 L17 34 Q19 35 18 37 L16 36 L6 28 Q4 26 4 24" />
+              <circle cx="10" cy="20" r="2"/>
+            </g>
+
+            {/* Minimal decorative dots */}
+            <circle cx="30" cy="25" r="1" opacity="0.4"/>
+            <circle cx="90" cy="35" r="1" opacity="0.3"/>
           </motion.svg>
         </motion.div>
       </motion.div>

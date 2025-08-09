@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import FadeUp from "@/animation/fade-up";
 import FadeRight from "@/animation/fade-right";
 import heroProfileImg from "@/public/images/heroProfile.png";
@@ -66,12 +67,12 @@ export default function AboutHero() {
               {/* CTAs */}
               <FadeUp key="about-ctas" duration={0.6} delay={0.65}>
                 <div className="mx-auto mt-8 flex max-w-3xl flex-col gap-3 sm:flex-row sm:justify-start">
-                  <a
+                  <Link
                     href="/projects"
                     className="rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:bg-accent-light active:scale-95 sm:text-base"
                   >
                     View Projects
-                  </a>
+                  </Link>
                   <a
                     href="mailto:njkhitha2003@gmail.com"
                     className="rounded-full border-2 border-accent bg-accent/10 px-6 py-3 text-center text-sm font-semibold text-accent backdrop-blur-sm transition-all duration-300 hover:scale-[1.03] hover:bg-accent hover:text-white active:scale-95 sm:text-base"

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 
 import LandingHero from "@/components/landing-hero";
 import SkillsShowcase from "@/components/skills/skills-showcase";
@@ -157,18 +158,18 @@ export default function Home() {
                   Ready to transform your ideas into reality? Let&apos;s collaborate on your next project.
                 </p>
                 <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-                  <a
+                  <Link
                     href="/projects"
                     className="rounded-full bg-accent px-8 py-3 text-center text-lg font-semibold text-white transition-all duration-300 hover:bg-accent-light hover:scale-105 active:scale-95"
                   >
                     View My Work
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/about"
                     className="rounded-full border-2 border-accent px-8 py-3 text-center text-lg font-semibold text-accent transition-all duration-300 hover:bg-accent hover:text-white hover:scale-105 active:scale-95"
                   >
                     Learn More About Me
-                  </a>
+                  </Link>
                 </div>
           </div>
         </div>

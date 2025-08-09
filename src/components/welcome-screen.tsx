@@ -25,17 +25,48 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
   useEffect(() => {
     if (!isVisible) return;
 
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsVisible(false);
-        localStorage.setItem("hasVisitedPortfolio", "true");
+    // Disable background scroll
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevDocOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    let touchStartY = 0;
+
+    const onWheel = (e: WheelEvent) => {
+      // Prevent page scroll while welcome screen is visible
+      e.preventDefault();
+      if (e.deltaY > 10) {
+        handleClose();
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches && e.touches.length > 0) {
+        touchStartY = e.touches[0].clientY;
+      }
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      // Prevent page scroll while welcome screen is visible
+      e.preventDefault();
+      const currentY = e.touches[0].clientY;
+      if (touchStartY - currentY > 20) {
+        handleClose();
+      }
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: false });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("wheel", onWheel as any);
+      window.removeEventListener("touchstart", onTouchStart as any);
+      window.removeEventListener("touchmove", onTouchMove as any);
+      // Restore background scroll
+      document.body.style.overflow = prevBodyOverflow;
+      document.documentElement.style.overflow = prevDocOverflow;
     };
   }, [isVisible]);
 
@@ -50,8 +81,39 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
   }, [isVisible, welcomeTexts.length]);
 
   const handleClose = () => {
+    // Mark that we are suppressing background scroll even after overlay unmounts
+    if (typeof document !== 'undefined') {
+      (document.documentElement as any).dataset.scrollLock = 'true';
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    // Dismiss overlay
     setIsVisible(false);
     localStorage.setItem("hasVisitedPortfolio", "true");
+
+    // Reset scroll to top
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+
+    // Temporarily prevent wheel/touch scroll bleeding-through for a short time
+    const prevent = (e: any) => {
+      try { e.preventDefault(); e.stopPropagation(); } catch {}
+    };
+    window.addEventListener('wheel', prevent, { passive: false });
+    window.addEventListener('touchmove', prevent, { passive: false });
+
+    // Release lock shortly after to avoid momentum scroll
+    setTimeout(() => {
+      window.removeEventListener('wheel', prevent as any);
+      window.removeEventListener('touchmove', prevent as any);
+      if (typeof document !== 'undefined') {
+        try { delete (document.documentElement as any).dataset.scrollLock; } catch {}
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      }
+    }, 350);
   };
 
   const containerVariants = {

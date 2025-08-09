@@ -14,12 +14,13 @@ const montserrat = Montserrat({
 
 export interface MainLayoutProps {
   children: ReactNode;
+  onWelcomeFinished?: () => void;
 }
 
 export default function MainLayout(props: MainLayoutProps) {
   return (
     <>
-      <WelcomeScreen />
+      <WelcomeScreen onFinished={props.onWelcomeFinished} />
       <div className={classNames("min-h-screen", montserrat.className)}>
         <Navbar routes={routes} />
         <main>{props.children}</main>

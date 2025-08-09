@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Sparkles } from "lucide-react";
 
-export default function WelcomeScreen() {
+export default function WelcomeScreen({ onFinished }: { onFinished?: () => void }) {
   const [isVisible, setIsVisible] = useState(false);
   const [currentText, setCurrentText] = useState(0);
 
@@ -100,7 +100,7 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={() => onFinished?.()}>
       {isVisible && (
         <motion.div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-br from-background via-background/95 to-accent/10 backdrop-blur-xl"
@@ -238,7 +238,6 @@ export default function WelcomeScreen() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <span className="text-sm">Skip intro</span>
           </motion.button>
         </motion.div>
       )}

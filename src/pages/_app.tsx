@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import { AnimatePresence, motion } from "framer-motion";
 import MainLayout from "@/layout/main-layout";
 import PageTransitionAnimation from "@/components/page-transition-animation";
+import { AnimationGateProvider, useAnimationGate } from "@/contexts/animation-gate";
 import "@/styles/globals.css";
 import dynamic from "next/dynamic";
 
@@ -36,19 +37,30 @@ const pageTransition = {
   duration: 0.6
 };
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App(props: AppProps) {
+  return (
+    <AnimationGateProvider>
+      <AppContent {...props} />
+    </AnimationGateProvider>
+  );
+}
+
+function AppContent({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const { setAnimationsReady, animationsReady } = useAnimationGate();
 
   useEffect(() => {
     const handleRouteChangeStart = () => {
       setIsTransitioning(true);
+      setAnimationsReady(false); // gate animations during route transition
     };
 
     const handleRouteChangeComplete = () => {
       // Add a small delay to ensure the transition completes
       setTimeout(() => {
         setIsTransitioning(false);
+        setAnimationsReady(true); // reopen animations after overlay exits
       }, 800); // Matches the faster transition duration
     };
 
@@ -71,12 +83,12 @@ export default function App({ Component, pageProps }: AppProps) {
       ) : null}
 
       <ThemeProvider attribute="class" defaultTheme="light">
-        <MainLayout>
-          <AnimatePresence mode="wait" initial={false}>
+        <MainLayout onWelcomeFinished={() => setAnimationsReady(true)}>
+          <AnimatePresence mode="wait" initial={false} onExitComplete={() => setAnimationsReady(true)}>
             <motion.div
               key={router.asPath}
               initial="initial"
-              animate="in"
+              animate={animationsReady ? "in" : "initial"}
               exit="out"
               variants={pageVariants}
               transition={pageTransition}

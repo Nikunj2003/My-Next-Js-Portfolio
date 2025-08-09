@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useAnimationGate } from "@/contexts/animation-gate";
 
 export interface FadeUpProps {
   children: ReactNode;
@@ -16,6 +17,7 @@ export default function FadeUp({
   whileInView = false,
 }: FadeUpProps) {
   const prefersReducedMotion = useReducedMotion();
+  const { animationsReady } = useAnimationGate();
   const animation = {
     opacity: 1,
     y: 0,
@@ -28,8 +30,14 @@ export default function FadeUp({
 
   const initial = prefersReducedMotion ? { opacity: 0 } : { y: 80, opacity: 0 };
   const animate = prefersReducedMotion ? { opacity: 1 } : animation;
+
+  // Avoid triggering any Framer Motion lifecycle before the global gate opens.
+  if (!animationsReady) {
+    return <div key="not-ready">{children}</div>;
+  }
+
   return (
-    <motion.div
+    <motion.div key="ready"
       initial={initial}
       whileInView={whileInView ? animate : {}}
       animate={!whileInView ? animate : {}}

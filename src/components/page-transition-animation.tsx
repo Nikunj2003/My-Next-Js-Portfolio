@@ -34,23 +34,27 @@ export default function PageTransitionAnimation() {
           <motion.svg
             width="100%"
             height="100%"
-            viewBox="0 0 10 10"
+            viewBox="0 0 100 100"
             className="fill-background drop-shadow-lg"
             xmlns="http://www.w3.org/2000/svg"
-            animate={{ 
+            animate={{
               filter: [
                 "drop-shadow(0 0 0px rgba(255,255,255,0))",
                 "drop-shadow(0 0 20px rgba(255,255,255,0.8))",
                 "drop-shadow(0 0 0px rgba(255,255,255,0))"
               ]
             }}
-            transition={{ 
-              duration: 1.5, 
-              repeat: Infinity, 
-              repeatType: "reverse" 
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse"
             }}
           >
-            <path d="M3.78711 3.17969L5 0.841797L9.74609 10H7.22656L3.78711 3.17969ZM4.6543 6.29688L2.77344 10H0.253906L3.42969 3.87109L4.6543 6.29688Z" />
+            {/* Stylish NK Logo */}
+            {/* N Letter */}
+            <path d="M10 15 L10 85 L20 85 L20 45 L35 85 L45 85 L45 15 L35 15 L35 55 L20 15 Z" />
+            {/* K Letter */}
+            <path d="M55 15 L55 85 L65 85 L65 55 L75 85 L87 85 L75 50 L85 15 L73 15 L65 42 L65 15 Z" />
           </motion.svg>
         </motion.div>
       </motion.div>
@@ -91,20 +95,24 @@ export default function PageTransitionAnimation() {
           <motion.svg
             width="100%"
             height="100%"
-            viewBox="0 0 10 10"
+            viewBox="0 0 100 100"
             className="fill-background/80"
             xmlns="http://www.w3.org/2000/svg"
-            animate={{ 
+            animate={{
               opacity: [0.8, 1, 0.8],
               scale: [1, 1.1, 1]
             }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity, 
-              repeatType: "reverse" 
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse"
             }}
           >
-            <path d="M3.78711 3.17969L5 0.841797L9.74609 10H7.22656L3.78711 3.17969ZM4.6543 6.29688L2.77344 10H0.253906L3.42969 3.87109L4.6543 6.29688Z" />
+            {/* Stylish NK Logo - smaller version */}
+            {/* N Letter */}
+            <path d="M10 15 L10 85 L20 85 L20 45 L35 85 L45 85 L45 15 L35 15 L35 55 L20 15 Z" />
+            {/* K Letter */}
+            <path d="M55 15 L55 85 L65 85 L65 55 L75 85 L87 85 L75 50 L85 15 L73 15 L65 42 L65 15 Z" />
           </motion.svg>
         </motion.div>
       </motion.div>

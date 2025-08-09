@@ -34,60 +34,101 @@ export default function PageTransitionAnimation() {
           <motion.svg
             width="100%"
             height="100%"
-            viewBox="0 0 120 100"
+            viewBox="0 0 200 140"
             className="fill-background drop-shadow-lg"
             xmlns="http://www.w3.org/2000/svg"
             animate={{
               filter: [
                 "drop-shadow(0 0 0px rgba(255,255,255,0))",
-                "drop-shadow(0 0 20px rgba(255,255,255,0.8))",
+                "drop-shadow(0 0 25px rgba(255,255,255,0.9))",
                 "drop-shadow(0 0 0px rgba(255,255,255,0))"
               ]
             }}
             transition={{
-              duration: 1.5,
+              duration: 2,
               repeat: Infinity,
               repeatType: "reverse"
             }}
           >
-            {/* Stylish NK Logo Design */}
             <defs>
-              <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="currentColor" stopOpacity="1"/>
+                <stop offset="50%" stopColor="currentColor" stopOpacity="0.9"/>
+                <stop offset="100%" stopColor="currentColor" stopOpacity="0.7"/>
+              </linearGradient>
+              <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="currentColor" stopOpacity="0.3"/>
                 <stop offset="100%" stopColor="currentColor" stopOpacity="0.8"/>
               </linearGradient>
             </defs>
 
-            {/* Background Circle */}
-            <circle cx="60" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
+            {/* Outer hexagonal frame */}
+            <polygon
+              points="100,15 140,35 140,85 100,105 60,85 60,35"
+              fill="none"
+              stroke="url(#accentGradient)"
+              strokeWidth="2"
+              opacity="0.4"
+            />
 
-            {/* Stylized N - with modern geometric design */}
-            <g transform="translate(20, 25)">
-              {/* N left vertical */}
-              <rect x="0" y="0" width="6" height="50" rx="3"/>
-              {/* N diagonal - curved connection */}
-              <path d="M6 40 Q15 30 24 10 Q27 7 30 10 L30 15 Q25 25 18 35 Q12 45 6 50" />
-              {/* N right vertical */}
-              <rect x="24" y="0" width="6" height="50" rx="3"/>
+            {/* Inner tech frame */}
+            <polygon
+              points="100,25 130,40 130,80 100,95 70,80 70,40"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1"
+              opacity="0.3"
+            />
+
+            {/* Modern N - Angular design */}
+            <g fill="url(#primaryGradient)">
+              {/* N left pillar */}
+              <polygon points="45,40 55,40 55,100 45,100" />
+              {/* N diagonal connector with tech cuts */}
+              <polygon points="55,85 85,45 90,50 85,55 75,65 70,70 65,75 55,95" />
+              {/* N right pillar */}
+              <polygon points="85,40 95,40 95,100 85,100" />
+              {/* Tech accent lines on N */}
+              <rect x="47" y="45" width="6" height="2" opacity="0.6"/>
+              <rect x="47" y="55" width="4" height="2" opacity="0.6"/>
+              <rect x="87" y="75" width="6" height="2" opacity="0.6"/>
+              <rect x="89" y="85" width="4" height="2" opacity="0.6"/>
             </g>
 
-            {/* Stylized K - with intersecting design */}
-            <g transform="translate(65, 25)">
-              {/* K vertical */}
-              <rect x="0" y="0" width="6" height="50" rx="3"/>
-              {/* K upper arm - angled */}
-              <path d="M6 20 L20 8 Q23 6 25 9 L22 12 L10 22 Q8 24 6 22" />
-              {/* K lower arm - angled */}
-              <path d="M6 30 L22 42 Q25 44 23 47 L20 45 L8 35 Q6 33 6 30" />
-              {/* K center connector */}
-              <circle cx="12" cy="25" r="3"/>
+            {/* Modern K - Sleek angular design */}
+            <g fill="url(#primaryGradient)">
+              {/* K main pillar */}
+              <polygon points="110,40 120,40 120,100 110,100" />
+              {/* K upper arm - modern angle */}
+              <polygon points="120,60 145,40 155,40 150,45 135,60 125,65" />
+              {/* K lower arm - modern angle */}
+              <polygon points="125,75 135,80 150,95 155,100 145,100 120,80" />
+              {/* K junction element */}
+              <circle cx="122" cy="70" r="4" opacity="0.8"/>
+              {/* Tech accent lines on K */}
+              <rect x="112" y="45" width="6" height="2" opacity="0.6"/>
+              <rect x="112" y="55" width="4" height="2" opacity="0.6"/>
+              <rect x="140" y="42" width="8" height="1" opacity="0.5"/>
+              <rect x="140" y="97" width="8" height="1" opacity="0.5"/>
             </g>
 
-            {/* Decorative elements */}
-            <circle cx="25" cy="20" r="2" opacity="0.6"/>
-            <circle cx="95" cy="30" r="1.5" opacity="0.4"/>
-            <circle cx="30" cy="80" r="1" opacity="0.5"/>
-            <circle cx="90" cy="75" r="1.5" opacity="0.3"/>
+            {/* Circuit-like connecting elements */}
+            <g stroke="currentColor" fill="none" strokeWidth="1" opacity="0.4">
+              <path d="M95 70 Q100 70 105 70" />
+              <circle cx="100" cy="70" r="2" fill="currentColor" opacity="0.6"/>
+            </g>
+
+            {/* Floating tech elements */}
+            <g fill="currentColor" opacity="0.3">
+              <rect x="40" y="30" width="3" height="3" transform="rotate(45 41.5 31.5)"/>
+              <rect x="157" y="35" width="2" height="2" transform="rotate(45 158 36)"/>
+              <rect x="35" y="110" width="2" height="2" transform="rotate(45 36 111)"/>
+              <rect x="160" y="105" width="3" height="3" transform="rotate(45 161.5 106.5)"/>
+            </g>
+
+            {/* Corner accent dots */}
+            <circle cx="180" cy="30" r="1.5" fill="currentColor" opacity="0.4"/>
+            <circle cx="20" cy="110" r="1.5" fill="currentColor" opacity="0.4"/>
           </motion.svg>
         </motion.div>
       </motion.div>
@@ -128,48 +169,59 @@ export default function PageTransitionAnimation() {
           <motion.svg
             width="100%"
             height="100%"
-            viewBox="0 0 120 100"
+            viewBox="0 0 160 120"
             className="fill-background/80"
             xmlns="http://www.w3.org/2000/svg"
             animate={{
-              opacity: [0.8, 1, 0.8],
-              scale: [1, 1.1, 1]
+              opacity: [0.6, 0.9, 0.6],
+              scale: [1, 1.15, 1],
+              rotate: [0, 5, 0]
             }}
             transition={{
-              duration: 2,
+              duration: 2.5,
               repeat: Infinity,
               repeatType: "reverse"
             }}
           >
-            {/* Stylish NK Logo Design - Secondary */}
             <defs>
-              <linearGradient id="logoGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="currentColor" stopOpacity="0.8"/>
-                <stop offset="100%" stopColor="currentColor" stopOpacity="0.6"/>
+              <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="currentColor" stopOpacity="0.7"/>
+                <stop offset="100%" stopColor="currentColor" stopOpacity="0.4"/>
               </linearGradient>
             </defs>
 
-            {/* Background Circle */}
-            <circle cx="60" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.2"/>
+            {/* Simplified hexagon */}
+            <polygon
+              points="80,20 105,30 105,70 80,80 55,70 55,30"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              opacity="0.3"
+            />
 
-            {/* Simplified N */}
-            <g transform="translate(25, 30)">
-              <rect x="0" y="0" width="4" height="40" rx="2"/>
-              <path d="M4 32 Q12 22 20 8 Q22 6 24 8 L24 12 Q20 20 14 28 Q8 36 4 40" />
-              <rect x="20" y="0" width="4" height="40" rx="2"/>
+            {/* Minimalist N */}
+            <g fill="url(#secondaryGradient)">
+              <rect x="35" y="35" width="6" height="45" rx="1"/>
+              <polygon points="41,70 55,40 60,43 46,73"/>
+              <rect x="55" y="35" width="6" height="45" rx="1"/>
             </g>
 
-            {/* Simplified K */}
-            <g transform="translate(70, 30)">
-              <rect x="0" y="0" width="4" height="40" rx="2"/>
-              <path d="M4 16 L16 6 Q18 5 19 7 L17 9 L7 17 Q5 19 4 17" />
-              <path d="M4 24 L17 34 Q19 35 18 37 L16 36 L6 28 Q4 26 4 24" />
-              <circle cx="10" cy="20" r="2"/>
+            {/* Minimalist K */}
+            <g fill="url(#secondaryGradient)">
+              <rect x="85" y="35" width="6" height="45" rx="1"/>
+              <polygon points="91,55 110,35 115,38 96,58"/>
+              <polygon points="96,62 115,82 110,85 91,65"/>
+              <circle cx="93" cy="60" r="2.5"/>
             </g>
 
-            {/* Minimal decorative dots */}
-            <circle cx="30" cy="25" r="1" opacity="0.4"/>
-            <circle cx="90" cy="35" r="1" opacity="0.3"/>
+            {/* Simple connecting line */}
+            <line x1="61" y1="57" x2="85" y2="57" stroke="currentColor" strokeWidth="1" opacity="0.3"/>
+
+            {/* Minimal accents */}
+            <circle cx="25" cy="25" r="1" fill="currentColor" opacity="0.3"/>
+            <circle cx="135" cy="30" r="1" fill="currentColor" opacity="0.3"/>
+            <circle cx="30" cy="95" r="0.8" fill="currentColor" opacity="0.2"/>
+            <circle cx="130" cy="90" r="0.8" fill="currentColor" opacity="0.2"/>
           </motion.svg>
         </motion.div>
       </motion.div>

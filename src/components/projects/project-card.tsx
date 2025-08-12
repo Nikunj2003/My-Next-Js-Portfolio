@@ -14,6 +14,8 @@ export interface ProjectCardProps {
   description: string;
   sourceCodeHref: string;
   liveWebsiteHref?: string;
+  category: string;
+  technologies: string[];
 }
 
 export default function ProjectCard(props: ProjectCardProps) {

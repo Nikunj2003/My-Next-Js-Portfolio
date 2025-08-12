@@ -135,6 +135,8 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref:
       "",
+    category: "Blog",
+    technologies: ["JavaScript", "Performance", "Web Development"],
   },
   {
     name: "How to create your own custom Hooks in React (extensive guide)",
@@ -145,6 +147,8 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref:
       "",
+    category: "Blog",
+    technologies: ["React", "Hooks", "JavaScript"],
   },
   {
     name: "10 Important productivity tools to make developer life easier 👨‍💻👨‍💻",
@@ -155,6 +159,8 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref:
       "",
+    category: "Blog",
+    technologies: ["Productivity", "Developer Tools", "Workflow"],
   },
   {
     name: "map, filter, reduce functions in JavaScript made easy 🔥",
@@ -164,5 +170,7 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref:
       "",
+    category: "Blog",
+    technologies: ["JavaScript", "Array Methods", "Functional Programming"],
   },
 ];

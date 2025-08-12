@@ -62,6 +62,8 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
       "EarthLink is an American Internet service provider.  The New York Times described Earthlink as the 'second largest Internet service provider after America Online.'",
     sourceCodeHref: "",
     liveWebsiteHref: "",
+    category: "Enterprise",
+    technologies: ["React", "Next.js", "Styled Components", "SCSS", "GraphQL", "Microservices"],
   },
   {
     name: "Rapid Store",
@@ -71,6 +73,8 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
       "Rapid Store is an e-commerce platform based on theme Electronics & Gadgets. It's for shoppers who want best deal in small amount of time at fast speed. You can buy products in your favourite category on Rapid Store.",
     sourceCodeHref: "",
     liveWebsiteHref: "",
+    category: "E-commerce",
+    technologies: ["React", "Razorpay", "Context API", "Authentication"],
   },
   {
     name: "DigiMantra Labs site",
@@ -80,6 +84,8 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
       "I've worked on making landing page pixel-perfect design and integrated chatbot. Integrated GraphQL to show data coming from backend",
     sourceCodeHref: "",
     liveWebsiteHref: "",
+    category: "Agency Work",
+    technologies: ["React", "GraphQL", "Chatbot Integration", "Responsive Design"],
   },
   {
     name: "Rapid Fire (Social Media app)",
@@ -88,6 +94,8 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
     description: "Share moments, Connect, Know the World",
     sourceCodeHref: "",
     liveWebsiteHref: "",
+    category: "Social Media",
+    technologies: ["React", "Redux Toolkit", "Dark Mode", "Real-time Features"],
   },
   {
     name: "Rapid UI",
@@ -101,6 +109,8 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
       "Rapid UI is an Open Source CSS library, integrated with pre-defined styled classes, and Utilites, for a quick creation of websites, with much focus on Functionality.",
     sourceCodeHref: "",
     liveWebsiteHref: "",
+    category: "Open Source",
+    technologies: ["CSS", "JavaScript", "Design System", "Component Library"],
   },
   {
     name: "Rapid TV",
@@ -110,6 +120,8 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
       "Rapid TV is a video library for tech enthusiast. It shows videos based on New gadgets arriving in the market, product reviews, tech news and whats overall happening in the market revolving around this theme.",
     sourceCodeHref: "",
     liveWebsiteHref: "",
+    category: "Media Platform",
+    technologies: ["React", "Video API", "Content Management", "Responsive Design"],
   },
 ];
 
@@ -123,6 +135,8 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref:
       "",
+    category: "Blog",
+    technologies: ["JavaScript", "Performance", "Web Development"],
   },
   {
     name: "How to create your own custom Hooks in React (extensive guide)",
@@ -133,6 +147,8 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref:
       "",
+    category: "Blog",
+    technologies: ["React", "Hooks", "JavaScript"],
   },
   {
     name: "10 Important productivity tools to make developer life easier 👨‍💻👨‍💻",
@@ -143,6 +159,8 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref:
       "",
+    category: "Blog",
+    technologies: ["Productivity", "Developer Tools", "Workflow"],
   },
   {
     name: "map, filter, reduce functions in JavaScript made easy 🔥",
@@ -152,5 +170,7 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref:
       "",
+    category: "Blog",
+    technologies: ["JavaScript", "Array Methods", "Functional Programming"],
   },
 ];

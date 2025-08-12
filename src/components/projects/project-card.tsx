@@ -14,6 +14,8 @@ export interface ProjectCardProps {
   description: string;
   sourceCodeHref: string;
   liveWebsiteHref?: string;
+  category: string;
+  technologies: string[];
 }
 
 export default function ProjectCard(props: ProjectCardProps) {
@@ -49,6 +51,16 @@ export default function ProjectCard(props: ProjectCardProps) {
             <p className="text-sm md:text-base text-muted-foreground">
               {props.description}
             </p>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {props.technologies.map((tech, index) => (
+              <span
+                key={index}
+                className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent border border-accent/20"
+              >
+                {tech}
+              </span>
+            ))}
           </div>
           <div className="mt-6 flex items-center justify-end gap-6">
             {props?.sourceCodeHref && (
@@ -97,6 +109,16 @@ export default function ProjectCard(props: ProjectCardProps) {
           <p className="text-sm md:text-base text-muted-foreground">
             {props.description}
           </p>
+        </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {props.technologies.map((tech, index) => (
+            <span
+              key={index}
+              className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent border border-accent/20"
+            >
+              {tech}
+            </span>
+          ))}
         </div>
         <div className="mt-6 flex items-center justify-end gap-6">
           {props?.sourceCodeHref && (

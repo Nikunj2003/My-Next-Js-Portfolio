@@ -5,6 +5,7 @@ import { Montserrat } from "next/font/google";
 import Navbar from "@/layout/navbar";
 import Footer from "@/layout/footer";
 import WelcomeScreen from "@/components/welcome-screen";
+import AIChatBubble from "@/components/ai-chat/ai-chat-bubble";
 import { routes } from "@/data/navigationRoutes";
 import { classNames } from "@/utility/classNames";
 

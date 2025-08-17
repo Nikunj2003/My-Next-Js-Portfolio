@@ -44,9 +44,8 @@ export default function AIChatBubble() {
     setIsLoading(true);
 
     try {
-      // Simulate AI response - replace with actual API call
-      const response = await generateAIResponse(inputValue);
-      
+      const response = await aiService.generateResponse(inputValue);
+
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: response,

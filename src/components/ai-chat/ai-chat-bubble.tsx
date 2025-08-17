@@ -87,7 +87,7 @@ export default function AIChatBubble() {
     <>
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-20 right-4 z-50 w-80 h-96 bg-background border border-border rounded-lg shadow-2xl flex flex-col overflow-hidden">
+        <div className="fixed bottom-20 right-4 z-50 w-80 h-96 max-w-[calc(100vw-2rem)] max-h-[calc(100vh-8rem)] bg-background border border-border rounded-lg shadow-2xl flex flex-col overflow-hidden sm:w-80 sm:h-96">
           {/* Header */}
           <div className="bg-accent text-accent-foreground p-4 flex items-center justify-between">
             <div className="flex items-center space-x-2">

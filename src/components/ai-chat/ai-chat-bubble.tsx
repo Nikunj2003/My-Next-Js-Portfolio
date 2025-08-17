@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { classNames } from "@/utility/classNames";
+import { aiService } from "@/utility/ai-service";
 
 interface Message {
   id: string;

@@ -34,6 +34,7 @@ export default function MainLayout(props: MainLayoutProps) {
         <main id="content">{props.children}</main>
       </div>
       <Footer />
+      <AIChatBubble />
     </>
   );
 }

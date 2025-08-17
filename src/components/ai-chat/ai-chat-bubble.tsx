@@ -176,3 +176,10 @@ export default function AIChatBubble() {
     </>
   );
 }
+
+// Format messages to handle markdown-like styling
+function formatMessage(content: string): string {
+  return content
+    .replace(/\*\*(.*?)\*\*/g, '$1') // Remove markdown bold syntax for display
+    .replace(/🔹|•/g, '•'); // Normalize bullet points
+}

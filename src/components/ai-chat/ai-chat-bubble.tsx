@@ -120,7 +120,7 @@ export default function AIChatBubble() {
                       : "bg-muted text-muted-foreground"
                   )}
                 >
-                  {message.content}
+                  <div className="whitespace-pre-wrap">{formatMessage(message.content)}</div>
                 </div>
               </div>
             ))}
@@ -132,6 +132,7 @@ export default function AIChatBubble() {
                 </div>
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Input */}

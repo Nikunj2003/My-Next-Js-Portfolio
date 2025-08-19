@@ -1,10 +1,11 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 import { Montserrat } from "next/font/google";
 
 import Navbar from "@/layout/navbar";
 import Footer from "@/layout/footer";
 import WelcomeScreen from "@/components/welcome-screen";
+import FloatingChatButton from "@/components/chat/floating-chat-button";
 import { routes } from "@/data/navigationRoutes";
 import { classNames } from "@/utility/classNames";
 
@@ -18,9 +19,16 @@ export interface MainLayoutProps {
 }
 
 export default function MainLayout(props: MainLayoutProps) {
+  const [isWelcomeFinished, setIsWelcomeFinished] = useState(false);
+
+  const handleWelcomeFinished = () => {
+    setIsWelcomeFinished(true);
+    props.onWelcomeFinished?.();
+  };
+
   return (
     <>
-      <WelcomeScreen onFinished={props.onWelcomeFinished} />
+      <WelcomeScreen onFinished={handleWelcomeFinished} />
       {/* Skip to content link for accessibility */}
       <a
         href="#content"
@@ -33,6 +41,7 @@ export default function MainLayout(props: MainLayoutProps) {
         <main id="content">{props.children}</main>
       </div>
       <Footer />
+      {isWelcomeFinished && <FloatingChatButton />}
     </>
   );
 }

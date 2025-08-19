@@ -110,4 +110,17 @@
   .no-cursor {
     cursor: none;
   }
+
+  /* Custom loading animation for AI chat */
+  @keyframes loading {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
 }

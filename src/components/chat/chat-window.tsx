@@ -104,14 +104,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
           <div className="h-2 w-2 rounded-full bg-accent animate-pulse" />
           <h3 className="font-semibold text-foreground">Ask about Nikunj</h3>
         </div>
-        <div className="flex items-center gap-1">
-          <button
-            onClick={() => setIsMinimized(!isMinimized)}
-            className="p-1 rounded hover:bg-muted transition-colors"
-            aria-label={isMinimized ? "Expand chat" : "Minimize chat"}
-          >
-            <Minimize2 size={16} className="text-muted-foreground" />
-          </button>
+        <div className="flex items-center">
           <button
             onClick={onClose}
             className="p-1 rounded hover:bg-muted transition-colors"

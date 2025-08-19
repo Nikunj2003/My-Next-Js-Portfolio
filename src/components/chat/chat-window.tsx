@@ -115,10 +115,8 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         </div>
       </div>
 
-      {!isMinimized && (
-        <>
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -207,9 +205,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                 <Send size={16} />
               </button>
             </div>
-          </div>
-        </>
-      )}
+      </div>
     </div>
   );
 }

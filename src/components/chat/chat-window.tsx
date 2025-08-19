@@ -30,14 +30,18 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [shouldAutoScroll, setShouldAutoScroll] = useState(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (shouldAutoScroll) {
+      scrollToBottom();
+      setShouldAutoScroll(false);
+    }
+  }, [messages, shouldAutoScroll]);
 
   useEffect(() => {
     if (isOpen) {
@@ -58,6 +62,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
     setMessages(prev => [...prev, userMessage]);
     setInputValue("");
     setIsLoading(true);
+    setShouldAutoScroll(true); // Only scroll when user sends a message
 
     try {
       const aiResponse = await getAIResponse(inputValue.trim());

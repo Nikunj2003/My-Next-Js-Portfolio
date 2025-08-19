@@ -92,8 +92,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
     <div
       className={classNames(
         "fixed bottom-24 right-6 z-50",
-        "w-80 sm:w-96",
-        isMinimized ? "h-12" : "h-[32rem]",
+        "w-80 sm:w-96 h-[32rem]",
         "bg-background border border-border rounded-lg shadow-2xl",
         "transition-all duration-300 ease-in-out",
         "flex flex-col overflow-hidden"

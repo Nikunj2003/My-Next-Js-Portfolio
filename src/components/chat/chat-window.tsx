@@ -338,8 +338,8 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.3 }}
       >
-        <motion.div 
-          className="flex gap-2"
+        <motion.div
+          className="flex gap-[17px]"
           layout
         >
           <motion.input
@@ -350,12 +350,13 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
             onKeyPress={handleKeyPress}
             placeholder="Ask about Nikunj's experience, skills, or projects..."
             className={classNames(
-              "flex-1 px-3 py-2 text-sm",
+              "flex-1 text-sm",
               "bg-background border border-border rounded-lg",
               "text-foreground placeholder:text-muted-foreground",
               "focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent",
               "transition-all duration-200"
             )}
+            style={{ padding: "8px 12px 9px 7px" }}
             disabled={isLoading}
             whileFocus={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -364,7 +365,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
             onClick={handleSendMessage}
             disabled={!inputValue.trim() || isLoading}
             className={classNames(
-              "p-2 rounded-lg transition-colors",
+              "p-3 -mb-px rounded-lg transition-colors",
               "bg-accent hover:bg-accent-light disabled:bg-muted",
               "text-accent-foreground disabled:text-muted-foreground",
               "disabled:cursor-not-allowed"

@@ -19,9 +19,16 @@ export interface MainLayoutProps {
 }
 
 export default function MainLayout(props: MainLayoutProps) {
+  const [isWelcomeFinished, setIsWelcomeFinished] = useState(false);
+
+  const handleWelcomeFinished = () => {
+    setIsWelcomeFinished(true);
+    props.onWelcomeFinished?.();
+  };
+
   return (
     <>
-      <WelcomeScreen onFinished={props.onWelcomeFinished} />
+      <WelcomeScreen onFinished={handleWelcomeFinished} />
       {/* Skip to content link for accessibility */}
       <a
         href="#content"

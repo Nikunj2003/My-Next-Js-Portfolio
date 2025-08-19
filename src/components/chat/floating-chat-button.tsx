@@ -27,7 +27,7 @@ export default function FloatingChatButton() {
           "fixed bottom-6 right-6 z-40",
           "h-14 w-14 rounded-full",
           "bg-accent hover:bg-accent-light active:bg-accent-dark",
-          "text-background dark:text-foreground",
+          "text-white dark:text-black",
           "shadow-lg hover:shadow-xl",
           "transition-all duration-300 ease-in-out",
           "hover:scale-110 active:scale-95",

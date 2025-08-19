@@ -127,7 +127,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
               >
                 {message.sender === "ai" && (
                   <div className="flex-shrink-0 h-8 w-8 rounded-full bg-accent flex items-center justify-center">
-                    <Bot size={16} className="text-accent-foreground" />
+                    <Bot size={16} className="text-background dark:text-foreground" />
                   </div>
                 )}
                 <div

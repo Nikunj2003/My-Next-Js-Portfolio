@@ -158,13 +158,21 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
             {isLoading && (
               <div className="flex gap-3 justify-start">
                 <div className="flex-shrink-0 h-8 w-8 rounded-full bg-accent flex items-center justify-center">
-                  <Bot size={16} className="text-accent-foreground" />
+                  <Bot size={16} className="text-white dark:text-black" />
                 </div>
-                <div className="bg-muted rounded-lg px-3 py-2">
-                  <div className="flex gap-1">
-                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" />
-                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce [animation-delay:0.1s]" />
-                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce [animation-delay:0.2s]" />
+                <div className="bg-muted rounded-lg px-4 py-3 min-w-[80px]">
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs text-muted-foreground mr-2">AI is thinking</span>
+                    <div className="flex gap-1">
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse [animation-delay:0.2s]" />
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse [animation-delay:0.4s]" />
+                    </div>
+                  </div>
+                  <div className="mt-2 flex gap-0.5">
+                    <div className="h-0.5 bg-accent/30 rounded-full flex-1 overflow-hidden">
+                      <div className="h-full bg-accent rounded-full animate-[loading_2s_ease-in-out_infinite]" />
+                    </div>
                   </div>
                 </div>
               </div>

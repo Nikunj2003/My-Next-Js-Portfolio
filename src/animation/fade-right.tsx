@@ -31,16 +31,23 @@ export default function FadeRight({
     },
   } as const;
 
-  const initial = prefersReducedMotion ? { opacity: 0 } : { x: -100, opacity: 0 };
+  const initial = prefersReducedMotion
+    ? { opacity: 0 }
+    : { x: -100, opacity: 0 };
   const animate = prefersReducedMotion ? { opacity: 1 } : animation;
 
   // Avoid triggering any Framer Motion lifecycle before the global gate opens.
   if (!animationsReady) {
-    return <div className={className} key="not-ready">{children}</div>;
+    return (
+      <div className={className} key="not-ready">
+        {children}
+      </div>
+    );
   }
 
   return (
-    <motion.div key="ready"
+    <motion.div
+      key="ready"
       initial={initial}
       whileInView={whileInView ? animate : {}}
       animate={!whileInView ? animate : {}}

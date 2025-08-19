@@ -80,13 +80,19 @@ export default function ContactForm() {
             {/* Hidden honeypot field for spam mitigation */}
             <div className="hidden" aria-hidden="true">
               <label htmlFor="website">Website</label>
-              <Field id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+              <Field
+                id="website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+              />
             </div>
             {/** Email Field */}
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="email"
-                className="text-sm font-semibold text-foreground uppercase tracking-wider"
+                className="text-sm font-semibold uppercase tracking-wider text-foreground"
               >
                 Email Address
               </label>
@@ -98,7 +104,7 @@ export default function ContactForm() {
                       {...field}
                       type="email"
                       placeholder="Enter your email address"
-                      className="h-12 border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors"
+                      className="h-12 border border-border bg-muted text-foreground transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-background"
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="mt-1 text-xs font-medium text-destructive">
@@ -114,7 +120,7 @@ export default function ContactForm() {
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="name"
-                className="text-sm font-semibold text-foreground uppercase tracking-wider"
+                className="text-sm font-semibold uppercase tracking-wider text-foreground"
               >
                 Full Name
               </label>
@@ -126,7 +132,7 @@ export default function ContactForm() {
                       {...field}
                       type="text"
                       placeholder="Enter your full name"
-                      className="h-12 border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors"
+                      className="h-12 border border-border bg-muted text-foreground transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-background"
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="mt-1 text-xs font-medium text-destructive">
@@ -142,7 +148,7 @@ export default function ContactForm() {
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="subject"
-                className="text-sm font-semibold text-foreground uppercase tracking-wider"
+                className="text-sm font-semibold uppercase tracking-wider text-foreground"
               >
                 Subject
               </label>
@@ -154,7 +160,7 @@ export default function ContactForm() {
                       {...field}
                       type="text"
                       placeholder="What would you like to discuss?"
-                      className="h-12 border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors"
+                      className="h-12 border border-border bg-muted text-foreground transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-background"
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="mt-1 text-xs font-medium text-destructive">
@@ -170,7 +176,7 @@ export default function ContactForm() {
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="message"
-                className="text-sm font-semibold text-foreground uppercase tracking-wider"
+                className="text-sm font-semibold uppercase tracking-wider text-foreground"
               >
                 Message
               </label>
@@ -182,7 +188,7 @@ export default function ContactForm() {
                       {...field}
                       placeholder="Tell me about your project or idea..."
                       rows={5}
-                      className="border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-accent focus:bg-background transition-colors resize-none"
+                      className="resize-none border border-border bg-muted text-foreground transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-background"
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="mt-1 text-xs font-medium text-destructive">
@@ -198,7 +204,7 @@ export default function ContactForm() {
             <button
               aria-label="Send message"
               type="submit"
-              className="mt-6 w-full rounded-xl bg-accent px-6 py-4 text-center text-lg font-semibold text-accent-foreground transition-all duration-200 hover:bg-accent/90 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="mt-6 w-full rounded-xl bg-accent px-6 py-4 text-center text-lg font-semibold text-accent-foreground transition-all duration-200 hover:scale-[1.02] hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
               disabled={!isValid || isSendingMail}
             >
               {isSendingMail ? (

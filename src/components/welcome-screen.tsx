@@ -2,14 +2,18 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Sparkles } from "lucide-react";
 
-export default function WelcomeScreen({ onFinished }: { onFinished?: () => void }) {
+export default function WelcomeScreen({
+  onFinished,
+}: {
+  onFinished?: () => void;
+}) {
   const [isVisible, setIsVisible] = useState(false);
   const [currentText, setCurrentText] = useState(0);
 
   const welcomeTexts = [
     "Welcome to my digital space",
     "Where innovation meets creativity",
-    "Let's build something amazing together"
+    "Let's build something amazing together",
   ];
 
   useEffect(() => {
@@ -17,7 +21,7 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
     // const hasVisited = localStorage.getItem("hasVisitedPortfolio");
 
     // if (!hasVisited) {
-      setIsVisible(true);
+    setIsVisible(true);
     //   localStorage.setItem("hasVisitedPortfolio", "true");
     // }
   }, []);
@@ -82,10 +86,10 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
 
   const handleClose = () => {
     // Mark that we are suppressing background scroll even after overlay unmounts
-    if (typeof document !== 'undefined') {
-      (document.documentElement as any).dataset.scrollLock = 'true';
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
+    if (typeof document !== "undefined") {
+      (document.documentElement as any).dataset.scrollLock = "true";
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     }
 
     // Dismiss overlay
@@ -93,72 +97,77 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
     localStorage.setItem("hasVisitedPortfolio", "true");
 
     // Reset scroll to top
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     }
 
     // Temporarily prevent wheel/touch scroll bleeding-through for a short time
     const prevent = (e: any) => {
-      try { e.preventDefault(); e.stopPropagation(); } catch {}
+      try {
+        e.preventDefault();
+        e.stopPropagation();
+      } catch {}
     };
-    window.addEventListener('wheel', prevent, { passive: false });
-    window.addEventListener('touchmove', prevent, { passive: false });
+    window.addEventListener("wheel", prevent, { passive: false });
+    window.addEventListener("touchmove", prevent, { passive: false });
 
     // Release lock shortly after to avoid momentum scroll
     setTimeout(() => {
-      window.removeEventListener('wheel', prevent as any);
-      window.removeEventListener('touchmove', prevent as any);
-      if (typeof document !== 'undefined') {
-        try { delete (document.documentElement as any).dataset.scrollLock; } catch {}
-        document.body.style.overflow = '';
-        document.documentElement.style.overflow = '';
+      window.removeEventListener("wheel", prevent as any);
+      window.removeEventListener("touchmove", prevent as any);
+      if (typeof document !== "undefined") {
+        try {
+          delete (document.documentElement as any).dataset.scrollLock;
+        } catch {}
+        document.body.style.overflow = "";
+        document.documentElement.style.overflow = "";
       }
     }, 350);
   };
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
       transition: {
         duration: 0.6,
-        staggerChildren: 0.3
-      }
+        staggerChildren: 0.3,
+      },
     },
     exit: {
       opacity: 0,
       scale: 0.8,
       transition: {
         duration: 0.8,
-        ease: [0.76, 0, 0.24, 1]
-      }
-    }
+        ease: [0.76, 0, 0.24, 1],
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { y: 60, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: [0.76, 0, 0.24, 1]
-      }
-    }
+        ease: [0.76, 0, 0.24, 1],
+      },
+    },
   };
 
   const textVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
-      transition: { duration: 0.6 }
+      transition: { duration: 0.6 },
     },
-    exit: { 
-      y: -20, 
+    exit: {
+      y: -20,
       opacity: 0,
-      transition: { duration: 0.4 }
-    }
+      transition: { duration: 0.4 },
+    },
   };
 
   return (
@@ -173,14 +182,14 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute -top-40 -right-40 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
-            <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-accent-light/15 rounded-full blur-3xl" />
-            
+            <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
+            <div className="bg-accent-light/15 absolute -bottom-40 -left-40 h-96 w-96 rounded-full blur-3xl" />
+
             {/* Floating elements */}
             {[...Array(15)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-1 h-1 bg-accent/30 rounded-full"
+                className="absolute h-1 w-1 rounded-full bg-accent/30"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
@@ -188,43 +197,47 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
                 animate={{
                   y: [-10, 10, -10],
                   opacity: [0.3, 0.8, 0.3],
-                  scale: [0.5, 1, 0.5]
+                  scale: [0.5, 1, 0.5],
                 }}
                 transition={{
                   duration: 3 + Math.random() * 2,
                   repeat: Infinity,
-                  delay: i * 0.2
+                  delay: i * 0.2,
                 }}
               />
             ))}
           </div>
 
           {/* Main Content */}
-          <div className="relative z-10 text-center px-8 max-w-4xl mx-auto">
+          <div className="relative z-10 mx-auto max-w-4xl px-8 text-center">
             {/* Sparkle Icon */}
             <motion.div
               variants={itemVariants}
-              className="flex justify-center mb-8"
+              className="mb-8 flex justify-center"
             >
               <motion.div
-                className="p-4 rounded-full bg-accent/20 backdrop-blur-lg border border-accent/30"
-                animate={{ 
+                className="rounded-full border border-accent/30 bg-accent/20 p-4 backdrop-blur-lg"
+                animate={{
                   rotate: [0, 360],
-                  scale: [1, 1.1, 1]
+                  scale: [1, 1.1, 1],
                 }}
-                transition={{ 
+                transition={{
                   rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                  scale: { duration: 2, repeat: Infinity, repeatType: "reverse" }
+                  scale: {
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  },
                 }}
               >
-                <Sparkles className="w-8 h-8 text-accent" />
+                <Sparkles className="h-8 w-8 text-accent" />
               </motion.div>
             </motion.div>
 
             {/* Main Title */}
             <motion.h1
               variants={itemVariants}
-              className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text text-transparent mb-6"
+              className="mb-6 bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text text-5xl font-bold text-transparent md:text-7xl"
             >
               Nikunj Khitha
             </motion.h1>
@@ -232,7 +245,7 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
             {/* Subtitle */}
             <motion.div
               variants={itemVariants}
-              className="text-xl md:text-2xl text-muted-foreground mb-12 font-medium"
+              className="mb-12 text-xl font-medium text-muted-foreground md:text-2xl"
             >
               <span className="text-foreground">Software Engineer</span>
               <span className="mx-3 text-accent">•</span>
@@ -244,7 +257,7 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
             {/* Dynamic Welcome Text */}
             <motion.div
               variants={itemVariants}
-              className="h-16 flex items-center justify-center mb-12"
+              className="mb-12 flex h-16 items-center justify-center"
             >
               <AnimatePresence mode="wait">
                 <motion.p
@@ -253,7 +266,7 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  className="text-lg md:text-xl text-foreground/80 font-medium"
+                  className="text-lg font-medium text-foreground/80 md:text-xl"
                 >
                   {welcomeTexts[currentText]}
                 </motion.p>
@@ -267,7 +280,7 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
             >
               <motion.button
                 onClick={handleClose}
-                className="group relative px-8 py-4 bg-accent text-white rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                className="group relative overflow-hidden rounded-full bg-accent px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -286,8 +299,8 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <span className="text-sm mb-2">Scroll to explore</span>
-                <ChevronDown className="w-5 h-5" />
+                <span className="mb-2 text-sm">Scroll to explore</span>
+                <ChevronDown className="h-5 w-5" />
               </motion.div>
             </motion.div>
           </div>
@@ -295,12 +308,11 @@ export default function WelcomeScreen({ onFinished }: { onFinished?: () => void 
           {/* Skip Button */}
           <motion.button
             onClick={handleClose}
-            className="absolute top-8 right-8 text-muted-foreground hover:text-foreground transition-colors duration-300"
+            className="absolute right-8 top-8 text-muted-foreground transition-colors duration-300 hover:text-foreground"
             variants={itemVariants}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-          >
-          </motion.button>
+          ></motion.button>
         </motion.div>
       )}
     </AnimatePresence>

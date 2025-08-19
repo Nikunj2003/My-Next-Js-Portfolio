@@ -68,8 +68,8 @@ export default function MobileMenu({
                   show: {
                     opacity: 1,
                     y: 0,
-                    transition: { staggerChildren: 0.08, delayChildren: 0.1 }
-                  }
+                    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+                  },
                 }}
                 initial="hidden"
                 animate="show"
@@ -79,7 +79,10 @@ export default function MobileMenu({
                     key={i}
                     className="group relative py-2 text-3xl font-medium"
                     onClick={() => handleClick(link.href)}
-                    variants={{ hidden: { opacity: 0, y: 14, scale: 0.98 }, show: { opacity: 1, y: 0, scale: 1 } }}
+                    variants={{
+                      hidden: { opacity: 0, y: 14, scale: 0.98 },
+                      show: { opacity: 1, y: 0, scale: 1 },
+                    }}
                     transition={{ type: "spring", stiffness: 320, damping: 24 }}
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
@@ -96,16 +99,32 @@ export default function MobileMenu({
                 ))}
 
                 <motion.div
-                  variants={{ hidden: { opacity: 0, scale: 0.96 }, show: { opacity: 1, scale: 1 } }}
-                  transition={{ type: "spring", stiffness: 300, damping: 24, delay: 0.04 }}
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.96 },
+                    show: { opacity: 1, scale: 1 },
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 24,
+                    delay: 0.04,
+                  }}
                 >
                   <ThemeSwitch setClose={setOpenMenu} />
                 </motion.div>
 
                 <motion.div
                   className="mt-2"
-                  variants={{ hidden: { opacity: 0, scale: 0.96 }, show: { opacity: 1, scale: 1 } }}
-                  transition={{ type: "spring", stiffness: 300, damping: 24, delay: 0.08 }}
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.96 },
+                    show: { opacity: 1, scale: 1 },
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 24,
+                    delay: 0.08,
+                  }}
                 >
                   <ContactButton />
                 </motion.div>

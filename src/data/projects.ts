@@ -63,7 +63,14 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref: "",
     category: "Enterprise",
-    technologies: ["React", "Next.js", "Styled Components", "SCSS", "GraphQL", "Microservices"],
+    technologies: [
+      "React",
+      "Next.js",
+      "Styled Components",
+      "SCSS",
+      "GraphQL",
+      "Microservices",
+    ],
   },
   {
     name: "Rapid Store",
@@ -85,7 +92,12 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref: "",
     category: "Agency Work",
-    technologies: ["React", "GraphQL", "Chatbot Integration", "Responsive Design"],
+    technologies: [
+      "React",
+      "GraphQL",
+      "Chatbot Integration",
+      "Responsive Design",
+    ],
   },
   {
     name: "Rapid Fire (Social Media app)",
@@ -121,7 +133,12 @@ export const PROJECTS_CARD: ProjectCardProps[] = [
     sourceCodeHref: "",
     liveWebsiteHref: "",
     category: "Media Platform",
-    technologies: ["React", "Video API", "Content Management", "Responsive Design"],
+    technologies: [
+      "React",
+      "Video API",
+      "Content Management",
+      "Responsive Design",
+    ],
   },
 ];
 
@@ -133,8 +150,7 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     description:
       "In this article, we will discuss and understand debouncing and throttling in javascript, which are very useful when it comes to the performance of a website.",
     sourceCodeHref: "",
-    liveWebsiteHref:
-      "",
+    liveWebsiteHref: "",
     category: "Blog",
     technologies: ["JavaScript", "Performance", "Web Development"],
   },
@@ -145,8 +161,7 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     description:
       "Hooks are reusable functions. When you have component logic that needs to be used by multiple components, we can extract that logic to a custom Hook. Custom Hooks start with 'use'. Example...",
     sourceCodeHref: "",
-    liveWebsiteHref:
-      "",
+    liveWebsiteHref: "",
     category: "Blog",
     technologies: ["React", "Hooks", "JavaScript"],
   },
@@ -157,8 +172,7 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     description:
       "Developing is not only about getting your device and start coding directly for all day long. Right tools & guidance is all we need. If you're a developer these tools will definitely make your life hassle free. Let's dive in !!",
     sourceCodeHref: "",
-    liveWebsiteHref:
-      "",
+    liveWebsiteHref: "",
     category: "Blog",
     technologies: ["Productivity", "Developer Tools", "Workflow"],
   },
@@ -168,8 +182,7 @@ export const BLOGS_CARD: ProjectCardProps[] = [
     imageUrl: ["/images/projects/filter.png"],
     description: `Let's understand some important functions of them, that are "map", "filter" and "reduce". You definitely have heard about them. You probably know about them. But are they still confusing to you? Let's make them beautifully more clearer to you via beautiful examples.`,
     sourceCodeHref: "",
-    liveWebsiteHref:
-      "",
+    liveWebsiteHref: "",
     category: "Blog",
     technologies: ["JavaScript", "Array Methods", "Functional Programming"],
   },

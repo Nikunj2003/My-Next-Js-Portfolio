@@ -40,7 +40,9 @@ export default function ProjectCard(props: ProjectCardProps) {
   // If gate not ready yet, render non-animated static markup so that whileInView fires after gate opens.
   if (!animationsReady) {
     return (
-      <div className={`w-full overflow-hidden rounded-lg border border-accent/20 shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-1 ${backgroundColor}`}>
+      <div
+        className={`w-full overflow-hidden rounded-lg border border-accent/20 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 ${backgroundColor}`}
+      >
         <Corosel images={props.imageUrl} aspectRatio={1.9} />
         <div className="p-4 text-foreground sm:p-6">
           <div className="flex items-center gap-3">
@@ -48,7 +50,7 @@ export default function ProjectCard(props: ProjectCardProps) {
             <span className="text-lg font-semibold">{props.name}</span>
           </div>
           <div className="mt-3">
-            <p className="text-sm md:text-base text-muted-foreground">
+            <p className="text-sm text-muted-foreground md:text-base">
               {props.description}
             </p>
           </div>
@@ -56,7 +58,7 @@ export default function ProjectCard(props: ProjectCardProps) {
             {props.technologies.map((tech, index) => (
               <span
                 key={index}
-                className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent border border-accent/20"
+                className="rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-xs font-medium text-accent"
               >
                 {tech}
               </span>
@@ -97,7 +99,7 @@ export default function ProjectCard(props: ProjectCardProps) {
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ ease: "easeOut", duration: 0.4 }}
-      className={`w-full overflow-hidden rounded-lg border border-accent/20 shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-1 ${backgroundColor}`}
+      className={`w-full overflow-hidden rounded-lg border border-accent/20 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 ${backgroundColor}`}
     >
       <Corosel images={props.imageUrl} aspectRatio={1.9} />
       <div className="p-4 text-foreground sm:p-6">
@@ -106,7 +108,7 @@ export default function ProjectCard(props: ProjectCardProps) {
           <span className="text-lg font-semibold">{props.name}</span>
         </div>
         <div className="mt-3">
-          <p className="text-sm md:text-base text-muted-foreground">
+          <p className="text-sm text-muted-foreground md:text-base">
             {props.description}
           </p>
         </div>
@@ -114,7 +116,7 @@ export default function ProjectCard(props: ProjectCardProps) {
           {props.technologies.map((tech, index) => (
             <span
               key={index}
-              className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent border border-accent/20"
+              className="rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-xs font-medium text-accent"
             >
               {tech}
             </span>

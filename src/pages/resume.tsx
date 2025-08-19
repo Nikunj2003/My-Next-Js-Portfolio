@@ -53,7 +53,9 @@ export default function Resume() {
       <section className="mx-auto mb-14 mt-6 w-full gap-20 px-4 sm:mt-12 sm:px-6 md:px-10">
         <div className="mx-auto max-w-7xl">
           <div
-            className={`rmb mb-6 flex flex-col items-center justify-center gap-3 transition-transform duration-700 ${isVisible ? "translate-y-0" : "translate-y-10 opacity-0"}`}
+            className={`rmb mb-6 flex flex-col items-center justify-center gap-3 transition-transform duration-700 ${
+              isVisible ? "translate-y-0" : "translate-y-10 opacity-0"
+            }`}
           >
             <div className="flex items-center gap-3">
               <a

@@ -11,7 +11,9 @@ export default function Projects() {
 
   // Get unique categories from projects
   const categories = useMemo(() => {
-    const uniqueCategories = Array.from(new Set(PROJECTS_CARD.map(project => project.category)));
+    const uniqueCategories = Array.from(
+      new Set(PROJECTS_CARD.map((project) => project.category))
+    );
     return ["All", ...uniqueCategories.sort()];
   }, []);
 
@@ -20,7 +22,9 @@ export default function Projects() {
     if (selectedCategory === "All") {
       return PROJECTS_CARD;
     }
-    return PROJECTS_CARD.filter(project => project.category === selectedCategory);
+    return PROJECTS_CARD.filter(
+      (project) => project.category === selectedCategory
+    );
   }, [selectedCategory]);
 
   // Get project count for current filter
@@ -60,19 +64,19 @@ export default function Projects() {
       />
       <section className="mx-auto mb-40 mt-6 w-full gap-20 px-6 sm:mt-12 sm:px-14 md:px-20">
         <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-border bg-muted/20 p-6 backdrop-blur-lg shadow-lg ring-1 ring-zinc-200/50 dark:ring-accent/20 sm:p-8 md:p-12">
+          <div className="rounded-2xl border border-border bg-muted/20 p-6 shadow-lg ring-1 ring-zinc-200/50 backdrop-blur-lg dark:ring-accent/20 sm:p-8 md:p-12">
             <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center">
               <div className="flex flex-col gap-2">
                 <h1 className="bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
                   Projects
                 </h1>
                 <span className="text-sm text-muted-foreground">
-                  {selectedCategory === "All" 
-                    ? `Showing all ${totalProjects} projects` 
+                  {selectedCategory === "All"
+                    ? `Showing all ${totalProjects} projects`
                     : `Showing ${projectCount} ${selectedCategory.toLowerCase()} projects`}
                 </span>
               </div>
-              <span className="text-sm text-muted-foreground hidden sm:block">
+              <span className="hidden text-sm text-muted-foreground sm:block">
                 Curated work showcasing engineering, AI, and product craft
               </span>
             </div>
@@ -86,16 +90,23 @@ export default function Projects() {
                   className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
                     selectedCategory === category
                       ? "bg-accent text-accent-foreground shadow-lg shadow-accent/25"
-                      : "bg-muted/50 text-muted-foreground hover:bg-accent/10 hover:text-accent border border-border"
+                      : "border border-border bg-muted/50 text-muted-foreground hover:bg-accent/10 hover:text-accent"
                   }`}
                 >
                   {category}
                   {category === "All" && (
-                    <span className="ml-2 text-xs opacity-70">({totalProjects})</span>
+                    <span className="ml-2 text-xs opacity-70">
+                      ({totalProjects})
+                    </span>
                   )}
                   {category !== "All" && (
                     <span className="ml-2 text-xs opacity-70">
-                      ({PROJECTS_CARD.filter(p => p.category === category).length})
+                      (
+                      {
+                        PROJECTS_CARD.filter((p) => p.category === category)
+                          .length
+                      }
+                      )
                     </span>
                   )}
                 </button>
@@ -112,16 +123,17 @@ export default function Projects() {
             {/* Empty State */}
             {filteredProjects.length === 0 && (
               <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="text-4xl mb-4">🔍</div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">
+                <div className="mb-4 text-4xl">🔍</div>
+                <h3 className="mb-2 text-lg font-semibold text-foreground">
                   No projects found
                 </h3>
-                <p className="text-muted-foreground max-w-md">
-                  No projects match the selected category. Try selecting a different category or view all projects.
+                <p className="max-w-md text-muted-foreground">
+                  No projects match the selected category. Try selecting a
+                  different category or view all projects.
                 </p>
                 <button
                   onClick={() => setSelectedCategory("All")}
-                  className="mt-4 rounded-full bg-accent px-6 py-2 text-sm font-medium text-accent-foreground hover:bg-accent/90 transition-colors"
+                  className="mt-4 rounded-full bg-accent px-6 py-2 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent/90"
                 >
                   View All Projects
                 </button>

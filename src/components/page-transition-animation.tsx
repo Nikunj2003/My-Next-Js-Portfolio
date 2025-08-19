@@ -8,14 +8,14 @@ export default function PageTransitionAnimation() {
     <>
       {/* Full screen overlay - covers entire viewport */}
       <motion.div
-        className="fixed inset-0 z-[60] h-screen w-screen bg-gradient-to-br from-accent via-accent-light to-accent-dark flex items-center justify-center"
+        className="fixed inset-0 z-[60] flex h-screen w-screen items-center justify-center bg-gradient-to-br from-accent via-accent-light to-accent-dark"
         initial={{ clipPath: "circle(0% at 50% 50%)" }}
         animate={{ clipPath: "circle(100% at 50% 50%)" }}
         exit={{ clipPath: "circle(0% at 50% 50%)" }}
         transition={{
           duration: 0.6,
           ease: [0.76, 0, 0.24, 1],
-          clipPath: { duration: 0.8 }
+          clipPath: { duration: 0.8 },
         }}
       >
         {/* Central Star Logo */}
@@ -30,33 +30,37 @@ export default function PageTransitionAnimation() {
             ease: [0.76, 0, 0.24, 1],
             type: "spring",
             stiffness: 120,
-            damping: 12
+            damping: 12,
           }}
         >
           <motion.div
-            className="p-6 rounded-full bg-background/20 backdrop-blur-xl border-2 border-background/30 shadow-2xl"
+            className="rounded-full border-2 border-background/30 bg-background/20 p-6 shadow-2xl backdrop-blur-xl"
             animate={{
               rotate: [0, 360],
               scale: [1, 1.1, 1],
               boxShadow: [
                 "0 0 0px rgba(255,255,255,0)",
                 "0 0 30px rgba(255,255,255,0.5)",
-                "0 0 0px rgba(255,255,255,0)"
-              ]
+                "0 0 0px rgba(255,255,255,0)",
+              ],
             }}
             transition={{
               rotate: { duration: 4, repeat: Infinity, ease: "linear" },
               scale: { duration: 2, repeat: Infinity, repeatType: "reverse" },
-              boxShadow: { duration: 2, repeat: Infinity, repeatType: "reverse" }
+              boxShadow: {
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse",
+              },
             }}
           >
-            <Sparkles className="w-12 h-12 text-background drop-shadow-lg" />
+            <Sparkles className="h-12 w-12 text-background drop-shadow-lg" />
           </motion.div>
         </motion.div>
 
         {/* Radiating circles */}
         <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -65,20 +69,20 @@ export default function PageTransitionAnimation() {
           {[...Array(3)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute border border-background/30 rounded-full"
+              className="absolute rounded-full border border-background/30"
               style={{
                 width: `${120 + i * 60}px`,
                 height: `${120 + i * 60}px`,
               }}
               animate={{
                 scale: [1, 1.3, 1],
-                opacity: [0.3, 0.1, 0.3]
+                opacity: [0.3, 0.1, 0.3],
               }}
               transition={{
                 duration: 2 + i * 0.5,
                 repeat: Infinity,
                 delay: i * 0.2,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
           ))}
@@ -86,14 +90,14 @@ export default function PageTransitionAnimation() {
 
         {/* Floating particles around the logo */}
         <motion.div
-          className="absolute inset-0 pointer-events-none"
+          className="pointer-events-none absolute inset-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ delay: 0.25, duration: 0.3 }}
         >
           {[...Array(12)].map((_, i) => {
-            const angle = (i * 30) * (Math.PI / 180);
+            const angle = i * 30 * (Math.PI / 180);
             const radius = 150;
             const x = Math.round(Math.cos(angle) * radius * 100) / 100; // Round to 2 decimal places
             const y = Math.round(Math.sin(angle) * radius * 100) / 100; // Round to 2 decimal places
@@ -101,22 +105,22 @@ export default function PageTransitionAnimation() {
             return (
               <motion.div
                 key={i}
-                className="absolute w-2 h-2 bg-background/70 rounded-full"
+                className="absolute h-2 w-2 rounded-full bg-background/70"
                 style={{
                   left: "50%",
                   top: "50%",
-                  transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`
+                  transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`,
                 }}
                 animate={{
                   scale: [0, 1, 0],
                   opacity: [0, 0.8, 0],
-                  rotate: [0, 360]
+                  rotate: [0, 360],
                 }}
                 transition={{
                   duration: 2,
                   delay: i * 0.1,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
               />
             );
@@ -133,7 +137,7 @@ export default function PageTransitionAnimation() {
         transition={{
           delay: 0.05,
           duration: 0.7,
-          ease: [0.76, 0, 0.24, 1]
+          ease: [0.76, 0, 0.24, 1],
         }}
       />
 
@@ -146,7 +150,7 @@ export default function PageTransitionAnimation() {
         transition={{
           delay: 0.1,
           duration: 0.8,
-          ease: [0.76, 0, 0.24, 1]
+          ease: [0.76, 0, 0.24, 1],
         }}
       />
     </>

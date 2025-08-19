@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-import { AnimatePresence, AnimationProps, motion, wrap, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  AnimationProps,
+  motion,
+  wrap,
+  useReducedMotion,
+} from "framer-motion";
 import { BiSolidLeftArrow } from "react-icons/bi";
 
 import { classNames } from "@/utility/classNames";
@@ -63,10 +69,14 @@ export default function Corosel({ aspectRatio = 1, images }: CoroselProps) {
           initial="enter"
           animate="center"
           exit="exit"
-          transition={prefersReducedMotion ? { opacity: { duration: 0.2 } } : {
-            x: { type: "spring", stiffness: 220, damping: 28 },
-            opacity: { duration: 0.2 },
-          }}
+          transition={
+            prefersReducedMotion
+              ? { opacity: { duration: 0.2 } }
+              : {
+                  x: { type: "spring", stiffness: 220, damping: 28 },
+                  opacity: { duration: 0.2 },
+                }
+          }
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={1}

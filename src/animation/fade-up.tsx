@@ -37,7 +37,8 @@ export default function FadeUp({
   }
 
   return (
-    <motion.div key="ready"
+    <motion.div
+      key="ready"
       initial={initial}
       whileInView={whileInView ? animate : {}}
       animate={!whileInView ? animate : {}}

@@ -55,14 +55,14 @@ export default function Home() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebSite',
+              "@context": "https://schema.org",
+              "@type": "WebSite",
               name: siteMetadata.siteName,
               url: siteMetadata.siteUrl,
               potentialAction: {
-                '@type': 'SearchAction',
+                "@type": "SearchAction",
                 target: `${siteMetadata.siteUrl}/?q={search_term_string}`,
-                'query-input': 'required name=search_term_string',
+                "query-input": "required name=search_term_string",
               },
             }),
           }}
@@ -71,8 +71,8 @@ export default function Home() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Person',
+              "@context": "https://schema.org",
+              "@type": "Person",
               name: siteMetadata.author,
               url: siteMetadata.siteUrl,
               sameAs: [siteMetadata.github, siteMetadata.linkedin],
@@ -83,99 +83,108 @@ export default function Home() {
           }}
         />
       </Head>
-      
+
       {/* Enhanced Hero Section */}
       <LandingHero />
 
       <SectionDivider />
-      
+
       {/* About Summary Section */}
       <AnimatePresence>
         <FadeUp key="about-title" duration={0.6} whileInView={true}>
-      <section className="px-6 py-16 sm:px-14 md:px-20">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-border bg-muted/20 p-6 backdrop-blur-lg shadow-lg ring-1 ring-zinc-200/50 dark:ring-accent/20 sm:p-8 md:p-12">
-
+          <section className="px-6 py-16 sm:px-14 md:px-20">
+            <div className="mx-auto max-w-7xl">
+              <div className="rounded-2xl border border-border bg-muted/20 p-6 shadow-lg ring-1 ring-zinc-200/50 backdrop-blur-lg dark:ring-accent/20 sm:p-8 md:p-12">
                 <h2 className="text-3xl font-bold text-accent sm:text-4xl md:text-5xl">
                   About Me
                 </h2>
                 <p className="mt-6 text-lg font-medium leading-relaxed text-zinc-900 dark:text-zinc-300 sm:text-xl">
-                  I&apos;m a passionate software engineer who specializes in building intelligent, 
-                  end-to-end solutions at the intersection of{" "}
-                  <span className="text-accent font-semibold">AI and automation</span>. 
-                  With expertise spanning from enterprise-grade testing frameworks with Spring Boot 
-                  to sophisticated AI agents using AWS Bedrock, Azure AI, and Crew AI.
+                  I&apos;m a passionate software engineer who specializes in
+                  building intelligent, end-to-end solutions at the intersection
+                  of{" "}
+                  <span className="font-semibold text-accent">
+                    AI and automation
+                  </span>
+                  . With expertise spanning from enterprise-grade testing
+                  frameworks with Spring Boot to sophisticated AI agents using
+                  AWS Bedrock, Azure AI, and Crew AI.
                 </p>
                 <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   <div className="rounded-lg bg-accent/10 p-4 backdrop-blur-sm">
-                    <h3 className="font-semibold text-accent">Full Stack Development</h3>
+                    <h3 className="font-semibold text-accent">
+                      Full Stack Development
+                    </h3>
                     <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
                       MERN Stack, Next.js, Flutter, and modern web technologies
                     </p>
                   </div>
                   <div className="rounded-lg bg-accent/10 p-4 backdrop-blur-sm">
-                    <h3 className="font-semibold text-accent">AI & Machine Learning</h3>
+                    <h3 className="font-semibold text-accent">
+                      AI & Machine Learning
+                    </h3>
                     <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
                       Azure AI, OpenAI, LangChain, and intelligent automation
                     </p>
                   </div>
                   <div className="rounded-lg bg-accent/10 p-4 backdrop-blur-sm sm:col-span-2 lg:col-span-1">
-                    <h3 className="font-semibold text-accent">DevOps & Cloud</h3>
+                    <h3 className="font-semibold text-accent">
+                      DevOps & Cloud
+                    </h3>
                     <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
                       CI/CD pipelines, Docker, Kubernetes, and Azure services
                     </p>
                   </div>
                 </div>
-          </div>
-        </div>
-      </section>
+              </div>
+            </div>
+          </section>
         </FadeUp>
-    </AnimatePresence>
+      </AnimatePresence>
 
-     <SectionDivider />
+      <SectionDivider />
 
       {/* Skills Section with Enhanced Styling */}
       <SkillsShowcase skills={SKILLS_DATA} />
 
       <SectionDivider />
-      
+
       {/* Featured Projects Section */}
       <ProjectShowcase projects={PROJECT_SHOWCASE} />
 
       <SectionDivider />
-      
-      {/* Call to Action Section */}
-    <AnimatePresence>
-      <FadeUp key="cta-title" duration={0.6} whileInView={true}>
-      <section className="px-6 py-16 sm:px-14 md:px-20">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-border bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5 p-6 backdrop-blur-lg shadow-lg ring-1 ring-accent/20 sm:p-8 md:p-12 mb-16 sm:mb-20">
 
+      {/* Call to Action Section */}
+      <AnimatePresence>
+        <FadeUp key="cta-title" duration={0.6} whileInView={true}>
+          <section className="px-6 py-16 sm:px-14 md:px-20">
+            <div className="mx-auto max-w-7xl">
+              <div className="mb-16 rounded-2xl border border-border bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5 p-6 shadow-lg ring-1 ring-accent/20 backdrop-blur-lg sm:mb-20 sm:p-8 md:p-12">
                 <h2 className="text-center text-3xl font-bold text-accent sm:text-4xl md:text-5xl">
                   Let&apos;s Build Something Amazing
                 </h2>
                 <p className="mt-6 text-center text-lg font-medium text-zinc-900 dark:text-zinc-300 sm:text-xl">
-                  Ready to transform your ideas into reality? Let&apos;s collaborate on your next project.
+                  Ready to transform your ideas into reality? Let&apos;s
+                  collaborate on your next project.
                 </p>
                 <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
                   <Link
                     href="/projects"
-                    className="rounded-full bg-accent px-8 py-3 text-center text-lg font-semibold text-white transition-all duration-300 hover:bg-accent-light hover:scale-105 active:scale-95"
+                    className="rounded-full bg-accent px-8 py-3 text-center text-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-accent-light active:scale-95"
                   >
                     View My Work
                   </Link>
                   <Link
                     href="/about"
-                    className="rounded-full border-2 border-accent px-8 py-3 text-center text-lg font-semibold text-accent transition-all duration-300 hover:bg-accent hover:text-white hover:scale-105 active:scale-95"
+                    className="rounded-full border-2 border-accent px-8 py-3 text-center text-lg font-semibold text-accent transition-all duration-300 hover:scale-105 hover:bg-accent hover:text-white active:scale-95"
                   >
                     Learn More About Me
                   </Link>
                 </div>
-          </div>
-        </div>
-      </section>
-      </FadeUp>
-    </AnimatePresence>
+              </div>
+            </div>
+          </section>
+        </FadeUp>
+      </AnimatePresence>
     </>
   );
 }

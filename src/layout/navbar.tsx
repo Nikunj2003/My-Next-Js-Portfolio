@@ -42,7 +42,7 @@ export default function Navbar({ routes }: NavbarProps) {
   if (!mounted) return null;
 
   return (
-    <motion.header 
+    <motion.header
       className="sticky top-0 z-50 mt-2 px-6 py-8 sm:mt-8 sm:px-14 md:px-20"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -50,7 +50,7 @@ export default function Navbar({ routes }: NavbarProps) {
     >
       <div className="mx-auto flex items-center justify-between lg:max-w-7xl">
         {/* Mobile Menu Logo for Small Screens */}
-        <motion.div 
+        <motion.div
           className="md:hidden"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -59,15 +59,16 @@ export default function Navbar({ routes }: NavbarProps) {
         </motion.div>
 
         {/* Navigation Links for Medium+ Screens */}
-        <motion.nav 
+        <motion.nav
           className="hidden flex-grow items-center justify-between gap-2 rounded-full px-2 py-2 shadow-lg ring-1 ring-zinc-200/80 backdrop-blur-xl dark:ring-accent/30 md:flex"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
           style={{
-            background: resolvedTheme === "dark" 
-              ? "rgba(0, 0, 0, 0.3)" 
-              : "rgba(255, 255, 255, 0.3)"
+            background:
+              resolvedTheme === "dark"
+                ? "rgba(0, 0, 0, 0.3)"
+                : "rgba(255, 255, 255, 0.3)",
           }}
         >
           <ul className="flex gap-2 text-sm font-medium">
@@ -113,7 +114,7 @@ export default function Navbar({ routes }: NavbarProps) {
           </ul>
 
           {/* Right Side: Theme Switch & Contact Button */}
-          <motion.div 
+          <motion.div
             className="ml-auto flex items-center gap-4"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -126,17 +127,14 @@ export default function Navbar({ routes }: NavbarProps) {
             >
               <ThemeSwitch />
             </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <ContactButton />
             </motion.div>
           </motion.div>
         </motion.nav>
 
         {/* Desktop Menu Logo */}
-        <motion.div 
+        <motion.div
           className="hidden md:block"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

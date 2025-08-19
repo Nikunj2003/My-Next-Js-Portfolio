@@ -51,7 +51,7 @@ export default function ContactFormModal({
                   <span>Send Message</span>
                 </Dialog.Title>
                 <button
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground transition-all duration-200 hover:bg-accent hover:text-accent-foreground hover:scale-105"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground transition-all duration-200 hover:scale-105 hover:bg-accent hover:text-accent-foreground"
                   onClick={() => setShowModal(false)}
                   aria-label="Close modal"
                 >

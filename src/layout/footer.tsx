@@ -14,12 +14,10 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-transparent">
-
       {/* Main Footer Content */}
-      <div className="rounded-t-2xl border-t border-border bg-muted/20 backdrop-blur-lg shadow-md ring-1 ring-zinc-200 dark:ring-accent/50">
+      <div className="rounded-t-2xl border-t border-border bg-muted/20 shadow-md ring-1 ring-zinc-200 backdrop-blur-lg dark:ring-accent/50">
         <div className="mx-auto max-w-7xl px-6 py-12 sm:px-14 md:px-20">
           <div className="grid gap-12 md:grid-cols-3 lg:gap-16">
-
             {/* Brand Section */}
             <div className="space-y-6">
               <div>
@@ -35,7 +33,7 @@ export default function Footer() {
                   href={siteMetadata.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent transition-all duration-300 hover:bg-accent hover:text-accent-foreground hover:scale-110 hover:shadow-lg"
+                  className="group flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent transition-all duration-300 hover:scale-110 hover:bg-accent hover:text-accent-foreground hover:shadow-lg"
                   aria-label="GitHub Profile"
                 >
                   <GithubIcon className="h-5 w-5" />
@@ -44,7 +42,7 @@ export default function Footer() {
                   href={siteMetadata.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent transition-all duration-300 hover:bg-accent hover:text-accent-foreground hover:scale-110 hover:shadow-lg"
+                  className="group flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent transition-all duration-300 hover:scale-110 hover:bg-accent hover:text-accent-foreground hover:shadow-lg"
                   aria-label="LinkedIn Profile"
                 >
                   <LinkedinIcon className="h-5 w-5" />
@@ -53,7 +51,7 @@ export default function Footer() {
                   href={`mailto:${siteMetadata.email}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent transition-all duration-300 hover:bg-accent hover:text-accent-foreground hover:scale-110 hover:shadow-lg"
+                  className="group flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent transition-all duration-300 hover:scale-110 hover:bg-accent hover:text-accent-foreground hover:shadow-lg"
                   aria-label="Email Contact"
                 >
                   <MailIcon className="h-5 w-5" />
@@ -63,7 +61,9 @@ export default function Footer() {
 
             {/* Quick Links */}
             <div className="space-y-6">
-              <h4 className="text-lg font-semibold text-foreground">Quick Links</h4>
+              <h4 className="text-lg font-semibold text-foreground">
+                Quick Links
+              </h4>
               <nav className="flex flex-col space-y-3">
                 {quickLinks.map((link) => (
                   <Link
@@ -79,10 +79,12 @@ export default function Footer() {
 
             {/* Contact Info */}
             <div className="space-y-6">
-              <h4 className="text-lg font-semibold text-foreground">Get in Touch</h4>
+              <h4 className="text-lg font-semibold text-foreground">
+                Get in Touch
+              </h4>
               <div className="space-y-4">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                  <p className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
                     Email
                   </p>
                   <a
@@ -93,7 +95,7 @@ export default function Footer() {
                   </a>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                  <p className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
                     Website
                   </p>
                   <a
@@ -102,7 +104,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="text-foreground transition-colors duration-200 hover:text-accent"
                   >
-                    {siteMetadata.siteUrl.replace('https://', '')}
+                    {siteMetadata.siteUrl.replace("https://", "")}
                   </a>
                 </div>
               </div>

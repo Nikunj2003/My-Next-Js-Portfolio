@@ -8,9 +8,9 @@ import heroProfileImg from "@/public/images/heroProfile.png";
 export default function AboutHero() {
   return (
     <div className="mx-auto mt-0 max-w-7xl px-6 py-20 sm:px-14 md:mt-20 md:px-20 lg:mt-0">
-      <div className="relative overflow-hidden rounded-2xl border border-border bg-muted/20 p-6 backdrop-blur-lg shadow-lg ring-1 ring-zinc-200/50 dark:ring-accent/20 sm:p-8 md:p-12">
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-muted/20 p-6 shadow-lg ring-1 ring-zinc-200/50 backdrop-blur-lg dark:ring-accent/20 sm:p-8 md:p-12">
         {/* Background accents */}
-        <div className="pointer-events-none absolute -top-10 -right-10 h-56 w-56 rounded-full bg-accent/15 blur-3xl sm:h-72 sm:w-72" />
+        <div className="bg-accent/15 pointer-events-none absolute -right-10 -top-10 h-56 w-56 rounded-full blur-3xl sm:h-72 sm:w-72" />
         <div className="pointer-events-none absolute -bottom-10 -left-10 h-72 w-72 rounded-full bg-accent/10 blur-3xl sm:h-96 sm:w-96" />
 
         <div className="flex flex-col items-center gap-6 text-center lg:flex-row lg:text-left">
@@ -21,7 +21,7 @@ export default function AboutHero() {
                   src={heroProfileImg}
                   width={800}
                   height={800}
-                  className="h-auto w-full px-0 xl:px-16 rounded-xl border border-accent/10"
+                  className="h-auto w-full rounded-xl border border-accent/10 px-0 xl:px-16"
                   alt="Portrait of Nikunj Khitha"
                   priority={false}
                 />
@@ -37,12 +37,21 @@ export default function AboutHero() {
               </FadeUp>
               <FadeUp key="description-1" duration={0.6} delay={0.2}>
                 <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-zinc-900 dark:text-zinc-300 sm:text-lg">
-                  I&apos;m a software engineer passionate about building intelligent, end-to-end solutions at the intersection of AI and automation. My experience ranges from developing enterprise-grade testing frameworks with Spring Boot to engineering sophisticated AI agents using AWS Bedrock, Azure AI, and Crew AI.
+                  I&apos;m a software engineer passionate about building
+                  intelligent, end-to-end solutions at the intersection of AI
+                  and automation. My experience ranges from developing
+                  enterprise-grade testing frameworks with Spring Boot to
+                  engineering sophisticated AI agents using AWS Bedrock, Azure
+                  AI, and Crew AI.
                 </p>
               </FadeUp>
               <FadeUp key="description-2" duration={0.6} delay={0.35}>
                 <p className="mx-auto mt-4 max-w-3xl text-base font-medium leading-relaxed text-zinc-900 dark:text-zinc-300 sm:text-lg">
-                  Explore my portfolio to see how I apply my expertise. From creating AI-powered chatbots with Node.js and FastAPI to implementing robust CI/CD pipelines and developing resilient mobile apps with Flutter, I am dedicated to delivering high-impact, production-ready code.
+                  Explore my portfolio to see how I apply my expertise. From
+                  creating AI-powered chatbots with Node.js and FastAPI to
+                  implementing robust CI/CD pipelines and developing resilient
+                  mobile apps with Flutter, I am dedicated to delivering
+                  high-impact, production-ready code.
                 </p>
               </FadeUp>
 
@@ -97,7 +106,9 @@ export default function AboutHero() {
                     height={14}
                   />
                 </div>
-                <span className="text-lg font-medium text-foreground">India</span>
+                <span className="text-lg font-medium text-foreground">
+                  India
+                </span>
               </FadeRight>
             </AnimatePresence>
           </div>

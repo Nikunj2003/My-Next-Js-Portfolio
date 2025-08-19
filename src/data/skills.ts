@@ -5,7 +5,7 @@ import {
   SiOpenai,
   SiSpringboot,
   SiPhp,
-  SiVercel
+  SiVercel,
 } from "react-icons/si";
 import { type SkillsShowcaseProps } from "@/components/skills/skills-showcase";
 import JavascriptSvg from "@/public/icons/javascript.svg";
@@ -39,7 +39,7 @@ import ADevOpsSvg from "@/public/icons/devops.svg";
 import JiraSvg from "@/public/icons/jira.svg";
 import NpmSvg from "@/public/icons/npm.svg";
 import SwaggerSvg from "@/public/icons/swagger.svg";
-import PiSvg from "@/public/icons/pi.svg"
+import PiSvg from "@/public/icons/pi.svg";
 import ArduinoSvg from "@/public/icons/arduino.svg";
 
 export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
@@ -219,5 +219,5 @@ export const SKILLS_DATA: SkillsShowcaseProps["skills"] = [
         icon: PythonSvg,
       },
     ],
-  }
+  },
 ];

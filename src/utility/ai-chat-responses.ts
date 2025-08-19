@@ -7,7 +7,8 @@ const NIKUNJ_KNOWLEDGE = {
     github: "https://github.com/Nikunj2003",
     linkedin: "https://www.linkedin.com/in/Nikunj-Khitha/",
     website: "https://nikunj.tech",
-    description: "AI Specialist and Full Stack Developer passionate about creating innovative web and mobile solutions"
+    description:
+      "AI Specialist and Full Stack Developer passionate about creating innovative web and mobile solutions",
   },
   experience: [
     {
@@ -21,8 +22,8 @@ const NIKUNJ_KNOWLEDGE = {
         "Won internal AI challenge by creating system that automates documentation for 250+ tools",
         "Reduced documentation update times from 72 hours to 45 minutes",
         "Implemented AI-based auto-heal feature reducing UI test flakiness by 99%",
-        "Built n8n pipelines for automated GitHub PR reviews"
-      ]
+        "Built n8n pipelines for automated GitHub PR reviews",
+      ],
     },
     {
       title: "Software Development Engineer (SDE) Intern",
@@ -35,8 +36,8 @@ const NIKUNJ_KNOWLEDGE = {
         "Reduced deployment time by 42%",
         "Engineered 'Fantasy GPT' chatbot for sports fans with 98% accuracy using RAG and LangGraph",
         "Built 'AIKO' media assistant for personalized sports highlights with real-time commentary",
-        "Created scalable ETL pipelines with MSSQL and Azure ensuring 100% data accuracy"
-      ]
+        "Created scalable ETL pipelines with MSSQL and Azure ensuring 100% data accuracy",
+      ],
     },
     {
       title: "Software Development Intern",
@@ -49,54 +50,103 @@ const NIKUNJ_KNOWLEDGE = {
         "Implemented role-based access control handling 5,000+ files",
         "Optimized file retrieval speed by 25%",
         "Developed MERN conference room booking system",
-        "Reduced booking times by 60% and scheduling errors by 40%"
-      ]
-    }
+        "Reduced booking times by 60% and scheduling errors by 40%",
+      ],
+    },
   ],
   skills: {
-    fullstack: ["React", "Next.js", "Node.js", "Express", "FastAPI", "Spring Boot", "Flutter", "TailwindCSS", "MongoDB", "MySQL", "Firebase", "Auth0"],
-    ai_ml: ["OpenAI", "Azure AI", "Vercel AI SDK", "LLaMA AI", "Prompt Engineering", "LangChain", "RAG", "LangGraph"],
-    devops: ["CI/CD", "Docker", "GitHub Actions", "API Gateway", "Kubernetes", "Jenkins"],
-    tools: ["Git", "GitHub", "Azure DevOps", "Jira", "Postman", "Swagger", "Vercel", "Microsoft Azure"],
-    languages: ["JavaScript", "TypeScript", "Java", "Dart", "PHP", "Python"]
+    fullstack: [
+      "React",
+      "Next.js",
+      "Node.js",
+      "Express",
+      "FastAPI",
+      "Spring Boot",
+      "Flutter",
+      "TailwindCSS",
+      "MongoDB",
+      "MySQL",
+      "Firebase",
+      "Auth0",
+    ],
+    ai_ml: [
+      "OpenAI",
+      "Azure AI",
+      "Vercel AI SDK",
+      "LLaMA AI",
+      "Prompt Engineering",
+      "LangChain",
+      "RAG",
+      "LangGraph",
+    ],
+    devops: [
+      "CI/CD",
+      "Docker",
+      "GitHub Actions",
+      "API Gateway",
+      "Kubernetes",
+      "Jenkins",
+    ],
+    tools: [
+      "Git",
+      "GitHub",
+      "Azure DevOps",
+      "Jira",
+      "Postman",
+      "Swagger",
+      "Vercel",
+      "Microsoft Azure",
+    ],
+    languages: ["JavaScript", "TypeScript", "Java", "Dart", "PHP", "Python"],
   },
   projects: [
     {
       name: "EarthLink",
       category: "Enterprise",
-      technologies: ["React", "Next.js", "Styled Components", "SCSS", "GraphQL", "Microservices"],
-      description: "American Internet service provider platform"
+      technologies: [
+        "React",
+        "Next.js",
+        "Styled Components",
+        "SCSS",
+        "GraphQL",
+        "Microservices",
+      ],
+      description: "American Internet service provider platform",
     },
     {
       name: "Rapid Store",
       category: "E-commerce",
       technologies: ["React", "Razorpay", "Context API", "Authentication"],
-      description: "E-commerce platform for electronics and gadgets with payment integration"
+      description:
+        "E-commerce platform for electronics and gadgets with payment integration",
     },
     {
       name: "Fantasy GPT",
       category: "AI/ML",
       technologies: ["RAG", "LangGraph", "Node.js", "AI"],
-      description: "Sports chatbot with 98% accuracy for fantasy sports enthusiasts"
+      description:
+        "Sports chatbot with 98% accuracy for fantasy sports enthusiasts",
     },
     {
       name: "AIKO",
-      category: "AI/ML", 
+      category: "AI/ML",
       technologies: ["AI", "Real-time Processing", "Media"],
-      description: "Media assistant generating personalized sports highlights with commentary"
+      description:
+        "Media assistant generating personalized sports highlights with commentary",
     },
     {
       name: "Rapid UI",
       category: "Open Source",
       technologies: ["CSS", "JavaScript", "Design System"],
-      description: "Open source CSS library with pre-defined styled classes and utilities"
+      description:
+        "Open source CSS library with pre-defined styled classes and utilities",
     },
     {
       name: "Rapid Fire",
       category: "Social Media",
       technologies: ["React", "Redux Toolkit", "Dark Mode"],
-      description: "Social media app for sharing moments and connecting"
-    }
+      description: "Social media app for sharing moments and connecting",
+    },
   ],
   achievements: [
     "Won internal AI challenge at Armorcode",
@@ -105,8 +155,8 @@ const NIKUNJ_KNOWLEDGE = {
     "Built AI systems with 98% accuracy",
     "Reduced UI test flakiness by 99% with AI-based auto-heal",
     "Improved national dashboard data accuracy by 30%",
-    "Created system reducing documentation time from 72 hours to 45 minutes"
-  ]
+    "Created system reducing documentation time from 72 hours to 45 minutes",
+  ],
 };
 
 // Simple keyword matching for responses
@@ -114,10 +164,17 @@ export async function getAIResponse(userMessage: string): Promise<string> {
   const message = userMessage.toLowerCase();
 
   // Simulate AI processing delay
-  await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+  await new Promise((resolve) =>
+    setTimeout(resolve, 1000 + Math.random() * 2000)
+  );
 
   // Experience related queries
-  if (message.includes('experience') || message.includes('work') || message.includes('job') || message.includes('intern')) {
+  if (
+    message.includes("experience") ||
+    message.includes("work") ||
+    message.includes("job") ||
+    message.includes("intern")
+  ) {
     return `Nikunj has diverse experience across multiple companies:
 
 🔧 **Current: Automation Intern at Armorcode Inc. (Jan 2025 - Aug 2025)**
@@ -141,7 +198,13 @@ Would you like to know more about any specific role or project?`;
   }
 
   // Skills related queries
-  if (message.includes('skill') || message.includes('technology') || message.includes('tech') || message.includes('language') || message.includes('framework')) {
+  if (
+    message.includes("skill") ||
+    message.includes("technology") ||
+    message.includes("tech") ||
+    message.includes("language") ||
+    message.includes("framework")
+  ) {
     return `Nikunj has expertise across multiple technology stacks:
 
 🌐 **Full Stack Development:**
@@ -163,7 +226,12 @@ He's particularly strong in AI development, having built chatbots with 98% accur
   }
 
   // Projects related queries
-  if (message.includes('project') || message.includes('portfolio') || message.includes('built') || message.includes('created')) {
+  if (
+    message.includes("project") ||
+    message.includes("portfolio") ||
+    message.includes("built") ||
+    message.includes("created")
+  ) {
     return `Nikunj has worked on diverse projects spanning enterprise, AI, and open source:
 
 🌍 **EarthLink** - Enterprise ISP platform using React, Next.js, GraphQL & Microservices
@@ -182,7 +250,13 @@ Each project demonstrates his ability to work across different domains - from en
   }
 
   // AI related queries
-  if (message.includes('ai') || message.includes('artificial intelligence') || message.includes('machine learning') || message.includes('chatbot') || message.includes('gpt')) {
+  if (
+    message.includes("ai") ||
+    message.includes("artificial intelligence") ||
+    message.includes("machine learning") ||
+    message.includes("chatbot") ||
+    message.includes("gpt")
+  ) {
     return `Nikunj is passionate about AI and has significant experience in this field:
 
 🏆 **AI Achievements:**
@@ -209,7 +283,13 @@ His AI work focuses on practical applications that solve real business problems 
   }
 
   // Contact related queries
-  if (message.includes('contact') || message.includes('email') || message.includes('reach') || message.includes('hire') || message.includes('linkedin')) {
+  if (
+    message.includes("contact") ||
+    message.includes("email") ||
+    message.includes("reach") ||
+    message.includes("hire") ||
+    message.includes("linkedin")
+  ) {
     return `You can connect with Nikunj through various channels:
 
 📧 **Email:** njkhitha2003@gmail.com
@@ -221,7 +301,13 @@ He's currently working as an Automation Intern at Armorcode and is passionate ab
   }
 
   // Education related queries
-  if (message.includes('education') || message.includes('degree') || message.includes('university') || message.includes('college') || message.includes('study')) {
+  if (
+    message.includes("education") ||
+    message.includes("degree") ||
+    message.includes("university") ||
+    message.includes("college") ||
+    message.includes("study")
+  ) {
     return `While specific educational details aren't provided in my knowledge base, I can tell you that Nikunj has demonstrated strong technical expertise through his internships and projects. His experience spans multiple companies and he's shown proficiency in:
 
 - Software Development Engineering
@@ -235,7 +321,13 @@ Would you like to know more about his specific technical experience or projects?
   }
 
   // Current work queries
-  if (message.includes('current') || message.includes('now') || message.includes('present') || message.includes('today') || message.includes('armorcode')) {
+  if (
+    message.includes("current") ||
+    message.includes("now") ||
+    message.includes("present") ||
+    message.includes("today") ||
+    message.includes("armorcode")
+  ) {
     return `Currently, Nikunj is working as an **Automation Intern at Armorcode Inc.** (Jan 2025 - Aug 2025), where he's:
 
 🔬 **Building Advanced Testing Solutions:**
@@ -256,7 +348,13 @@ This role showcases his expertise in automation, AI, and building robust testing
   }
 
   // General greeting or introduction
-  if (message.includes('hello') || message.includes('hi') || message.includes('who') || message.includes('tell me about') || message.includes('introduce')) {
+  if (
+    message.includes("hello") ||
+    message.includes("hi") ||
+    message.includes("who") ||
+    message.includes("tell me about") ||
+    message.includes("introduce")
+  ) {
     return `Hello! I'm here to tell you about **Nikunj Khitha** - a talented Software Development Engineer with a passion for AI and full-stack development.
 
 🎯 **Quick Overview:**
@@ -280,7 +378,12 @@ What would you like to know more about?`;
   }
 
   // Achievements and accomplishments
-  if (message.includes('achievement') || message.includes('award') || message.includes('accomplishment') || message.includes('recognition')) {
+  if (
+    message.includes("achievement") ||
+    message.includes("award") ||
+    message.includes("accomplishment") ||
+    message.includes("recognition")
+  ) {
     return `Nikunj has several notable achievements throughout his career:
 
 🏆 **Competition & Recognition:**

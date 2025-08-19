@@ -16,10 +16,7 @@ export default function FloatingChatButton() {
       {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
-          <ChatWindow
-            isOpen={isOpen}
-            onClose={() => setIsOpen(false)}
-          />
+          <ChatWindow isOpen={isOpen} onClose={() => setIsOpen(false)} />
         )}
       </AnimatePresence>
 
@@ -45,7 +42,7 @@ export default function FloatingChatButton() {
           type: "spring",
           stiffness: 260,
           damping: 20,
-          delay: 0.5
+          delay: 0.5,
         }}
         aria-label={isOpen ? "Close chat" : "Open chat"}
       >
@@ -84,19 +81,19 @@ export default function FloatingChatButton() {
         <AnimatePresence>
           {!isOpen && (
             <motion.div
-              className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-destructive"
+              className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-destructive"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
               transition={{ delay: 0.8, type: "spring" }}
             >
               <motion.div
-                className="w-full h-full rounded-full bg-destructive"
+                className="h-full w-full rounded-full bg-destructive"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{
                   duration: 2,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
               />
             </motion.div>

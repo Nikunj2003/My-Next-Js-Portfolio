@@ -30,6 +30,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const [shouldAutoScroll, setShouldAutoScroll] = useState(false);
 
@@ -74,6 +75,10 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, aiMessage]);
+      // After AI response, scroll last user message to top
+      setTimeout(() => {
+        scrollUserMessageToTop(userMessage.id);
+      }, 50);
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -187,11 +192,15 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       </motion.div>
 
       {/* Messages */}
-      <div className="flex-1 space-y-4 overflow-y-auto p-4">
+      <div
+        ref={messagesContainerRef}
+        className="flex-1 space-y-4 overflow-y-auto p-4"
+      >
         <AnimatePresence mode="popLayout">
           {messages.map((message, index) => (
             <motion.div
               key={message.id}
+              data-message-id={message.id}
               initial={
                 prefersReducedMotion
                   ? { opacity: 0 }
@@ -251,7 +260,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                 className={classNames(
                   "max-w-[80%] rounded-lg px-3 py-2 text-sm",
                   message.sender === "user"
-                    ? "bg-accent text-accent-foreground"
+                    ? "bg-accent text-white dark:text-black"
                     : "bg-muted text-muted-foreground"
                 )}
                 whileHover={{ scale: 1.02 }}
@@ -377,7 +386,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask about Nikunj's experience, skills, or projects..."
+            placeholder="Ask about Nikunj's experience, skills..."
             className={classNames(
               "flex-1 text-sm",
               "rounded-lg border border-border bg-background",
@@ -401,15 +410,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
             )}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            animate={{
-              rotate: isLoading ? 360 : 0,
-            }}
             transition={{
-              rotate: {
-                duration: 1,
-                repeat: isLoading ? Infinity : 0,
-                ease: "linear",
-              },
               scale: {
                 type: "spring",
                 stiffness: 400,
@@ -424,4 +425,21 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       </motion.div>
     </motion.div>
   );
+}
+
+// Helper: scroll the specified user message to the top of the container
+function scrollUserMessageToTop(messageId: string) {
+  // Find the message element & its scroll container
+  const messageEl = document.querySelector<HTMLElement>(
+    `[data-message-id="${messageId}"]`
+  );
+  const messagesWrapper = messageEl?.closest(
+    '.overflow-y-auto'
+  ) as HTMLElement | null;
+  if (!messageEl || !messagesWrapper) return;
+  const containerRect = messagesWrapper.getBoundingClientRect();
+  const elRect = messageEl.getBoundingClientRect();
+  const GAP = 12; // px gap from the top
+  const offset = elRect.top - containerRect.top + messagesWrapper.scrollTop - GAP;
+  messagesWrapper.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
 }

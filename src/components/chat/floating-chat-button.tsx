@@ -11,6 +11,13 @@ export default function FloatingChatButton() {
     setIsOpen(!isOpen);
   };
 
+  // Variants for smoother morph-style transition between icons
+  const iconVariants = {
+    enter: { rotate: -90, opacity: 0, scale: 0.4 },
+    center: { rotate: 0, opacity: 1, scale: 1 },
+    exit: { rotate: 90, opacity: 0, scale: 0.4 },
+  } as const;
+
   return (
     <>
       {/* Chat Window */}
@@ -49,31 +56,26 @@ export default function FloatingChatButton() {
         <motion.div
           className="relative"
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
-          <AnimatePresence mode="wait">
-            {isOpen ? (
-              <motion.div
-                key="close"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.div
+              key={isOpen ? "close" : "chat"}
+              variants={iconVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ type: "spring", stiffness: 340, damping: 24 }}
+              className="flex items-center justify-center"
+            >
+              {isOpen ? (
                 <X size={24} />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="chat"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                whileHover={{ y: -2 }}
-              >
-                <MessageCircle size={24} />
-              </motion.div>
-            )}
+              ) : (
+                <motion.span whileHover={{ y: -2 }}>
+                  <MessageCircle size={24} />
+                </motion.span>
+              )}
+            </motion.div>
           </AnimatePresence>
         </motion.div>
 

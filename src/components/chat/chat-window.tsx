@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, User, Bot, X, Minimize2 } from "lucide-react";
+import { Send, User, Bot, X } from "lucide-react";
 import { classNames } from "@/utility/classNames";
 import { getAIResponse } from "@/utility/ai-chat-responses";
 

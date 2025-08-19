@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, User, Bot, X } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { classNames } from "@/utility/classNames";
 import { getAIResponse } from "@/utility/ai-chat-responses";
 
@@ -67,7 +69,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
     setShouldAutoScroll(true); // Only scroll when user sends a message
 
     try {
-      const aiResponse = await getAIResponse(inputValue.trim());
+      const aiResponse = await getAIResponse(inputValue.trim(), messages);
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: aiResponse,
@@ -266,14 +268,86 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                <motion.p
-                  className="whitespace-pre-wrap leading-relaxed"
+                <motion.div
+                  className="leading-relaxed"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3, duration: 0.5 }}
                 >
-                  {message.content}
-                </motion.p>
+                  {message.sender === "ai" ? (
+                    <div className="chat-markdown prose prose-sm max-w-none dark:prose-invert">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          // Custom styling for markdown elements
+                          h1: ({ children }) => (
+                            <h1 className="text-lg font-bold mb-2 text-foreground">{children}</h1>
+                          ),
+                          h2: ({ children }) => (
+                            <h2 className="text-base font-semibold mb-2 text-foreground">{children}</h2>
+                          ),
+                          h3: ({ children }) => (
+                            <h3 className="text-sm font-semibold mb-1 text-foreground">{children}</h3>
+                          ),
+                          p: ({ children }) => (
+                            <p className="mb-2 last:mb-0 text-inherit">{children}</p>
+                          ),
+                          ul: ({ children }) => (
+                            <ul className="list-disc list-inside mb-2 space-y-1 text-inherit">{children}</ul>
+                          ),
+                          ol: ({ children }) => (
+                            <ol className="list-decimal list-inside mb-2 space-y-1 text-inherit">{children}</ol>
+                          ),
+                          li: ({ children }) => (
+                            <li className="text-inherit">{children}</li>
+                          ),
+                          strong: ({ children }) => (
+                            <strong className="font-semibold text-inherit">{children}</strong>
+                          ),
+                          em: ({ children }) => (
+                            <em className="italic text-inherit">{children}</em>
+                          ),
+                          code: ({ children, className }) => {
+                            const isInline = !className;
+                            return isInline ? (
+                              <code className="bg-muted/50 px-1 py-0.5 rounded text-xs font-mono text-inherit">
+                                {children}
+                              </code>
+                            ) : (
+                              <code className="block bg-muted/50 p-2 rounded text-xs font-mono overflow-x-auto text-inherit">
+                                {children}
+                              </code>
+                            );
+                          },
+                          pre: ({ children }) => (
+                            <pre className="bg-muted/50 p-2 rounded text-xs font-mono overflow-x-auto mb-2 text-inherit">
+                              {children}
+                            </pre>
+                          ),
+                          blockquote: ({ children }) => (
+                            <blockquote className="border-l-2 border-accent pl-3 mb-2 text-inherit opacity-80">
+                              {children}
+                            </blockquote>
+                          ),
+                          a: ({ children, href }) => (
+                            <a
+                              href={href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-accent hover:text-accent/80 underline"
+                            >
+                              {children}
+                            </a>
+                          ),
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
+                  ) : (
+                    <p className="whitespace-pre-wrap">{message.content}</p>
+                  )}
+                </motion.div>
                 <motion.span
                   className="mt-1 block text-xs opacity-70"
                   initial={{ opacity: 0, x: -10 }}

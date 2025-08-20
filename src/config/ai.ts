@@ -1,6 +1,3 @@
-// Centralized AI configuration: model selection & system prompt.
-// Server-only: Do NOT import this into client components.
-
 export const AI_MODEL = "meta/llama-3.1-70b-instruct";
 
 export const SYSTEM_PROMPT = `You are an AI assistant for Nikunj Khitha's portfolio website. Your role is to provide helpful, accurate information about Nikunj's professional background, skills, experience, and projects.

@@ -257,156 +257,6 @@ function ActionIndicator({ action }: { action: ToolAction }) {
   );
 }
 
-// Enhanced loading indicator for tool execution
-function ToolExecutionLoadingIndicator() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const steps = [
-    { icon: Bot, text: "Processing request..." },
-    { icon: Loader2, text: "Executing tools..." },
-    { icon: CheckCircle, text: "Generating response..." }
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentStep((prev) => (prev + 1) % steps.length);
-    }, 1500);
-
-    return () => clearInterval(interval);
-  }, [steps.length]);
-
-  const CurrentIcon = steps[currentStep].icon;
-
-  return (
-    <motion.div
-      className="flex justify-start gap-3"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
-    >
-      <motion.div
-        className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent"
-        animate={{ rotate: currentStep === 1 ? 360 : 0 }}
-        transition={{ duration: 2, repeat: currentStep === 1 ? Infinity : 0, ease: "linear" }}
-      >
-        <CurrentIcon size={16} className="text-white dark:text-black" />
-      </motion.div>
-      <motion.div
-        className="min-w-[120px] rounded-lg bg-muted px-4 py-3"
-        animate={{ scale: [1, 1.02, 1] }}
-        transition={{
-          duration: 1.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      >
-        <div className="flex items-center gap-2">
-          <motion.span
-            key={currentStep}
-            className="text-xs text-muted-foreground"
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            transition={{ duration: 0.3 }}
-          >
-            {steps[currentStep].text}
-          </motion.span>
-          <div className="flex gap-1">
-            {[0, 0.2, 0.4].map((delay, i) => (
-              <motion.div
-                key={i}
-                className="h-1.5 w-1.5 rounded-full bg-accent"
-                animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0.5, 1, 0.5],
-                }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  delay,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Progress bar */}
-        <div className="mt-2 flex gap-0.5">
-          <div className="h-0.5 flex-1 overflow-hidden rounded-full bg-accent/30">
-            <motion.div
-              className="h-full rounded-full bg-accent"
-              initial={{ x: "-100%" }}
-              animate={{ x: "100%" }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Step indicators */}
-        <div className="mt-2 flex justify-center gap-1">
-          {steps.map((_, index) => (
-            <motion.div
-              key={index}
-              className={classNames(
-                "h-1 w-1 rounded-full transition-colors",
-                index === currentStep ? "bg-accent" : "bg-accent/30"
-              )}
-              animate={{
-                scale: index === currentStep ? 1.2 : 1,
-              }}
-              transition={{ type: "spring", stiffness: 300 }}
-            />
-          ))}
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-// Lightweight inline typing indicator bubble to avoid large vertical gaps before AI response arrives
-function AITypingIndicator() {
-  return (
-    <motion.div
-      className="flex gap-3 justify-start"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-    >
-      <motion.div
-        className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent"
-        initial={{ scale: 0, rotate: -180 }}
-        animate={{ scale: 1, rotate: 0 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      >
-        <Bot size={16} className="text-white dark:text-black" />
-      </motion.div>
-      <motion.div
-        className="max-w-[80%] rounded-lg px-3 py-2 text-sm bg-muted text-muted-foreground flex items-center"
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 350, damping: 24 }}
-      >
-        <div className="flex items-center gap-1">
-          {[0, 0.15, 0.3].map((d, i) => (
-            <motion.span
-              key={i}
-              className="h-2 w-2 rounded-full bg-accent/80 dark:bg-accent"
-              animate={{ opacity: [0.3, 1, 0.3], y: [0, -3, 0] }}
-              transition={{ duration: 1, repeat: Infinity, delay: d, ease: 'easeInOut' }}
-            />
-          ))}
-          <span className="sr-only">AI is typing</span>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
 
 export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
   const router = useRouter();
@@ -1165,10 +1015,70 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                 )}
               </motion.div>
             ))}
-            {isLoading && (
-              // Inline AI typing indicator bubble (prevents large gap before response)
-              <AITypingIndicator />
-            )}
+          {isLoading && (
+            <motion.div
+              className="flex justify-start gap-3"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            >
+              <motion.div
+                className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              >
+                <Bot size={16} className="text-white dark:text-black" />
+              </motion.div>
+              <motion.div
+                className="min-w-[80px] rounded-lg bg-muted px-4 py-3"
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <div className="flex items-center gap-1">
+                  <span className="mr-2 text-xs text-muted-foreground">
+                    AI is thinking
+                  </span>
+                  <div className="flex gap-1">
+                    {[0, 0.2, 0.4].map((delay, i) => (
+                      <motion.div
+                        key={i}
+                        className="h-1.5 w-1.5 rounded-full bg-accent"
+                        animate={{
+                          scale: [1, 1.5, 1],
+                          opacity: [0.5, 1, 0.5],
+                        }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          delay,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-2 flex gap-0.5">
+                  <div className="h-0.5 flex-1 overflow-hidden rounded-full bg-accent/30">
+                    <motion.div
+                      className="h-full rounded-full bg-accent"
+                      initial={{ x: "-100%" }}
+                      animate={{ x: "100%" }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
           </AnimatePresence>
           <div ref={messagesEndRef} />
         </div>

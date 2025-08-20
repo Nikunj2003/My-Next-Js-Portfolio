@@ -274,16 +274,29 @@ export class ManageUIStateTool extends BaseTool {
     args: Record<string, any>, 
     context: ToolContext
   ): Promise<ToolResult> {
-    const { action, target, options = {} } = args;
+    const { action: rawAction, target, options = {} } = args;
     const { smooth = true, duration = 300, offset = 0 } = options;
 
     try {
-      // Validate action
+      // Normalize common alias variants the LLM might produce
+      const aliasMap: Record<string, string> = {
+        scroll_to: 'scroll',
+        scrollTo: 'scroll',
+        SCROLL_TO: 'scroll',
+        ScrollTo: 'scroll',
+        scrollsection: 'scroll',
+        'scroll-section': 'scroll',
+        focus_section: 'focus',
+        focusSection: 'focus'
+      };
+      const normalizedAction = aliasMap[rawAction] || rawAction;
+
+      // Validate action AFTER normalization
       const validActions = ['focus', 'scroll', 'highlight', 'show', 'hide'];
-      if (!validActions.includes(action)) {
+      if (!validActions.includes(normalizedAction)) {
         return this.createErrorResult(
           'INVALID_ACTION',
-          `Invalid UI action: ${action}. Must be one of: ${validActions.join(', ')}`,
+          `Invalid UI action: ${rawAction}. Must be one of: ${validActions.join(', ')} (normalized to: ${normalizedAction})`,
           {
             suggestions: [`Use one of: ${validActions.join(', ')}`],
             fallback: { availableActions: validActions }
@@ -304,7 +317,7 @@ export class ManageUIStateTool extends BaseTool {
 
       // Create UI state action
       const uiAction: ToolAction = {
-        type: action as any, // Type assertion since we validated above
+  type: normalizedAction as any, // Type assertion since we validated above
         target,
         data: {
           smooth,
@@ -320,8 +333,9 @@ export class ManageUIStateTool extends BaseTool {
 
       return this.createSuccessResult(
         {
-          message: `UI action "${action}" applied to target "${target}"`,
-          action,
+          message: `UI action "${normalizedAction}" applied to target "${target}"` ,
+          action: normalizedAction,
+          originalAction: rawAction,
           target,
           options: { smooth, duration, offset }
         },

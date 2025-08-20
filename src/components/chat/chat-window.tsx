@@ -1293,7 +1293,8 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
               className={classNames(
                 "self-center rounded-lg p-3 transition-colors",
                 "bg-accent hover:bg-accent-light disabled:bg-muted",
-                "text-accent-foreground disabled:text-muted-foreground",
+                // Remove generic accent foreground so we can control icon color explicitly
+                "disabled:text-muted-foreground",
                 "disabled:cursor-not-allowed"
               )}
               whileHover={{ scale: 1.05 }}
@@ -1303,7 +1304,15 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
               }}
               aria-label="Send message"
             >
-              <Send size={16} />
+              <Send
+                size={16}
+                className={classNames(
+                  // Icon should be white in light mode and black in dark mode (consistent with other icons)
+                  "text-white dark:text-black",
+                  // Dim when disabled
+                  (!inputValue.trim() || isLoading) && "text-muted-foreground dark:text-muted-foreground"
+                )}
+              />
             </motion.button>
           </motion.div>
         </motion.div>

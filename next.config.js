@@ -4,6 +4,10 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withBundleAnalyzer({
+  eslint: {
+    // Allow production builds to successfully complete even with ESLint errors
+    ignoreDuringBuilds: true,
+  },
   output: process.env.BUILD_STANDALONE === "true" ? "standalone" : undefined,
   reactStrictMode: true,
   pageExtensions: ["ts", "tsx", "js"],

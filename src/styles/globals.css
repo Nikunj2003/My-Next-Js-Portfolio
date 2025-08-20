@@ -137,7 +137,7 @@
   .chat-markdown h4,
   .chat-markdown h5,
   .chat-markdown h6 {
-    @apply text-inherit font-semibold mt-3 mb-2 first:mt-0;
+    @apply mb-2 mt-3 font-semibold text-inherit first:mt-0;
   }
 
   .chat-markdown h1 {
@@ -153,16 +153,16 @@
   }
 
   .chat-markdown p {
-    @apply text-inherit mb-2 last:mb-0;
+    @apply mb-2 text-inherit last:mb-0;
   }
 
   .chat-markdown ul,
   .chat-markdown ol {
-    @apply text-inherit mb-2 pl-4;
+    @apply mb-2 pl-4 text-inherit;
   }
 
   .chat-markdown li {
-    @apply text-inherit mb-1;
+    @apply mb-1 text-inherit;
   }
 
   .chat-markdown strong {
@@ -174,11 +174,11 @@
   }
 
   .chat-markdown code {
-    @apply bg-muted/50 px-1 py-0.5 rounded text-xs font-mono text-inherit;
+    @apply rounded bg-muted/50 px-1 py-0.5 font-mono text-xs text-inherit;
   }
 
   .chat-markdown pre {
-    @apply bg-muted/50 p-2 rounded text-xs font-mono overflow-x-auto mb-2 text-inherit;
+    @apply mb-2 overflow-x-auto rounded bg-muted/50 p-2 font-mono text-xs text-inherit;
   }
 
   .chat-markdown pre code {
@@ -186,15 +186,15 @@
   }
 
   .chat-markdown blockquote {
-    @apply border-l-2 border-accent pl-3 mb-2 text-inherit opacity-80;
+    @apply mb-2 border-l-2 border-accent pl-3 text-inherit opacity-80;
   }
 
   .chat-markdown a {
-    @apply text-accent hover:text-accent/80 underline;
+    @apply text-accent underline hover:text-accent/80;
   }
 
   .chat-markdown hr {
-    @apply border-border my-3;
+    @apply my-3 border-border;
   }
 
   /* Override prose styles for chat context */

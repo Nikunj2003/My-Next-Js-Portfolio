@@ -35,6 +35,19 @@ export default function ContactButton() {
     };
   }, [refSendBtn]);
 
+  // Listen for global event to open contact modal programmatically (e.g., from AI chat)
+  useEffect(() => {
+    const handler = (e: Event) => {
+      setIsOpenModal(true);
+    };
+    window.addEventListener("open-contact-modal", handler as EventListener);
+    return () =>
+      window.removeEventListener(
+        "open-contact-modal",
+        handler as EventListener
+      );
+  }, []);
+
   // Determine the button text color based on the theme
   const buttonTextColor =
     mounted && resolvedTheme === "dark" ? "text-black" : "text-white";

@@ -125,4 +125,93 @@
       transform: translateX(100%);
     }
   }
+
+  /* Custom styles for markdown in chat messages */
+  .chat-markdown {
+    @apply text-inherit;
+  }
+
+  .chat-markdown h1,
+  .chat-markdown h2,
+  .chat-markdown h3,
+  .chat-markdown h4,
+  .chat-markdown h5,
+  .chat-markdown h6 {
+    @apply text-inherit font-semibold mt-3 mb-2 first:mt-0;
+  }
+
+  .chat-markdown h1 {
+    @apply text-base;
+  }
+
+  .chat-markdown h2 {
+    @apply text-sm;
+  }
+
+  .chat-markdown h3 {
+    @apply text-sm;
+  }
+
+  .chat-markdown p {
+    @apply text-inherit mb-2 last:mb-0;
+  }
+
+  .chat-markdown ul,
+  .chat-markdown ol {
+    @apply text-inherit mb-2 pl-4;
+  }
+
+  .chat-markdown li {
+    @apply text-inherit mb-1;
+  }
+
+  .chat-markdown strong {
+    @apply font-semibold text-inherit;
+  }
+
+  .chat-markdown em {
+    @apply italic text-inherit;
+  }
+
+  .chat-markdown code {
+    @apply bg-muted/50 px-1 py-0.5 rounded text-xs font-mono text-inherit;
+  }
+
+  .chat-markdown pre {
+    @apply bg-muted/50 p-2 rounded text-xs font-mono overflow-x-auto mb-2 text-inherit;
+  }
+
+  .chat-markdown pre code {
+    @apply bg-transparent p-0;
+  }
+
+  .chat-markdown blockquote {
+    @apply border-l-2 border-accent pl-3 mb-2 text-inherit opacity-80;
+  }
+
+  .chat-markdown a {
+    @apply text-accent hover:text-accent/80 underline;
+  }
+
+  .chat-markdown hr {
+    @apply border-border my-3;
+  }
+
+  /* Override prose styles for chat context */
+  .chat-markdown.prose {
+    @apply max-w-none;
+  }
+
+  .chat-markdown.prose h1,
+  .chat-markdown.prose h2,
+  .chat-markdown.prose h3,
+  .chat-markdown.prose h4 {
+    @apply text-inherit;
+  }
+
+  .chat-markdown.prose p,
+  .chat-markdown.prose li,
+  .chat-markdown.prose blockquote {
+    @apply text-inherit;
+  }
 }

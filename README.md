@@ -10,7 +10,7 @@ An interactive, animated, AI‑augmented portfolio built with **Next.js**, featu
 
 ---
 
-## � Feature Highlights
+## ✨ Feature Highlights
 
 ### 1. 🤖 AI Portfolio Assistant
 Interactive floating chat (see `src/components/chat/`) powered by an LLM (`meta/llama-3.1-70b-instruct`) with:
@@ -71,6 +71,45 @@ Custom animation utilities in `src/animation/` (fade, flip words, page transitio
 - Central AI system prompt governs boundaries & formatting
 - Pluggable tool execution pattern allows future actions (focus/highlight/show/hide) with minimal changes
 
+### 13. ⚙️ Component Architecture (Non‑AI Core)
+- Modular section components: hero, about, experience, projects, skills, resume
+- Shared layout primitives (`main-layout`, `navbar`, `footer`) for consistency
+- Reusable animation variants to avoid duplication
+- Data-driven sections sourced from TypeScript files in `src/data/` (no hard-coded JSX blobs)
+
+### 14. 🚀 Performance Mindset
+- Lean image usage; static assets optimized under `public/`
+- Conditional rendering for heavy components (chat window mounts only when opened)
+- Auto-scroll management to prevent layout thrash
+- Potential to integrate Next.js `<Image />` for further optimization (future enhancement)
+
+### 15. 🧹 Code Quality & Maintainability
+- Strong typing across utilities & tool system
+- Separation of concerns: UI vs. domain logic vs. configuration
+- Centralized constants & metadata (`siteMetaData.mjs`, `ai.ts`)
+- Clear naming + comments for complex behaviors (tool execution, scrolling)
+
+### 16. ♿ Accessibility & Semantics (Beyond Chat)
+- Semantic headings & icon labels with `aria-label`
+- Color contrasts tuned for dark/light themes
+- Motion reduced when user prefers reduced motion
+- Focusable floating action button with clear state indication
+
+### 17. 🎞️ Animation Philosophy
+- Subtle motion for first-impression polish (resume, hero, chat open)
+- Avoids perpetual CPU-heavy animations; most transitions are spring-based and finite
+- Encapsulated variants enabling consistent timing curves
+
+### 18. 🔐 Security / Resilience Considerations
+- Rate limiting on AI endpoint
+- Graceful fallback messaging when AI or tools fail
+- Environment variable isolation via `.env.local` (example provided)
+
+### 19. 🧭 Navigation UX
+- Smooth in-page hash scrolling
+- AI assisted scroll-to-section actions (planned highlight/focus tools)
+- Clear active route boundaries in the navbar (implementation detail in layout components)
+
 ---
 
 ## 🖥️ Technology Stack
@@ -116,7 +155,7 @@ Add a new tool:
 ---
 
 ## 🔐 Environment Variables
-Create a `.env.local` (not committed):
+Create a `.env.local` (not committed). See `.env.example` for the full annotated list.
 
 ```bash
 NODEMAILER_USER=your-email@example.com
@@ -185,6 +224,9 @@ Resume Content | Update `resume-display.tsx` or source structured data
 Tool Actions | Extend `ToolAction` in `types/tools.ts`
 SEO Metadata | `src/data/siteMetaData.mjs`
 Animations | Add variants under `src/animation/`
+Email Transport | Update `.env.local` + `sendMail.ts` config (e.g., switch from Gmail to custom SMTP)
+LLM Provider | Point `LLM_BASE_URL` & `LLM_API_KEY` to alternative (OpenAI-compatible) endpoint
+Rate Limits | Tweak limiter settings in `src/utility/rate-limiter.ts`
 
 ---
 

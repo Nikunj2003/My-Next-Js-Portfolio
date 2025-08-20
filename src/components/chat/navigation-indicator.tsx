@@ -81,15 +81,15 @@ export default function NavigationIndicator({
   const getStatusColor = (status: NavigationAction["status"]) => {
     switch (status) {
       case "pending":
-        return "text-yellow-600 dark:text-yellow-400";
+  return "text-amber-600 dark:text-amber-400";
       case "in-progress":
-        return "text-blue-600 dark:text-blue-400";
+  return "text-accent";
       case "completed":
-        return "text-green-600 dark:text-green-400";
+  return "text-emerald-500 dark:text-emerald-400";
       case "failed":
-        return "text-red-600 dark:text-red-400";
+  return "text-rose-500 dark:text-rose-400";
       default:
-        return "text-gray-600 dark:text-gray-400";
+  return "text-foreground/70";
     }
   };
 
@@ -117,16 +117,29 @@ export default function NavigationIndicator({
         {activeActions.map((action) => {
           const ActionIcon = getActionIcon(action.type);
           const StatusIcon = getStatusIcon(action.status);
+          const wrapperGradient = (() => {
+            switch (action.status) {
+              case "in-progress":
+                return "from-accent/30 via-accent/10 to-background/60 border-accent/40";
+              case "completed":
+                return "from-emerald-500/30 via-emerald-500/10 to-background/60 border-emerald-500/40";
+              case "failed":
+                return "from-rose-500/30 via-rose-500/10 to-background/60 border-rose-500/40";
+              case "pending":
+              default:
+                return "from-amber-500/25 via-amber-500/10 to-background/60 border-amber-500/40";
+            }
+          })();
 
           return (
             <motion.div
               key={action.id}
               className={classNames(
-                "flex items-center gap-3 rounded-lg border bg-background/95 p-3 shadow-lg backdrop-blur-sm",
+                "group relative flex items-center gap-3 overflow-hidden rounded-xl border p-3 shadow-lg backdrop-blur-xl",
                 "min-w-[280px] max-w-[400px]",
-                action.status === "in-progress"
-                  ? "border-blue-200 dark:border-blue-800"
-                  : "border-border"
+                "bg-gradient-to-br",
+                wrapperGradient,
+                "transition-colors duration-300"
               )}
               initial={{ opacity: 0, scale: 0.9, x: 20 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -136,10 +149,14 @@ export default function NavigationIndicator({
               {/* Action Icon */}
               <motion.div
                 className={classNames(
-                  "flex h-8 w-8 items-center justify-center rounded-full",
+                  "flex h-8 w-8 items-center justify-center rounded-full ring-1 ring-inset",
                   action.status === "in-progress"
-                    ? "bg-blue-100 dark:bg-blue-900"
-                    : "bg-muted"
+                    ? "bg-accent/20 text-accent ring-accent/40"
+                    : action.status === "completed"
+                    ? "bg-emerald-500/15 text-emerald-500 ring-emerald-500/40"
+                    : action.status === "failed"
+                    ? "bg-rose-500/15 text-rose-500 ring-rose-500/40"
+                    : "bg-amber-500/15 text-amber-500 ring-amber-500/40"
                 )}
                 animate={action.status === "in-progress" ? { rotate: 360 } : {}}
                 transition={
@@ -152,14 +169,7 @@ export default function NavigationIndicator({
                     : {}
                 }
               >
-                <ActionIcon
-                  size={16}
-                  className={classNames(
-                    action.status === "in-progress"
-                      ? "text-blue-600 dark:text-blue-400"
-                      : "text-muted-foreground"
-                  )}
-                />
+                <ActionIcon size={16} className="drop-shadow" />
               </motion.div>
 
               {/* Action Details */}
@@ -177,12 +187,16 @@ export default function NavigationIndicator({
                 {/* Progress Bar for In-Progress Actions */}
                 {action.status === "in-progress" && (
                   <motion.div
-                    className="mt-2 h-1 overflow-hidden rounded-full bg-blue-100 dark:bg-blue-900"
+                    className={classNames(
+                      "mt-2 h-1 overflow-hidden rounded-full",
+                      action.status === "in-progress" &&
+                        "bg-accent/20 dark:bg-accent/30"
+                    )}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                   >
                     <motion.div
-                      className="h-full rounded-full bg-blue-500"
+                      className="h-full rounded-full bg-accent"
                       initial={{ width: "0%" }}
                       animate={{ width: "100%" }}
                       transition={{
@@ -204,7 +218,14 @@ export default function NavigationIndicator({
                 >
                   <StatusIcon
                     size={16}
-                    className={getStatusColor(action.status)}
+                    className={classNames(
+                      "drop-shadow",
+                      action.status === "completed"
+                        ? "text-emerald-500"
+                        : action.status === "failed"
+                        ? "text-rose-500"
+                        : getStatusColor(action.status)
+                    )}
                   />
                 </motion.div>
               )}
@@ -213,7 +234,7 @@ export default function NavigationIndicator({
               {onDismiss && action.status !== "in-progress" && (
                 <motion.button
                   onClick={() => onDismiss(action.id)}
-                  className="ml-2 rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+                  className="ml-2 rounded p-1 text-muted-foreground/70 hover:bg-foreground/10 hover:text-foreground"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   aria-label="Dismiss notification"

@@ -27,10 +27,11 @@ Structured types in `src/types/tools.ts` define:
 - Normalization of action variants for resilient AI function calling
 
 ### 3. 📝 Animated Resume Module
-`resume-display.tsx` renders a glassmorphism, theme‑adaptive, animated resume with:
+`resume-display.tsx` renders a theme‑adaptive, animated resume within the **site‑wide glassmorphism design language**:
 - Staggered Framer Motion reveals
 - Smooth in‑page hash scrolling
 - Responsive layout & iconography (Lucide)
+- Shares global frosted surfaces & layered blur gradients used across navbar, overlays, chat, transitions
 
 ### 4. 🎬 Micro‑interaction Animations
 Custom animation utilities in `src/animation/` (fade, flip words, page transitions) plus Framer Motion orchestration for:
@@ -42,6 +43,7 @@ Custom animation utilities in `src/animation/` (fade, flip words, page transitio
 - Dark/light theme via `next-themes`
 - TailwindCSS utility‑first styling with accent-driven gradients
 - Reusable helper `classNames` utility
+ - Site‑wide glassmorphism: layered translucent panels, subtle borders, backdrop blurs
 
 ### 6. 📧 Contact & Email (Nodemailer)
 - Configurable email transport via environment variables
@@ -109,6 +111,35 @@ Custom animation utilities in `src/animation/` (fade, flip words, page transitio
 - Smooth in-page hash scrolling
 - AI assisted scroll-to-section actions (planned highlight/focus tools)
 - Clear active route boundaries in the navbar (implementation detail in layout components)
+
+### 20. 🪟 Welcome Intro Overlay
+`welcome-screen.tsx` provides a first‑visit immersive intro:
+- Scroll/touch to dismiss interaction
+- Rotating inspirational taglines with timed transitions
+- Scroll lock handling + graceful teardown
+- Dynamic floating particles & gradient orbs with reduced‑motion awareness
+
+### 21. 🔄 Page Transition Portal
+`page-transition-animation.tsx` adds cinematic route transitions:
+- Layered radial clipPath reveals & gradient overlays
+- Animated sparkle core with orbiting particles & radiating rings
+- Automatically skipped when user prefers reduced motion
+- Elevates perceived performance & brand identity
+
+### 22. 🧊 Global Glassmorphism Aesthetic
+- Consistent translucent surfaces (welcome overlay, chat window, resume container, transition panels)
+- Light/dark adaptive accent hues with subtle inner/outer shadow blending
+- Avoids excessive blur radius for performance while retaining depth
+
+### 23. 📄 Pages Overview
+Route | Purpose
+----- | -------
+`/` (Home) | Landing hero, skills snapshot, featured sections, AI chat entry
+`/about` | Detailed background, narrative profile
+`/projects` | Project gallery sourced from `src/data/projects.ts`
+`/resume` | Interactive animated resume (`resume-display.tsx`)
+`/404` | Custom not‑found with consistent styling
+API routes (`/api/*`) | Chat endpoint, email sending (rate limited)
 
 ---
 

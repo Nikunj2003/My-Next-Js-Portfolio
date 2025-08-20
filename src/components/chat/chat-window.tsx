@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { classNames } from "@/utility/classNames";
 import { getAIResponse } from "@/utility/ai-chat-responses";
+import { useAutosizeTextArea } from "@/hooks/useAutoSizeTextarea";
 
 interface Message {
   id: string;
@@ -35,6 +36,11 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const [shouldAutoScroll, setShouldAutoScroll] = useState(false);
+  const [showScrollToBottom, setShowScrollToBottom] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  useAutosizeTextArea(textareaRef, inputValue, "40px");
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -52,6 +58,19 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       inputRef.current?.focus();
     }
   }, [isOpen]);
+
+  // Scroll position tracking to toggle scroll-to-bottom button
+  useEffect(() => {
+    const el = messagesContainerRef.current;
+    if (!el) return;
+    const handler = () => {
+      const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 120;
+      setShowScrollToBottom(!nearBottom);
+    };
+    el.addEventListener('scroll', handler);
+    handler();
+    return () => el.removeEventListener('scroll', handler);
+  }, []);
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -95,11 +114,24 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
+  };
+
+  const suggestions = [
+    "What technologies does Nikunj use?",
+    "Summarize Nikunj's experience",
+    "List notable projects",
+    "What are key skills?",
+  ];
+
+  const handleSuggestionClick = (text: string) => {
+    setInputValue(text);
+    setHasInteracted(true);
+    setTimeout(() => handleSendMessage(), 10);
   };
 
   return (
@@ -143,7 +175,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       className={classNames(
         "fixed bottom-24 right-6 z-50",
         "h-[32rem] w-80 sm:w-96",
-        "rounded-lg border border-border bg-background shadow-2xl",
+  "rounded-lg border border-border/60 bg-background/55 backdrop-blur-xl shadow-2xl",
         "flex flex-col overflow-hidden"
       )}
       style={{
@@ -153,7 +185,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
     >
       {/* Header */}
       <motion.div
-        className="flex items-center justify-between border-b border-border bg-accent/5 p-4"
+  className="flex items-center justify-between border-b border-border/60 bg-accent/10 backdrop-blur-xl p-4"
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.3 }}
@@ -265,7 +297,6 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                     ? "bg-accent text-white dark:text-black"
                     : "bg-muted text-muted-foreground"
                 )}
-                whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
                 <motion.div
@@ -309,21 +340,28 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                           ),
                           code: ({ children, className }) => {
                             const isInline = !className;
-                            return isInline ? (
-                              <code className="bg-muted/50 px-1 py-0.5 rounded text-xs font-mono text-inherit">
-                                {children}
-                              </code>
-                            ) : (
-                              <code className="block bg-muted/50 p-2 rounded text-xs font-mono overflow-x-auto text-inherit">
-                                {children}
-                              </code>
+                            if (isInline) {
+                              return (
+                                <code className="bg-muted/50 px-1 py-0.5 rounded text-[11px] font-mono text-inherit">
+                                  {children}
+                                </code>
+                              );
+                            }
+                            const codeText = String(children).replace(/\n$/, '');
+                            return (
+                              <div className="group relative mb-2">
+                                <button
+                                  onClick={() => navigator.clipboard.writeText(codeText)}
+                                  className="absolute right-1 top-1 rounded px-2 py-0.5 text-[10px] font-medium bg-accent text-white dark:text-black opacity-0 group-hover:opacity-100 transition-opacity"
+                                  aria-label="Copy code"
+                                >
+                                  Copy
+                                </button>
+                                <code className="block bg-muted/50 p-2 rounded text-xs font-mono overflow-x-auto text-inherit whitespace-pre">{codeText}</code>
+                              </div>
                             );
                           },
-                          pre: ({ children }) => (
-                            <pre className="bg-muted/50 p-2 rounded text-xs font-mono overflow-x-auto mb-2 text-inherit">
-                              {children}
-                            </pre>
-                          ),
+                          pre: ({ children }) => <>{children}</>,
                           blockquote: ({ children }) => (
                             <blockquote className="border-l-2 border-accent pl-3 mb-2 text-inherit opacity-80">
                               {children}
@@ -362,7 +400,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
               </motion.div>
               {message.sender === "user" && (
                 <motion.div
-                  className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-foreground"
+                  className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent"
                   initial={{ scale: 0, rotate: 180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{
@@ -373,7 +411,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                   }}
                   whileHover={{ scale: 1.1, rotate: -5 }}
                 >
-                  <User size={16} className="text-background" />
+                  <User size={16} className="text-white dark:text-black" />
                 </motion.div>
               )}
             </motion.div>
@@ -448,36 +486,62 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
 
       {/* Input */}
       <motion.div
-        className="border-t border-border bg-background p-4"
+        className="border-t border-border/60 bg-background/50 backdrop-blur-xl p-4"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.3 }}
       >
-        <motion.div className="flex gap-[17px]" layout>
-          <motion.input
-            ref={inputRef}
-            type="text"
+        {/* Suggestions */}
+        {messages.length === 1 && !hasInteracted && (
+          <motion.div
+            className="mb-3 flex flex-wrap gap-2"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            {suggestions.map((s) => (
+              <button
+                key={s}
+                onClick={() => handleSuggestionClick(s)}
+                className="rounded-full bg-accent/10 hover:bg-accent/20 text-xs px-3 py-1 text-foreground transition-colors"
+              >
+                {s}
+              </button>
+            ))}
+          </motion.div>
+        )}
+        <motion.div className="flex items-end gap-3" layout>
+          <motion.textarea
+            ref={(el: HTMLTextAreaElement | null) => {
+              // assign to both refs safely
+              (textareaRef as any).current = el;
+              (inputRef as any).current = el;
+            }}
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              if (!hasInteracted) setHasInteracted(true);
+            }}
+            onKeyDown={handleKeyDown}
             placeholder="Ask about Nikunj's experience, skills..."
+            rows={1}
             className={classNames(
-              "flex-1 text-sm",
+              "flex-1 text-sm resize-none leading-relaxed",
               "rounded-lg border border-border bg-background",
               "text-foreground placeholder:text-muted-foreground",
               "focus:border-transparent focus:outline-none focus:ring-2 focus:ring-accent",
-              "transition-all duration-200"
+              "transition-all duration-200 scrollbar-thin scrollbar-thumb-accent/30 scrollbar-track-transparent",
+              "max-h-40"
             )}
-            style={{ padding: "8px 12px 9px 7px" }}
+            style={{ padding: '10px 12px 11px 10px', lineHeight: '1.35' }}
             disabled={isLoading}
             whileFocus={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
           />
           <motion.button
             onClick={handleSendMessage}
             disabled={!inputValue.trim() || isLoading}
             className={classNames(
-              "-mb-px rounded-lg p-3 transition-colors",
+              "rounded-lg p-3 transition-colors self-center",
               "bg-accent hover:bg-accent-light disabled:bg-muted",
               "text-accent-foreground disabled:text-muted-foreground",
               "disabled:cursor-not-allowed"
@@ -485,11 +549,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{
-              scale: {
-                type: "spring",
-                stiffness: 400,
-                damping: 25,
-              },
+              scale: { type: 'spring', stiffness: 400, damping: 25 },
             }}
             aria-label="Send message"
           >

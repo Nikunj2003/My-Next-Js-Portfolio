@@ -2,7 +2,7 @@
  * Utility functions for tool context validation and sanitization
  */
 
-import { ToolContext } from '@/types/tools';
+import { ToolContext } from "@/types/tools";
 
 /**
  * Context sanitization utilities
@@ -12,21 +12,21 @@ export class ContextSanitizer {
    * Sanitize page name
    */
   static sanitizePage(page: string): string {
-    if (!page || typeof page !== 'string') {
-      return 'home';
+    if (!page || typeof page !== "string") {
+      return "home";
     }
 
     const sanitized = page.trim().toLowerCase();
-    const validPages = ['home', 'about', 'projects', 'resume', 'contact'];
-    
-    return validPages.includes(sanitized) ? sanitized : 'home';
+    const validPages = ["home", "about", "projects", "resume", "contact"];
+
+    return validPages.includes(sanitized) ? sanitized : "home";
   }
 
   /**
    * Sanitize section name
    */
   static sanitizeSection(section: string | undefined): string | undefined {
-    if (!section || typeof section !== 'string') {
+    if (!section || typeof section !== "string") {
       return undefined;
     }
 
@@ -37,23 +37,23 @@ export class ContextSanitizer {
   /**
    * Sanitize theme
    */
-  static sanitizeTheme(theme: string): 'light' | 'dark' {
-    if (theme === 'dark') {
-      return 'dark';
+  static sanitizeTheme(theme: string): "light" | "dark" {
+    if (theme === "dark") {
+      return "dark";
     }
-    return 'light'; // Default to light
+    return "light"; // Default to light
   }
 
   /**
    * Sanitize session ID
    */
   static sanitizeSessionId(sessionId: string): string {
-    if (!sessionId || typeof sessionId !== 'string') {
+    if (!sessionId || typeof sessionId !== "string") {
       return `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     }
 
     // Remove any potentially harmful characters
-    const sanitized = sessionId.replace(/[^a-zA-Z0-9-_]/g, '');
+    const sanitized = sessionId.replace(/[^a-zA-Z0-9-_]/g, "");
     return sanitized.length > 0 ? sanitized : `session-${Date.now()}`;
   }
 
@@ -61,13 +61,13 @@ export class ContextSanitizer {
    * Sanitize user agent
    */
   static sanitizeUserAgent(userAgent: string): string {
-    if (!userAgent || typeof userAgent !== 'string') {
-      return 'Unknown';
+    if (!userAgent || typeof userAgent !== "string") {
+      return "Unknown";
     }
 
     // Limit length and remove potentially harmful content
     const sanitized = userAgent.trim().substring(0, 500);
-    return sanitized.length > 0 ? sanitized : 'Unknown';
+    return sanitized.length > 0 ? sanitized : "Unknown";
   }
 
   /**
@@ -75,11 +75,11 @@ export class ContextSanitizer {
    */
   static sanitizeContext(context: Partial<ToolContext>): ToolContext {
     return {
-      currentPage: this.sanitizePage(context.currentPage || 'home'),
+      currentPage: this.sanitizePage(context.currentPage || "home"),
       currentSection: this.sanitizeSection(context.currentSection),
-      theme: this.sanitizeTheme(context.theme || 'light'),
-      sessionId: this.sanitizeSessionId(context.sessionId || ''),
-      userAgent: this.sanitizeUserAgent(context.userAgent || 'Unknown')
+      theme: this.sanitizeTheme(context.theme || "light"),
+      sessionId: this.sanitizeSessionId(context.sessionId || ""),
+      userAgent: this.sanitizeUserAgent(context.userAgent || "Unknown"),
     };
   }
 }
@@ -92,22 +92,22 @@ export class ContextValidator {
    * Validate page name
    */
   static isValidPage(page: string): boolean {
-    const validPages = ['home', 'about', 'projects', 'resume', 'contact'];
-    return typeof page === 'string' && validPages.includes(page.toLowerCase());
+    const validPages = ["home", "about", "projects", "resume", "contact"];
+    return typeof page === "string" && validPages.includes(page.toLowerCase());
   }
 
   /**
    * Validate theme
    */
-  static isValidTheme(theme: string): theme is 'light' | 'dark' {
-    return theme === 'light' || theme === 'dark';
+  static isValidTheme(theme: string): theme is "light" | "dark" {
+    return theme === "light" || theme === "dark";
   }
 
   /**
    * Validate session ID format
    */
   static isValidSessionId(sessionId: string): boolean {
-    if (!sessionId || typeof sessionId !== 'string') {
+    if (!sessionId || typeof sessionId !== "string") {
       return false;
     }
 
@@ -120,7 +120,7 @@ export class ContextValidator {
    * Validate user agent
    */
   static isValidUserAgent(userAgent: string): boolean {
-    return typeof userAgent === 'string' && userAgent.trim().length > 0;
+    return typeof userAgent === "string" && userAgent.trim().length > 0;
   }
 
   /**
@@ -136,30 +136,40 @@ export class ContextValidator {
 
     // Required field validations
     if (!this.isValidPage(context.currentPage)) {
-      errors.push(`Invalid currentPage: "${context.currentPage}". Must be one of: home, about, projects, resume, contact`);
+      errors.push(
+        `Invalid currentPage: "${context.currentPage}". Must be one of: home, about, projects, resume, contact`
+      );
     }
 
     if (!this.isValidTheme(context.theme)) {
-      errors.push(`Invalid theme: "${context.theme}". Must be "light" or "dark"`);
+      errors.push(
+        `Invalid theme: "${context.theme}". Must be "light" or "dark"`
+      );
     }
 
     if (!this.isValidSessionId(context.sessionId)) {
-      errors.push(`Invalid sessionId: "${context.sessionId}". Must be a valid session identifier`);
+      errors.push(
+        `Invalid sessionId: "${context.sessionId}". Must be a valid session identifier`
+      );
     }
 
     if (!this.isValidUserAgent(context.userAgent)) {
-      errors.push(`Invalid userAgent: "${context.userAgent}". Must be a non-empty string`);
+      errors.push(
+        `Invalid userAgent: "${context.userAgent}". Must be a non-empty string`
+      );
     }
 
     // Optional field validations
-    if (context.currentSection && typeof context.currentSection !== 'string') {
-      warnings.push(`currentSection should be a string if provided, got: ${typeof context.currentSection}`);
+    if (context.currentSection && typeof context.currentSection !== "string") {
+      warnings.push(
+        `currentSection should be a string if provided, got: ${typeof context.currentSection}`
+      );
     }
 
     return {
       valid: errors.length === 0,
       errors,
-      warnings
+      warnings,
     };
   }
 }
@@ -172,20 +182,25 @@ export class ContextTransformer {
    * Transform URL path to page and section
    */
   static pathToPageSection(path: string): { page: string; section?: string } {
-    if (!path || typeof path !== 'string') {
-      return { page: 'home' };
+    if (!path || typeof path !== "string") {
+      return { page: "home" };
     }
 
     // Remove leading/trailing slashes and query parameters
-    const cleanPath = path.split('?')[0].replace(/^\/+|\/+$/g, '').toLowerCase();
-    
-    if (!cleanPath || cleanPath === 'index') {
-      return { page: 'home' };
+    const cleanPath = path
+      .split("?")[0]
+      .replace(/^\/+|\/+$/g, "")
+      .toLowerCase();
+
+    if (!cleanPath || cleanPath === "index") {
+      return { page: "home" };
     }
 
-    const segments = cleanPath.split('/');
+    const segments = cleanPath.split("/");
     const page = ContextSanitizer.sanitizePage(segments[0]);
-    const section = segments[1] ? ContextSanitizer.sanitizeSection(segments[1]) : undefined;
+    const section = segments[1]
+      ? ContextSanitizer.sanitizeSection(segments[1])
+      : undefined;
 
     return { page, section };
   }
@@ -195,13 +210,13 @@ export class ContextTransformer {
    */
   static pageSectionToPath(page: string, section?: string): string {
     const sanitizedPage = ContextSanitizer.sanitizePage(page);
-    
-    if (sanitizedPage === 'home') {
-      return '/';
+
+    if (sanitizedPage === "home") {
+      return "/";
     }
 
     let path = `/${sanitizedPage}`;
-    
+
     if (section) {
       const sanitizedSection = ContextSanitizer.sanitizeSection(section);
       if (sanitizedSection) {
@@ -216,15 +231,16 @@ export class ContextTransformer {
    * Create context from browser environment
    */
   static fromBrowser(overrides: Partial<ToolContext> = {}): ToolContext {
-    const path = typeof window !== 'undefined' ? window.location.pathname : '/';
+    const path = typeof window !== "undefined" ? window.location.pathname : "/";
     const { page, section } = this.pathToPageSection(path);
-    
+
     const baseContext: ToolContext = {
       currentPage: page,
       currentSection: section,
       theme: this.detectSystemTheme(),
-      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown',
-      sessionId: this.generateSessionId()
+      userAgent:
+        typeof navigator !== "undefined" ? navigator.userAgent : "Unknown",
+      sessionId: this.generateSessionId(),
     };
 
     return ContextSanitizer.sanitizeContext({ ...baseContext, ...overrides });
@@ -233,12 +249,15 @@ export class ContextTransformer {
   /**
    * Create context for server-side rendering
    */
-  static forServer(page: string = 'home', overrides: Partial<ToolContext> = {}): ToolContext {
+  static forServer(
+    page: string = "home",
+    overrides: Partial<ToolContext> = {}
+  ): ToolContext {
     const baseContext: ToolContext = {
       currentPage: page,
-      theme: 'light',
-      userAgent: 'Server',
-      sessionId: `server-${Date.now()}`
+      theme: "light",
+      userAgent: "Server",
+      sessionId: `server-${Date.now()}`,
     };
 
     return ContextSanitizer.sanitizeContext({ ...baseContext, ...overrides });
@@ -247,11 +266,13 @@ export class ContextTransformer {
   /**
    * Detect system theme preference
    */
-  private static detectSystemTheme(): 'light' | 'dark' {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  private static detectSystemTheme(): "light" | "dark" {
+    if (typeof window !== "undefined" && window.matchMedia) {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
     }
-    return 'light';
+    return "light";
   }
 
   /**
@@ -284,7 +305,10 @@ export class ContextComparator {
   /**
    * Get differences between two contexts
    */
-  static getDifferences(context1: ToolContext, context2: ToolContext): Partial<ToolContext> {
+  static getDifferences(
+    context1: ToolContext,
+    context2: ToolContext
+  ): Partial<ToolContext> {
     const differences: Partial<ToolContext> = {};
 
     if (context1.currentPage !== context2.currentPage) {
@@ -313,7 +337,10 @@ export class ContextComparator {
   /**
    * Check if context has changed significantly (excluding session/user agent)
    */
-  static hasSignificantChange(context1: ToolContext, context2: ToolContext): boolean {
+  static hasSignificantChange(
+    context1: ToolContext,
+    context2: ToolContext
+  ): boolean {
     return (
       context1.currentPage !== context2.currentPage ||
       context1.currentSection !== context2.currentSection ||

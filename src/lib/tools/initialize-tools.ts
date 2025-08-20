@@ -2,11 +2,23 @@
  * Initialize and register all portfolio tools
  */
 
-import { toolRegistry } from './tool-registry';
-import { contextAwareToolRegistry } from './context-aware-tool-registry';
-import { GetProjectsTool, GetExperienceTool, GetSkillsTool } from './data-access-tools';
-import { NavigateToPageTool, OpenModalTool, NavigateToSectionTool } from './navigation-tools';
-import { ToggleThemeTool, TriggerDownloadTool, ManageUIStateTool } from './ui-control-tools';
+import { toolRegistry } from "./tool-registry";
+import { contextAwareToolRegistry } from "./context-aware-tool-registry";
+import {
+  GetProjectsTool,
+  GetExperienceTool,
+  GetSkillsTool,
+} from "./data-access-tools";
+import {
+  NavigateToPageTool,
+  OpenModalTool,
+  NavigateToSectionTool,
+} from "./navigation-tools";
+import {
+  ToggleThemeTool,
+  TriggerDownloadTool,
+  ManageUIStateTool,
+} from "./ui-control-tools";
 
 /**
  * Initialize all data access tools and register them
@@ -16,10 +28,10 @@ export function initializeDataAccessTools(): void {
   const dataTools = [
     new GetProjectsTool(),
     new GetExperienceTool(),
-    new GetSkillsTool()
+    new GetSkillsTool(),
   ];
-  
-  dataTools.forEach(tool => {
+
+  dataTools.forEach((tool) => {
     toolRegistry.register(tool);
     contextAwareToolRegistry.register(tool);
   });
@@ -33,10 +45,10 @@ export function initializeNavigationTools(): void {
   const navigationTools = [
     new NavigateToPageTool(),
     new OpenModalTool(),
-    new NavigateToSectionTool()
+    new NavigateToSectionTool(),
   ];
-  
-  navigationTools.forEach(tool => {
+
+  navigationTools.forEach((tool) => {
     toolRegistry.register(tool);
     contextAwareToolRegistry.register(tool);
   });
@@ -50,10 +62,10 @@ export function initializeUIControlTools(): void {
   const uiTools = [
     new ToggleThemeTool(),
     new TriggerDownloadTool(),
-    new ManageUIStateTool()
+    new ManageUIStateTool(),
   ];
-  
-  uiTools.forEach(tool => {
+
+  uiTools.forEach((tool) => {
     toolRegistry.register(tool);
     contextAwareToolRegistry.register(tool);
   });
@@ -67,17 +79,21 @@ export function initializeAllTools(): void {
   toolRegistry.clearExecutionHistory();
   toolRegistry.clearAllTools();
   contextAwareToolRegistry.clearAllTools();
-  
+
   // Initialize data access tools
   initializeDataAccessTools();
-  
+
   // Initialize navigation tools
   initializeNavigationTools();
-  
+
   // Initialize UI control tools
   initializeUIControlTools();
-  
-  console.log(`✅ Initialized ${toolRegistry.getAll().length} portfolio tools with contextual awareness`);
+
+  console.log(
+    `✅ Initialized ${
+      toolRegistry.getAll().length
+    } portfolio tools with contextual awareness`
+  );
 }
 
 /**
@@ -92,6 +108,6 @@ export function getToolInitializationStatus(): {
   return {
     isInitialized: tools.length > 0,
     toolCount: tools.length,
-    toolNames: tools.map(tool => tool.name)
+    toolNames: tools.map((tool) => tool.name),
   };
 }

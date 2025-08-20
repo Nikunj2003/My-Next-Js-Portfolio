@@ -2,7 +2,7 @@
  * Core tool system types for the AI Portfolio Navigator
  */
 
-import { JSONSchema7 } from 'json-schema';
+import { JSONSchema7 } from "json-schema";
 
 /**
  * Context information available to tools during execution
@@ -11,7 +11,7 @@ export interface ToolContext {
   /** Current page the user is on */
   currentPage: string;
   /** Current theme (light/dark) */
-  theme: 'light' | 'dark';
+  theme: "light" | "dark";
   /** User agent string */
   userAgent: string;
   /** Session identifier */
@@ -55,7 +55,7 @@ export interface ToolError {
  */
 export interface ToolAction {
   /** Type of action to perform */
-  type: 'navigate' | 'modal' | 'theme' | 'download' | 'scroll';
+  type: "navigate" | "modal" | "theme" | "download" | "scroll";
   /** Target for the action */
   target: string;
   /** Additional data for the action */
@@ -87,7 +87,11 @@ export interface PortfolioTool {
   /** JSON Schema defining the tool's parameters */
   parameters: JSONSchema7;
   /** Execute the tool with given arguments and context */
-  execute: (args: Record<string, unknown>, context: ToolContext, config?: ToolExecutionConfig) => Promise<ToolResult>;
+  execute: (
+    args: Record<string, unknown>,
+    context: ToolContext,
+    config?: ToolExecutionConfig
+  ) => Promise<ToolResult>;
 }
 
 /**

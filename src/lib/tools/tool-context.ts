@@ -2,7 +2,7 @@
  * Tool execution context management
  */
 
-import { ToolContext } from '@/types/tools';
+import { ToolContext } from "@/types/tools";
 
 /**
  * Tool context manager for tracking and managing execution state
@@ -28,7 +28,7 @@ export class ToolContextManager {
   updateContext(updates: Partial<ToolContext>): void {
     const previousContext = { ...this.context };
     this.context = { ...this.context, ...updates };
-    
+
     // Validate updated context
     const validation = this.validateContext(this.context);
     if (!validation.valid) {
@@ -45,16 +45,16 @@ export class ToolContextManager {
    * Update current page
    */
   setCurrentPage(page: string, section?: string): void {
-    this.updateContext({ 
+    this.updateContext({
       currentPage: page,
-      currentSection: section 
+      currentSection: section,
     });
   }
 
   /**
    * Update theme
    */
-  setTheme(theme: 'light' | 'dark'): void {
+  setTheme(theme: "light" | "dark"): void {
     this.updateContext({ theme });
   }
 
@@ -77,7 +77,7 @@ export class ToolContextManager {
    */
   subscribe(listener: (context: ToolContext) => void): () => void {
     this.listeners.push(listener);
-    
+
     // Return unsubscribe function
     return () => {
       const index = this.listeners.indexOf(listener);
@@ -112,39 +112,42 @@ export class ToolContextManager {
   /**
    * Validate context data
    */
-  private validateContext(context: ToolContext): { valid: boolean; message?: string } {
-    if (!context.currentPage || typeof context.currentPage !== 'string') {
+  private validateContext(context: ToolContext): {
+    valid: boolean;
+    message?: string;
+  } {
+    if (!context.currentPage || typeof context.currentPage !== "string") {
       return {
         valid: false,
-        message: 'currentPage is required and must be a string'
+        message: "currentPage is required and must be a string",
       };
     }
 
-    if (!context.theme || !['light', 'dark'].includes(context.theme)) {
+    if (!context.theme || !["light", "dark"].includes(context.theme)) {
       return {
         valid: false,
-        message: 'theme must be either "light" or "dark"'
+        message: 'theme must be either "light" or "dark"',
       };
     }
 
-    if (!context.sessionId || typeof context.sessionId !== 'string') {
+    if (!context.sessionId || typeof context.sessionId !== "string") {
       return {
         valid: false,
-        message: 'sessionId is required and must be a string'
+        message: "sessionId is required and must be a string",
       };
     }
 
-    if (!context.userAgent || typeof context.userAgent !== 'string') {
+    if (!context.userAgent || typeof context.userAgent !== "string") {
       return {
         valid: false,
-        message: 'userAgent is required and must be a string'
+        message: "userAgent is required and must be a string",
       };
     }
 
-    if (context.currentSection && typeof context.currentSection !== 'string') {
+    if (context.currentSection && typeof context.currentSection !== "string") {
       return {
         valid: false,
-        message: 'currentSection must be a string if provided'
+        message: "currentSection must be a string if provided",
       };
     }
 
@@ -154,14 +157,17 @@ export class ToolContextManager {
   /**
    * Create default context
    */
-  private createDefaultContext(overrides: Partial<ToolContext> = {}): ToolContext {
+  private createDefaultContext(
+    overrides: Partial<ToolContext> = {}
+  ): ToolContext {
     return {
-      currentPage: 'home',
-      theme: 'light',
-      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown',
+      currentPage: "home",
+      theme: "light",
+      userAgent:
+        typeof navigator !== "undefined" ? navigator.userAgent : "Unknown",
       sessionId: this.generateSessionId(),
       currentSection: undefined,
-      ...overrides
+      ...overrides,
     };
   }
 
@@ -177,11 +183,11 @@ export class ToolContextManager {
    */
   private notifyListeners(): void {
     const currentContext = this.getContext();
-    this.listeners.forEach(listener => {
+    this.listeners.forEach((listener) => {
       try {
         listener(currentContext);
       } catch (error) {
-        console.error('Error in context listener:', error);
+        console.error("Error in context listener:", error);
       }
     });
   }
@@ -197,29 +203,29 @@ export class ToolContextValidator {
   static validate(context: ToolContext): { valid: boolean; errors: string[] } {
     const errors: string[] = [];
 
-    if (!context.currentPage || typeof context.currentPage !== 'string') {
-      errors.push('currentPage is required and must be a string');
+    if (!context.currentPage || typeof context.currentPage !== "string") {
+      errors.push("currentPage is required and must be a string");
     }
 
-    if (!context.theme || !['light', 'dark'].includes(context.theme)) {
+    if (!context.theme || !["light", "dark"].includes(context.theme)) {
       errors.push('theme must be either "light" or "dark"');
     }
 
-    if (!context.sessionId || typeof context.sessionId !== 'string') {
-      errors.push('sessionId is required and must be a string');
+    if (!context.sessionId || typeof context.sessionId !== "string") {
+      errors.push("sessionId is required and must be a string");
     }
 
-    if (!context.userAgent || typeof context.userAgent !== 'string') {
-      errors.push('userAgent is required and must be a string');
+    if (!context.userAgent || typeof context.userAgent !== "string") {
+      errors.push("userAgent is required and must be a string");
     }
 
-    if (context.currentSection && typeof context.currentSection !== 'string') {
-      errors.push('currentSection must be a string if provided');
+    if (context.currentSection && typeof context.currentSection !== "string") {
+      errors.push("currentSection must be a string if provided");
     }
 
     return {
       valid: errors.length === 0,
-      errors
+      errors,
     };
   }
 
@@ -229,23 +235,23 @@ export class ToolContextValidator {
   static sanitize(context: Partial<ToolContext>): Partial<ToolContext> {
     const sanitized: Partial<ToolContext> = {};
 
-    if (context.currentPage && typeof context.currentPage === 'string') {
+    if (context.currentPage && typeof context.currentPage === "string") {
       sanitized.currentPage = context.currentPage.trim().toLowerCase();
     }
 
-    if (context.theme && ['light', 'dark'].includes(context.theme)) {
+    if (context.theme && ["light", "dark"].includes(context.theme)) {
       sanitized.theme = context.theme;
     }
 
-    if (context.sessionId && typeof context.sessionId === 'string') {
+    if (context.sessionId && typeof context.sessionId === "string") {
       sanitized.sessionId = context.sessionId.trim();
     }
 
-    if (context.userAgent && typeof context.userAgent === 'string') {
+    if (context.userAgent && typeof context.userAgent === "string") {
       sanitized.userAgent = context.userAgent.trim();
     }
 
-    if (context.currentSection && typeof context.currentSection === 'string') {
+    if (context.currentSection && typeof context.currentSection === "string") {
       sanitized.currentSection = context.currentSection.trim();
     }
 
@@ -256,15 +262,15 @@ export class ToolContextValidator {
    * Check if a page name is valid
    */
   static isValidPage(page: string): boolean {
-    const validPages = ['home', 'about', 'projects', 'resume', 'contact'];
+    const validPages = ["home", "about", "projects", "resume", "contact"];
     return validPages.includes(page.toLowerCase());
   }
 
   /**
    * Check if a theme is valid
    */
-  static isValidTheme(theme: string): theme is 'light' | 'dark' {
-    return theme === 'light' || theme === 'dark';
+  static isValidTheme(theme: string): theme is "light" | "dark" {
+    return theme === "light" || theme === "dark";
   }
 }
 
@@ -276,46 +282,53 @@ export class ToolContextUtils {
    * Extract page information from URL or path
    */
   static extractPageFromPath(path: string): { page: string; section?: string } {
-    const cleanPath = path.replace(/^\/+|\/+$/g, '').toLowerCase();
-    
-    if (!cleanPath || cleanPath === 'index') {
-      return { page: 'home' };
+    const cleanPath = path.replace(/^\/+|\/+$/g, "").toLowerCase();
+
+    if (!cleanPath || cleanPath === "index") {
+      return { page: "home" };
     }
 
-    const parts = cleanPath.split('/');
+    const parts = cleanPath.split("/");
     const page = parts[0];
     const section = parts[1];
 
     return {
-      page: ToolContextValidator.isValidPage(page) ? page : 'home',
-      section: section || undefined
+      page: ToolContextValidator.isValidPage(page) ? page : "home",
+      section: section || undefined,
     };
   }
 
   /**
    * Detect theme from system preferences
    */
-  static detectSystemTheme(): 'light' | 'dark' {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  static detectSystemTheme(): "light" | "dark" {
+    if (typeof window !== "undefined" && window.matchMedia) {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
     }
-    return 'light';
+    return "light";
   }
 
   /**
    * Generate context from browser environment
    */
-  static createBrowserContext(overrides: Partial<ToolContext> = {}): ToolContext {
-    const path = typeof window !== 'undefined' ? window.location.pathname : '/';
+  static createBrowserContext(
+    overrides: Partial<ToolContext> = {}
+  ): ToolContext {
+    const path = typeof window !== "undefined" ? window.location.pathname : "/";
     const { page, section } = this.extractPageFromPath(path);
-    
+
     return {
       currentPage: page,
       currentSection: section,
       theme: this.detectSystemTheme(),
-      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown',
-      sessionId: `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      ...overrides
+      userAgent:
+        typeof navigator !== "undefined" ? navigator.userAgent : "Unknown",
+      sessionId: `session-${Date.now()}-${Math.random()
+        .toString(36)
+        .substr(2, 9)}`,
+      ...overrides,
     };
   }
 
@@ -323,15 +336,15 @@ export class ToolContextUtils {
    * Create context for server-side rendering
    */
   static createServerContext(
-    page: string = 'home',
+    page: string = "home",
     overrides: Partial<ToolContext> = {}
   ): ToolContext {
     return {
       currentPage: page,
-      theme: 'light',
-      userAgent: 'Server',
+      theme: "light",
+      userAgent: "Server",
       sessionId: `server-session-${Date.now()}`,
-      ...overrides
+      ...overrides,
     };
   }
 }

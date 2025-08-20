@@ -1,6 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Send, User, Bot, X, Loader2, CheckCircle, XCircle, Navigation, Download, Palette, ExternalLink, Trash2 } from "lucide-react";
+import {
+  Send,
+  User,
+  Bot,
+  X,
+  CheckCircle,
+  XCircle,
+  Navigation,
+  Download,
+  Palette,
+  ExternalLink,
+  Trash2,
+} from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -8,7 +20,9 @@ import { useTheme } from "next-themes";
 import { classNames } from "@/utility/classNames";
 import { useAutosizeTextArea } from "@/hooks/useAutoSizeTextarea";
 import { ToolCall, ToolAction } from "@/types/tools";
-import NavigationIndicator, { useNavigationActions } from "./navigation-indicator";
+import NavigationIndicator, {
+  useNavigationActions,
+} from "./navigation-indicator";
 
 interface Message {
   id: string;
@@ -25,21 +39,27 @@ interface ChatWindowProps {
 }
 
 // Normalize incoming (possibly LLM-generated) action type variants to canonical ones
-function normalizeActionType(raw: string): ToolAction['type'] {
+function normalizeActionType(raw: string): ToolAction["type"] {
   const lower = raw.toLowerCase();
-  if (lower === 'scrollto' || lower === 'scroll_to' || lower === 'scroll-section' || lower === 'scrollsection') return 'scroll';
+  if (
+    lower === "scrollto" ||
+    lower === "scroll_to" ||
+    lower === "scroll-section" ||
+    lower === "scrollsection"
+  )
+    return "scroll";
   // Already valid types -> return as-is when matching
   switch (lower) {
-    case 'navigate':
-    case 'download':
-    case 'theme':
-    case 'modal':
-    case 'scroll':
-      return lower as ToolAction['type'];
+    case "navigate":
+    case "download":
+    case "theme":
+    case "modal":
+    case "scroll":
+      return lower as ToolAction["type"];
     default:
       // Fallback: try partial match
-      if (lower.startsWith('scroll')) return 'scroll';
-      return 'scroll'; // safe default (or could throw)
+      if (lower.startsWith("scroll")) return "scroll";
+      return "scroll"; // safe default (or could throw)
   }
 }
 
@@ -51,10 +71,14 @@ function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const getToolIcon = (toolName: string) => {
-    if (toolName.includes('Navigate') || toolName.includes('navigate')) return Navigation;
-    if (toolName.includes('Download') || toolName.includes('download')) return Download;
-    if (toolName.includes('Theme') || toolName.includes('theme')) return Palette;
-    if (toolName.includes('Modal') || toolName.includes('modal')) return ExternalLink;
+    if (toolName.includes("Navigate") || toolName.includes("navigate"))
+      return Navigation;
+    if (toolName.includes("Download") || toolName.includes("download"))
+      return Download;
+    if (toolName.includes("Theme") || toolName.includes("theme"))
+      return Palette;
+    if (toolName.includes("Modal") || toolName.includes("modal"))
+      return ExternalLink;
     return Bot;
   };
 
@@ -66,27 +90,33 @@ function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
       if (hasActions && result?.actions) {
         const action = result.actions[0];
         switch (action.type) {
-          case 'navigate': return `Navigated to ${action.target}`;
-          case 'download': return `Downloaded ${action.target}`;
-          case 'theme': return `Switched to ${action.target} theme`;
-          case 'modal': return `Opened ${action.target}`;
-          case 'scroll': return `Scrolled to ${action.target}`;
-          default: return 'Action completed successfully';
+          case "navigate":
+            return `Navigated to ${action.target}`;
+          case "download":
+            return `Downloaded ${action.target}`;
+          case "theme":
+            return `Switched to ${action.target} theme`;
+          case "modal":
+            return `Opened ${action.target}`;
+          case "scroll":
+            return `Scrolled to ${action.target}`;
+          default:
+            return "Action completed successfully";
         }
       }
-      return 'Executed successfully';
+      return "Executed successfully";
     } else {
-      return result?.error?.message || 'Execution failed';
+      return result?.error?.message || "Execution failed";
     }
   };
 
   return (
     <motion.div
       className={classNames(
-        "rounded-lg border text-xs cursor-pointer transition-all duration-200",
+        "cursor-pointer rounded-lg border text-xs transition-all duration-200",
         isSuccess
-          ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/30 hover:bg-green-100 dark:hover:bg-green-950/50"
-          : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-950/50"
+          ? "border-green-200 bg-green-50 hover:bg-green-100 dark:border-green-800 dark:bg-green-950/30 dark:hover:bg-green-950/50"
+          : "border-red-200 bg-red-50 hover:bg-red-100 dark:border-red-800 dark:bg-red-950/30 dark:hover:bg-red-950/50"
       )}
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -111,21 +141,36 @@ function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
           )}
         </motion.div>
 
-        <div className="flex items-center gap-1 flex-1">
-          <ToolIcon size={14} className={isSuccess ? "text-green-700 dark:text-green-300" : "text-red-700 dark:text-red-300"} />
-          <span className={classNames(
-            "font-medium",
-            isSuccess ? "text-green-800 dark:text-green-200" : "text-red-800 dark:text-red-200"
-          )}>
-            {name.replace(/([A-Z])/g, ' $1').trim()}
+        <div className="flex flex-1 items-center gap-1">
+          <ToolIcon
+            size={14}
+            className={
+              isSuccess
+                ? "text-green-700 dark:text-green-300"
+                : "text-red-700 dark:text-red-300"
+            }
+          />
+          <span
+            className={classNames(
+              "font-medium",
+              isSuccess
+                ? "text-green-800 dark:text-green-200"
+                : "text-red-800 dark:text-red-200"
+            )}
+          >
+            {name.replace(/([A-Z])/g, " $1").trim()}
           </span>
         </div>
 
         {/* Summary message */}
-        <span className={classNames(
-          "text-xs flex-1 text-right truncate ml-2",
-          isSuccess ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
-        )}>
+        <span
+          className={classNames(
+            "ml-2 flex-1 truncate text-right text-xs",
+            isSuccess
+              ? "text-green-600 dark:text-green-400"
+              : "text-red-600 dark:text-red-400"
+          )}
+        >
           {getSummaryMessage()}
         </span>
 
@@ -135,11 +180,20 @@ function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
           transition={{ duration: 0.2 }}
           className={classNames(
             "ml-2",
-            isSuccess ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
+            isSuccess
+              ? "text-green-600 dark:text-green-400"
+              : "text-red-600 dark:text-red-400"
           )}
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M3 4.5L6 7.5L9 4.5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </motion.div>
       </div>
@@ -152,7 +206,7 @@ function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="border-t border-current/20"
+            className="border-current/20 border-t"
           >
             <div className="p-3 pt-2">
               {/* Success data */}
@@ -163,11 +217,11 @@ function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <p className="font-medium mb-1">Result:</p>
-                  {typeof result.data === 'string' ? (
+                  <p className="mb-1 font-medium">Result:</p>
+                  {typeof result.data === "string" ? (
                     <p className="text-xs">{result.data}</p>
                   ) : (
-                    <pre className="whitespace-pre-wrap font-mono text-xs bg-green-100 dark:bg-green-900/30 p-2 rounded">
+                    <pre className="whitespace-pre-wrap rounded bg-green-100 p-2 font-mono text-xs dark:bg-green-900/30">
                       {JSON.stringify(result.data, null, 2)}
                     </pre>
                   )}
@@ -182,18 +236,21 @@ function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <p className="font-medium mb-1">Error Details:</p>
-                  <p className="text-xs mb-2">{result.error.message}</p>
-                  {result.error.suggestions && result.error.suggestions.length > 0 && (
-                    <div>
-                      <p className="font-medium mb-1">Suggestions:</p>
-                      <ul className="list-disc list-inside space-y-1">
-                        {result.error.suggestions.map((suggestion, index) => (
-                          <li key={index} className="text-xs">{suggestion}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  <p className="mb-1 font-medium">Error Details:</p>
+                  <p className="mb-2 text-xs">{result.error.message}</p>
+                  {result.error.suggestions &&
+                    result.error.suggestions.length > 0 && (
+                      <div>
+                        <p className="mb-1 font-medium">Suggestions:</p>
+                        <ul className="list-inside list-disc space-y-1">
+                          {result.error.suggestions.map((suggestion, index) => (
+                            <li key={index} className="text-xs">
+                              {suggestion}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                 </motion.div>
               )}
 
@@ -205,10 +262,14 @@ function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <p className={classNames(
-                    "font-medium",
-                    isSuccess ? "text-green-800 dark:text-green-200" : "text-red-800 dark:text-red-200"
-                  )}>
+                  <p
+                    className={classNames(
+                      "font-medium",
+                      isSuccess
+                        ? "text-green-800 dark:text-green-200"
+                        : "text-red-800 dark:text-red-200"
+                    )}
+                  >
                     Actions Performed:
                   </p>
                   {result!.actions!.map((action, index) => (
@@ -228,11 +289,16 @@ function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
 function ActionIndicator({ action }: { action: ToolAction }) {
   const getActionIcon = (type: string) => {
     switch (type) {
-      case 'navigate': return Navigation;
-      case 'download': return Download;
-      case 'theme': return Palette;
-      case 'modal': return ExternalLink;
-      default: return Bot;
+      case "navigate":
+        return Navigation;
+      case "download":
+        return Download;
+      case "theme":
+        return Palette;
+      case "modal":
+        return ExternalLink;
+      default:
+        return Bot;
     }
   };
 
@@ -247,24 +313,26 @@ function ActionIndicator({ action }: { action: ToolAction }) {
     >
       <ActionIcon size={12} />
       <span>
-        {action.type === 'navigate' && `Navigating to ${action.target}`}
-        {action.type === 'download' && `Downloading ${action.target}`}
-        {action.type === 'theme' && `Switching to ${action.target} theme`}
-        {action.type === 'modal' && `Opening ${action.target} modal`}
-        {action.type === 'scroll' && `Scrolling to ${action.target}`}
+        {action.type === "navigate" && `Navigating to ${action.target}`}
+        {action.type === "download" && `Downloading ${action.target}`}
+        {action.type === "theme" && `Switching to ${action.target} theme`}
+        {action.type === "modal" && `Opening ${action.target} modal`}
+        {action.type === "scroll" && `Scrolling to ${action.target}`}
       </span>
     </motion.div>
   );
 }
 
-
 export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
   const router = useRouter();
   // Add highlight styles to the document head if not already present
   useEffect(() => {
-    if (typeof document !== 'undefined' && !document.getElementById('chat-highlight-styles')) {
-      const style = document.createElement('style');
-      style.id = 'chat-highlight-styles';
+    if (
+      typeof document !== "undefined" &&
+      !document.getElementById("chat-highlight-styles")
+    ) {
+      const style = document.createElement("style");
+      style.id = "chat-highlight-styles";
       style.textContent = `
         .highlight-section {
           animation: highlight-pulse 2s ease-in-out;
@@ -306,37 +374,42 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
   const prefersReducedMotion = useReducedMotion();
   // Scroll behavior control
   const pendingUserMessageIdRef = useRef<string | null>(null); // last sent user message id awaiting AI reply
-  const desiredScrollBehaviorRef = useRef<'none' | 'anchorUserTop'>('none');
+  const desiredScrollBehaviorRef = useRef<"none" | "anchorUserTop">("none");
   const userInitiatedScrollRef = useRef(false); // user scrolled up (lock auto positioning)
   const wasNearBottomBeforeAIRef = useRef(false); // track state before AI message insertion
-  const lastAIMessageIdRef = useRef<string | null>(null);
-  const pendingScrollRef = useRef<'none' | 'bottom'>('none');
+  // const lastAIMessageIdRef = useRef<string | null>(null); // removed unused ref
+  const pendingScrollRef = useRef<"none" | "bottom">("none");
   // const [showScrollToBottom, setShowScrollToBottom] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
 
   // Navigation actions
-  const {
-    actions,
-    addAction,
-    updateActionStatus,
-    removeAction
-  } = useNavigationActions();
+  const { actions, addAction, updateActionStatus, removeAction } =
+    useNavigationActions();
 
   // Theme management
   const { setTheme, resolvedTheme } = useTheme();
 
-  useAutosizeTextArea(textareaRef, inputValue, "40px", { minHeight: 40, maxHeight: 240, shrinkOnEmpty: true });
+  useAutosizeTextArea(textareaRef, inputValue, "40px", {
+    minHeight: 40,
+    maxHeight: 240,
+    shrinkOnEmpty: true,
+  });
 
   const isNearBottom = () => {
     const container = messagesContainerRef.current;
     if (!container) return true;
     const threshold = 120; // px
-    return container.scrollHeight - container.scrollTop - container.clientHeight < threshold;
+    return (
+      container.scrollHeight - container.scrollTop - container.clientHeight <
+      threshold
+    );
   };
 
   const scrollToBottom = (smooth = true) => {
-    messagesEndRef.current?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
+    messagesEndRef.current?.scrollIntoView({
+      behavior: smooth ? "smooth" : "auto",
+    });
   };
 
   // Set up scroll listener to detect user manual scrolling (locks auto anchor positioning)
@@ -355,33 +428,38 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       }
       lastScrollTop = st;
     };
-    container.addEventListener('scroll', onScroll, { passive: true });
-    return () => container.removeEventListener('scroll', onScroll);
+    container.addEventListener("scroll", onScroll, { passive: true });
+    return () => container.removeEventListener("scroll", onScroll);
   }, []);
 
   // Apply desired anchor scroll after AI message appended
   useEffect(() => {
-    if (desiredScrollBehaviorRef.current === 'anchorUserTop') {
+    if (desiredScrollBehaviorRef.current === "anchorUserTop") {
       const container = messagesContainerRef.current;
       if (!container) return;
       // Skip if user scrolled away
       if (userInitiatedScrollRef.current) {
-        desiredScrollBehaviorRef.current = 'none';
+        desiredScrollBehaviorRef.current = "none";
         return;
       }
       const userId = pendingUserMessageIdRef.current;
       if (!userId) return;
       // Allow layout paint
       const timer = setTimeout(() => {
-        const el = container.querySelector(`[data-message-id="${userId}"]`) as HTMLElement | null;
+        const el = container.querySelector(
+          `[data-message-id="${userId}"]`
+        ) as HTMLElement | null;
         if (el) {
           const GAP = 16; // reduced gap per user request
-            // Smooth anchor scroll
+          // Smooth anchor scroll
           const top = el.offsetTop - GAP;
-          container.scrollTo({ top: top < 0 ? 0 : top, behavior: wasNearBottomBeforeAIRef.current ? 'smooth' : 'auto' });
+          container.scrollTo({
+            top: top < 0 ? 0 : top,
+            behavior: wasNearBottomBeforeAIRef.current ? "smooth" : "auto",
+          });
           // Removed blue ring highlight per user request.
         }
-        desiredScrollBehaviorRef.current = 'none';
+        desiredScrollBehaviorRef.current = "none";
       }, 50);
       return () => clearTimeout(timer);
     }
@@ -389,9 +467,9 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
 
   // Perform deferred scroll actions (e.g., after user sends a message) once messages render
   useEffect(() => {
-    if (pendingScrollRef.current === 'bottom') {
+    if (pendingScrollRef.current === "bottom") {
       scrollToBottom(true);
-      pendingScrollRef.current = 'none';
+      pendingScrollRef.current = "none";
     }
   }, [messages.length]);
 
@@ -424,15 +502,15 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       timestamp: new Date(),
     };
 
-  setMessages((prev) => [...prev, userMessage]);
-  pendingUserMessageIdRef.current = userMessage.id;
-  // Defer scroll until after DOM updates to ensure accurate bottom position
-  pendingScrollRef.current = 'bottom';
+    setMessages((prev) => [...prev, userMessage]);
+    pendingUserMessageIdRef.current = userMessage.id;
+    // Defer scroll until after DOM updates to ensure accurate bottom position
+    pendingScrollRef.current = "bottom";
     setInputValue("");
     // Force shrink immediately after clearing large pasted content
     requestAnimationFrame(() => {
       if (textareaRef.current) {
-        textareaRef.current.style.height = '40px';
+        textareaRef.current.style.height = "40px";
       }
     });
     setIsLoading(true);
@@ -440,16 +518,18 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
 
     try {
       // Enhanced API call to get tool execution results
-      const response = await fetch('/api/chat', {
-        method: 'POST',
+      const response = await fetch("/api/chat", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           message: inputValue.trim(),
           conversationHistory: messages,
-          currentPage: window.location.pathname.slice(1) || 'home',
-          currentTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+          currentPage: window.location.pathname.slice(1) || "home",
+          currentTheme: document.documentElement.classList.contains("dark")
+            ? "dark"
+            : "light",
           userAgent: navigator.userAgent,
         }),
       });
@@ -465,10 +545,14 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         for (const toolCall of data.toolCalls) {
           if (toolCall.result?.actions) {
             // Mutate actions in-place to normalized types so UI components see canonical type
-            toolCall.result.actions = toolCall.result.actions.map((a: any) => {
-              const normalizedType = normalizeActionType(a.type || '');
-              return { ...a, type: normalizedType };
-            });
+            toolCall.result.actions = toolCall.result.actions.map(
+              (a: Partial<ToolAction> & { [k: string]: unknown }) => {
+                const normalizedType = normalizeActionType(
+                  (a as ToolAction).type || ""
+                );
+                return { ...a, type: normalizedType } as ToolAction;
+              }
+            );
             for (const action of toolCall.result.actions) {
               const actionId = addAction(action.type, action.target);
               executeAction(actionId, action as ToolAction);
@@ -480,7 +564,9 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       // Create AI message with tool execution results
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: data.response || "I apologize, but I'm having trouble responding right now.",
+        content:
+          data.response ||
+          "I apologize, but I'm having trouble responding right now.",
         sender: "ai",
         timestamp: new Date(),
         toolCalls: data.toolCalls,
@@ -490,10 +576,10 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       setMessages((prev) => [...prev, aiMessage]);
       // Request anchor positioning (only if user was near bottom)
       if (wasNearBottomBeforeAIRef.current) {
-        desiredScrollBehaviorRef.current = 'anchorUserTop';
+        desiredScrollBehaviorRef.current = "anchorUserTop";
       }
     } catch (error) {
-      console.error('Chat API error:', error);
+      console.error("Chat API error:", error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         content:
@@ -504,7 +590,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       wasNearBottomBeforeAIRef.current = isNearBottom();
       setMessages((prev) => [...prev, errorMessage]);
       if (wasNearBottomBeforeAIRef.current) {
-        desiredScrollBehaviorRef.current = 'anchorUserTop';
+        desiredScrollBehaviorRef.current = "anchorUserTop";
       }
     } finally {
       setIsLoading(false);
@@ -512,87 +598,96 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
   };
 
   const handleClearChat = () => {
-    setMessages([{
-      id: 'welcome',
-      content: "Hi! I'm an AI assistant that can answer questions about Nikunj Khitha's background, skills, and experience. What would you like to know?",
-      sender: 'ai',
-      timestamp: new Date()
-    }]);
+    setMessages([
+      {
+        id: "welcome",
+        content:
+          "Hi! I'm an AI assistant that can answer questions about Nikunj Khitha's background, skills, and experience. What would you like to know?",
+        sender: "ai",
+        timestamp: new Date(),
+      },
+    ]);
     pendingUserMessageIdRef.current = null;
-    desiredScrollBehaviorRef.current = 'none';
-  pendingScrollRef.current = 'bottom';
+    desiredScrollBehaviorRef.current = "none";
+    pendingScrollRef.current = "bottom";
     setHasInteracted(false); // allow quick suggestion buttons to reappear
-    setInputValue('');
+    setInputValue("");
     requestAnimationFrame(() => {
-      if (textareaRef.current) textareaRef.current.style.height = '40px';
+      if (textareaRef.current) textareaRef.current.style.height = "40px";
     });
   };
 
-
-
   const executeAction = async (actionId: string, action: ToolAction) => {
-    updateActionStatus(actionId, 'in-progress');
+    updateActionStatus(actionId, "in-progress");
 
     try {
       // Simulate action execution with appropriate delays
-      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+      await new Promise((resolve) =>
+        setTimeout(resolve, 1000 + Math.random() * 2000)
+      );
 
       // Execute the actual action based on type
       switch (action.type) {
-        case 'navigate':
+        case "navigate":
           // Actually navigate to the target page
-          if (action.target && typeof action.target === 'string') {
-            const targetPathRaw = action.target.startsWith('/') ? action.target : `/${action.target}`;
+          if (action.target && typeof action.target === "string") {
+            const targetPathRaw = action.target.startsWith("/")
+              ? action.target
+              : `/${action.target}`;
             // Normalize root/home aliases
-            const targetPath = targetPathRaw === '/home' ? '/' : targetPathRaw;
+            const targetPath = targetPathRaw === "/home" ? "/" : targetPathRaw;
             // Use Next.js router push to preserve transition provider state (avoiding full reload / welcome screen rerun)
-            router.push(targetPath).catch(err => console.error('Router navigation failed', err));
+            router
+              .push(targetPath)
+              .catch((err) => console.error("Router navigation failed", err));
             console.log(`Navigating (SPA) to ${targetPath}`);
           } else {
-            console.error('Invalid navigation target:', action.target);
+            console.error("Invalid navigation target:", action.target);
           }
           break;
-        case 'download':
+        case "download":
           // Actually trigger the download
-          if (action.target && typeof action.target === 'string') {
+          if (action.target && typeof action.target === "string") {
             // Create a temporary link element and trigger download
-            const link = document.createElement('a');
+            const link = document.createElement("a");
             link.href = action.target;
-            link.download = (action.data as any)?.fileName || 'download';
+            type DownloadData = { fileName?: string } | undefined;
+            const downloadMeta = action.data as DownloadData;
+            link.download = downloadMeta?.fileName || "download";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             console.log(`Download triggered for ${action.target}`);
           } else {
-            console.error('Invalid download target:', action.target);
+            console.error("Invalid download target:", action.target);
           }
           break;
-        case 'theme':
+        case "theme":
           // Actually switch the theme
-          if (action.target === 'light' || action.target === 'dark') {
+          if (action.target === "light" || action.target === "dark") {
             setTheme(action.target);
             console.log(`Theme switched to ${action.target}`);
           } else {
             // Toggle theme if target is not specific
-            const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
+            const newTheme = resolvedTheme === "dark" ? "light" : "dark";
             setTheme(newTheme);
             console.log(`Theme toggled to ${newTheme}`);
           }
           break;
-        case 'modal':
+        case "modal":
           // Open specific modals via global custom events
-          if (typeof action.target === 'string') {
-            if (action.target.toLowerCase() === 'contact') {
-              window.dispatchEvent(new Event('open-contact-modal'));
-              console.log('Dispatched open-contact-modal event');
+          if (typeof action.target === "string") {
+            if (action.target.toLowerCase() === "contact") {
+              window.dispatchEvent(new Event("open-contact-modal"));
+              console.log("Dispatched open-contact-modal event");
             } else {
               console.log(`Modal target '${action.target}' not wired yet.`);
             }
           }
           break;
-  case 'scroll':
+        case "scroll":
           // Actually scroll to the target element
-          if (action.target && typeof action.target === 'string') {
+          if (action.target && typeof action.target === "string") {
             let element: Element | null = null;
 
             // Try different selector strategies for finding the section
@@ -608,7 +703,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
 
             // Try each selector until we find the element
             for (const selector of selectors) {
-              if (selector.includes(':contains(')) continue; // Skip pseudo-selectors
+              if (selector.includes(":contains(")) continue; // Skip pseudo-selectors
               try {
                 element = document.querySelector(selector);
                 if (element) break;
@@ -620,10 +715,16 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
 
             // If still not found, try to find by text content
             if (!element) {
-              const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+              const headings = Array.from(
+                document.querySelectorAll("h1, h2, h3, h4, h5, h6")
+              );
               for (const heading of headings) {
-                if (heading.textContent?.toLowerCase().includes(action.target.toLowerCase())) {
-                  element = heading.closest('section') || heading;
+                if (
+                  heading.textContent
+                    ?.toLowerCase()
+                    .includes(action.target.toLowerCase())
+                ) {
+                  element = heading.closest("section") || heading;
                   break;
                 }
               }
@@ -631,28 +732,34 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
 
             if (element) {
               element.scrollIntoView({
-                behavior: action.data?.smooth !== false ? 'smooth' : 'auto',
-                block: 'start'
+                behavior: action.data?.smooth !== false ? "smooth" : "auto",
+                block: "start",
               });
               console.log(`Scrolled to ${action.target}`);
 
               // Add highlight effect if requested
               if (action.data?.highlight) {
-                element.classList.add('highlight-section');
+                element.classList.add("highlight-section");
                 setTimeout(() => {
-                  element?.classList.remove('highlight-section');
+                  element?.classList.remove("highlight-section");
                 }, 2000);
               }
             } else {
-              console.warn(`Element not found for scroll target: ${action.target}`);
+              console.warn(
+                `Element not found for scroll target: ${action.target}`
+              );
               // Try to scroll to a common skills section selector as fallback
-              const fallbackSelectors = ['#skills', '.skills', '[data-section="skills"]'];
+              const fallbackSelectors = [
+                "#skills",
+                ".skills",
+                '[data-section="skills"]',
+              ];
               for (const fallback of fallbackSelectors) {
                 const fallbackElement = document.querySelector(fallback);
                 if (fallbackElement) {
                   fallbackElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                    behavior: "smooth",
+                    block: "start",
                   });
                   console.log(`Scrolled to fallback selector: ${fallback}`);
                   break;
@@ -660,21 +767,20 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
               }
             }
           } else {
-            console.error('Invalid scroll target:', action.target);
+            console.error("Invalid scroll target:", action.target);
           }
           break;
       }
 
-      updateActionStatus(actionId, 'completed');
+      updateActionStatus(actionId, "completed");
 
       // Auto-remove completed actions after a delay
       setTimeout(() => {
         removeAction(actionId);
       }, 3000);
-
     } catch (error) {
-      console.error('Action execution failed:', error);
-      updateActionStatus(actionId, 'failed', 'Action failed to execute');
+      console.error("Action execution failed:", error);
+      updateActionStatus(actionId, "failed", "Action failed to execute");
 
       // Auto-remove failed actions after a longer delay
       setTimeout(() => {
@@ -684,7 +790,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -706,41 +812,38 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
   return (
     <>
       {/* Navigation Indicator */}
-      <NavigationIndicator
-        actions={actions}
-        onDismiss={removeAction}
-      />
+      <NavigationIndicator actions={actions} onDismiss={removeAction} />
 
       <motion.div
         initial={
           prefersReducedMotion
             ? { opacity: 0 }
             : {
-              opacity: 0,
-              scale: 0.8,
-              y: 20,
-              rotateX: -15,
-            }
+                opacity: 0,
+                scale: 0.8,
+                y: 20,
+                rotateX: -15,
+              }
         }
         animate={
           prefersReducedMotion
             ? { opacity: 1 }
             : {
-              opacity: 1,
-              scale: 1,
-              y: 0,
-              rotateX: 0,
-            }
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                rotateX: 0,
+              }
         }
         exit={
           prefersReducedMotion
             ? { opacity: 0 }
             : {
-              opacity: 0,
-              scale: 0.8,
-              y: 20,
-              rotateX: 15,
-            }
+                opacity: 0,
+                scale: 0.8,
+                y: 20,
+                rotateX: 15,
+              }
         }
         transition={{
           type: "spring",
@@ -751,7 +854,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         className={classNames(
           "fixed bottom-24 right-6 z-40",
           "h-[32rem] w-80 sm:w-96",
-          "rounded-lg border border-border/60 bg-background/55 backdrop-blur-xl shadow-2xl",
+          "bg-background/55 rounded-lg border border-border/60 shadow-2xl backdrop-blur-xl",
           "flex flex-col overflow-hidden"
         )}
         style={{
@@ -761,7 +864,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       >
         {/* Header */}
         <motion.div
-          className="relative flex items-center justify-between border-b border-border/60 bg-accent/10 backdrop-blur-xl p-4"
+          className="relative flex items-center justify-between border-b border-border/60 bg-accent/10 p-4 backdrop-blur-xl"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.3 }}
@@ -815,9 +918,9 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         {/* Messages */}
         <div
           ref={messagesContainerRef}
-          className="flex-1 space-y-4 overflow-y-auto p-4 relative scroll-smooth"
+          className="relative flex-1 space-y-4 overflow-y-auto scroll-smooth p-4"
         >
-          <div className="pointer-events-none absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-background via-background/70 to-transparent z-10" />
+          <div className="pointer-events-none absolute left-0 right-0 top-0 z-10 h-6 bg-gradient-to-b from-background via-background/70 to-transparent" />
           <AnimatePresence mode="popLayout">
             {messages.map((message, index) => (
               <motion.div
@@ -827,28 +930,28 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                   prefersReducedMotion
                     ? { opacity: 0 }
                     : {
-                      opacity: 0,
-                      y: 20,
-                      scale: 0.8,
-                    }
+                        opacity: 0,
+                        y: 20,
+                        scale: 0.8,
+                      }
                 }
                 animate={
                   prefersReducedMotion
                     ? { opacity: 1 }
                     : {
-                      opacity: 1,
-                      y: 0,
-                      scale: 1,
-                    }
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                      }
                 }
                 exit={
                   prefersReducedMotion
                     ? { opacity: 0 }
                     : {
-                      opacity: 0,
-                      y: -20,
-                      scale: 0.8,
-                    }
+                        opacity: 0,
+                        y: -20,
+                        scale: 0.8,
+                      }
                 }
                 transition={{
                   type: "spring",
@@ -857,7 +960,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                   delay: index === 0 ? 0.3 : 0.1,
                 }}
                 className={classNames(
-                  "flex gap-3 group",
+                  "group flex gap-3",
                   message.sender === "user" ? "justify-end" : "justify-start"
                 )}
               >
@@ -882,15 +985,19 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                     "relative max-w-[80%] rounded-2xl px-4 py-2 text-sm shadow-sm ring-1 ring-border/20",
                     message.sender === "user"
                       ? "bg-gradient-to-br from-accent to-accent/80 text-white dark:text-black"
-                      : "bg-muted/60 backdrop-blur-sm text-muted-foreground"
+                      : "bg-muted/60 text-muted-foreground backdrop-blur-sm"
                   )}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 >
                   {/* Tail decoration */}
-                  <span className={classNames(
-                    "pointer-events-none absolute -bottom-1 h-3 w-3 rotate-45",
-                    message.sender === 'user' ? "right-3 bg-accent/70" : "left-3 bg-muted/60"
-                  )} />
+                  <span
+                    className={classNames(
+                      "pointer-events-none absolute -bottom-1 h-3 w-3 rotate-45",
+                      message.sender === "user"
+                        ? "right-3 bg-accent/70"
+                        : "left-3 bg-muted/60"
+                    )}
+                  />
                   <motion.div
                     className="leading-relaxed"
                     initial={{ opacity: 0 }}
@@ -904,58 +1011,81 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                           components={{
                             // Custom styling for markdown elements
                             h1: ({ children }) => (
-                              <h1 className="text-lg font-bold mb-2 text-foreground">{children}</h1>
+                              <h1 className="mb-2 text-lg font-bold text-foreground">
+                                {children}
+                              </h1>
                             ),
                             h2: ({ children }) => (
-                              <h2 className="text-base font-semibold mb-2 text-foreground">{children}</h2>
+                              <h2 className="mb-2 text-base font-semibold text-foreground">
+                                {children}
+                              </h2>
                             ),
                             h3: ({ children }) => (
-                              <h3 className="text-sm font-semibold mb-1 text-foreground">{children}</h3>
+                              <h3 className="mb-1 text-sm font-semibold text-foreground">
+                                {children}
+                              </h3>
                             ),
                             p: ({ children }) => (
-                              <p className="mb-2 last:mb-0 text-inherit">{children}</p>
+                              <p className="mb-2 text-inherit last:mb-0">
+                                {children}
+                              </p>
                             ),
                             ul: ({ children }) => (
-                              <ul className="list-disc list-inside mb-2 space-y-1 text-inherit">{children}</ul>
+                              <ul className="mb-2 list-inside list-disc space-y-1 text-inherit">
+                                {children}
+                              </ul>
                             ),
                             ol: ({ children }) => (
-                              <ol className="list-decimal list-inside mb-2 space-y-1 text-inherit">{children}</ol>
+                              <ol className="mb-2 list-inside list-decimal space-y-1 text-inherit">
+                                {children}
+                              </ol>
                             ),
                             li: ({ children }) => (
                               <li className="text-inherit">{children}</li>
                             ),
                             strong: ({ children }) => (
-                              <strong className="font-semibold text-inherit">{children}</strong>
+                              <strong className="font-semibold text-inherit">
+                                {children}
+                              </strong>
                             ),
                             em: ({ children }) => (
-                              <em className="italic text-inherit">{children}</em>
+                              <em className="italic text-inherit">
+                                {children}
+                              </em>
                             ),
                             code: ({ children, className }) => {
                               const isInline = !className;
                               if (isInline) {
                                 return (
-                                  <code className="bg-muted/50 px-1 py-0.5 rounded text-[11px] font-mono text-inherit">
+                                  <code className="rounded bg-muted/50 px-1 py-0.5 font-mono text-[11px] text-inherit">
                                     {children}
                                   </code>
                                 );
                               }
-                              const codeText = String(children).replace(/\n$/, '');
+                              const codeText = String(children).replace(
+                                /\n$/,
+                                ""
+                              );
                               return (
                                 <div className="group relative mb-2">
                                   <button
-                                    onClick={() => navigator.clipboard.writeText(codeText)}
-                                    className="absolute right-1 top-1 rounded px-2 py-0.5 text-[10px] font-medium bg-accent text-white dark:text-black opacity-0 group-hover:opacity-100 transition-opacity"
+                                    onClick={() =>
+                                      navigator.clipboard.writeText(codeText)
+                                    }
+                                    className="absolute right-1 top-1 rounded bg-accent px-2 py-0.5 text-[10px] font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:text-black"
                                     aria-label="Copy code"
                                   >
                                     Copy
                                   </button>
-                                  <code className="block bg-muted/50 p-2 rounded text-xs font-mono overflow-x-auto text-inherit whitespace-pre">{codeText}</code>
+                                  <code className="block overflow-x-auto whitespace-pre rounded bg-muted/50 p-2 font-mono text-xs text-inherit">
+                                    {codeText}
+                                  </code>
                                 </div>
                               );
                             },
                             pre: ({ children }) => <>{children}</>,
                             blockquote: ({ children }) => (
-                              <blockquote className="border-l-2 border-accent pl-3 mb-2 text-inherit opacity-80">
+                              <blockquote className="mb-2 border-l-2 border-accent pl-3 text-inherit opacity-80">
                                 {children}
                               </blockquote>
                             ),
@@ -964,7 +1094,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                                 href={href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-accent hover:text-accent/80 underline"
+                                className="text-accent underline hover:text-accent/80"
                               >
                                 {children}
                               </a>
@@ -988,12 +1118,15 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                       transition={{ delay: 0.5, duration: 0.3 }}
                     >
                       {message.toolCalls.map((toolCall, index) => (
-                        <ToolExecutionResult key={`${toolCall.id}-${index}`} toolCall={toolCall} />
+                        <ToolExecutionResult
+                          key={`${toolCall.id}-${index}`}
+                          toolCall={toolCall}
+                        />
                       ))}
                     </motion.div>
                   )}
                   <motion.span
-                    className="mt-1 block text-[10px] tracking-wide uppercase opacity-60 group-hover:opacity-80 transition-opacity"
+                    className="mt-1 block text-[10px] uppercase tracking-wide opacity-60 transition-opacity group-hover:opacity-80"
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 0.7, x: 0 }}
                     transition={{ delay: 0.5, duration: 0.3 }}
@@ -1022,77 +1155,77 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                 )}
               </motion.div>
             ))}
-          {isLoading && (
-            <motion.div
-              className="flex justify-start gap-3"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            >
+            {isLoading && (
               <motion.div
-                className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="flex justify-start gap-3"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
               >
-                <Bot size={16} className="text-white dark:text-black" />
-              </motion.div>
-              <motion.div
-                className="min-w-[80px] rounded-lg bg-muted px-4 py-3"
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <div className="flex items-center gap-1">
-                  <span className="mr-2 text-xs text-muted-foreground">
-                    AI is thinking
-                  </span>
-                  <div className="flex gap-1">
-                    {[0, 0.2, 0.4].map((delay, i) => (
+                <motion.div
+                  className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                >
+                  <Bot size={16} className="text-white dark:text-black" />
+                </motion.div>
+                <motion.div
+                  className="min-w-[80px] rounded-lg bg-muted px-4 py-3"
+                  animate={{ scale: [1, 1.02, 1] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <div className="flex items-center gap-1">
+                    <span className="mr-2 text-xs text-muted-foreground">
+                      AI is thinking
+                    </span>
+                    <div className="flex gap-1">
+                      {[0, 0.2, 0.4].map((delay, i) => (
+                        <motion.div
+                          key={i}
+                          className="h-1.5 w-1.5 rounded-full bg-accent"
+                          animate={{
+                            scale: [1, 1.5, 1],
+                            opacity: [0.5, 1, 0.5],
+                          }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            delay,
+                            ease: "easeInOut",
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mt-2 flex gap-0.5">
+                    <div className="h-0.5 flex-1 overflow-hidden rounded-full bg-accent/30">
                       <motion.div
-                        key={i}
-                        className="h-1.5 w-1.5 rounded-full bg-accent"
-                        animate={{
-                          scale: [1, 1.5, 1],
-                          opacity: [0.5, 1, 0.5],
-                        }}
+                        className="h-full rounded-full bg-accent"
+                        initial={{ x: "-100%" }}
+                        animate={{ x: "100%" }}
                         transition={{
-                          duration: 1,
+                          duration: 1.5,
                           repeat: Infinity,
-                          delay,
                           ease: "easeInOut",
                         }}
                       />
-                    ))}
+                    </div>
                   </div>
-                </div>
-                <div className="mt-2 flex gap-0.5">
-                  <div className="h-0.5 flex-1 overflow-hidden rounded-full bg-accent/30">
-                    <motion.div
-                      className="h-full rounded-full bg-accent"
-                      initial={{ x: "-100%" }}
-                      animate={{ x: "100%" }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    />
-                  </div>
-                </div>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          )}
+            )}
           </AnimatePresence>
           <div ref={messagesEndRef} />
         </div>
 
         {/* Input */}
         <motion.div
-          className="border-t border-border/60 bg-background/50 backdrop-blur-xl p-4"
+          className="border-t border-border/60 bg-background/50 p-4 backdrop-blur-xl"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.3 }}
@@ -1108,7 +1241,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                 <button
                   key={s}
                   onClick={() => handleSuggestionClick(s)}
-                  className="rounded-full bg-accent/10 hover:bg-accent/20 text-xs px-3 py-1 text-foreground transition-colors"
+                  className="rounded-full bg-accent/10 px-3 py-1 text-xs text-foreground transition-colors hover:bg-accent/20"
                 >
                   {s}
                 </button>
@@ -1119,11 +1252,15 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
             <motion.textarea
               ref={(el: HTMLTextAreaElement | null) => {
                 // assign to both refs safely
-                if (textareaRef && 'current' in textareaRef) {
-                  (textareaRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = el;
+                if (textareaRef && "current" in textareaRef) {
+                  (
+                    textareaRef as React.MutableRefObject<HTMLTextAreaElement | null>
+                  ).current = el;
                 }
-                if (inputRef && 'current' in inputRef) {
-                  (inputRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = el;
+                if (inputRef && "current" in inputRef) {
+                  (
+                    inputRef as React.MutableRefObject<HTMLTextAreaElement | null>
+                  ).current = el;
                 }
               }}
               value={inputValue}
@@ -1135,23 +1272,23 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
               placeholder="Ask about Nikunj's experience, skills..."
               rows={1}
               className={classNames(
-                "flex-1 text-sm resize-none leading-relaxed",
+                "flex-1 resize-none text-sm leading-relaxed",
                 "rounded-lg border border-border bg-background",
                 "text-foreground placeholder:text-muted-foreground",
                 "focus:border-transparent focus:outline-none focus:ring-2 focus:ring-accent",
-                "transition-all duration-200 scrollbar-thin scrollbar-thumb-accent/30 scrollbar-track-transparent",
+                "scrollbar-thin scrollbar-thumb-accent/30 scrollbar-track-transparent transition-all duration-200",
                 "max-h-40"
               )}
-              style={{ padding: '10px 12px 11px 10px', lineHeight: '1.35' }}
+              style={{ padding: "10px 12px 11px 10px", lineHeight: "1.35" }}
               disabled={isLoading}
               whileFocus={{ scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
             />
             <motion.button
               onClick={handleSendMessage}
               disabled={!inputValue.trim() || isLoading}
               className={classNames(
-                "rounded-lg p-3 transition-colors self-center",
+                "self-center rounded-lg p-3 transition-colors",
                 "bg-accent hover:bg-accent-light disabled:bg-muted",
                 "text-accent-foreground disabled:text-muted-foreground",
                 "disabled:cursor-not-allowed"
@@ -1159,7 +1296,7 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{
-                scale: { type: 'spring', stiffness: 400, damping: 25 },
+                scale: { type: "spring", stiffness: 400, damping: 25 },
               }}
               aria-label="Send message"
             >
@@ -1171,5 +1308,3 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
     </>
   );
 }
-
-

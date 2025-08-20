@@ -1,11 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import OpenAI from 'openai';
-import { AI_MODEL, SYSTEM_PROMPT } from '@/config/ai';
-import { rateLimiterApi, getUserId } from '@/utility/rate-limiter';
-import { toolRegistry, initializeAllTools } from '@/lib/tools';
-import { contextAwareToolRegistry } from '@/lib/tools/context-aware-tool-registry';
-import { ToolContext, ToolCall, ToolResult } from '@/types/tools';
-
+import { NextApiRequest, NextApiResponse } from "next";
+import OpenAI from "openai";
+import { AI_MODEL, SYSTEM_PROMPT } from "@/config/ai";
+import { rateLimiterApi, getUserId } from "@/utility/rate-limiter";
+import { toolRegistry, initializeAllTools } from "@/lib/tools";
+import { contextAwareToolRegistry } from "@/lib/tools/context-aware-tool-registry";
+import { ToolContext, ToolCall, ToolResult } from "@/types/tools";
 
 interface Message {
   id: string;
@@ -18,7 +17,7 @@ interface ChatRequest {
   message: string;
   conversationHistory?: Message[];
   currentPage?: string;
-  currentTheme?: 'light' | 'dark';
+  currentTheme?: "light" | "dark";
   userAgent?: string;
 }
 
@@ -27,7 +26,6 @@ interface ChatResponse {
   actions?: unknown[];
   toolCalls?: ToolCall[];
 }
-
 
 const openai = new OpenAI({
   apiKey: process.env.LLM_API_KEY,
@@ -49,10 +47,10 @@ async function ensureToolsInitialized(): Promise<void> {
     try {
       await initializeAllTools();
       toolsInitialized = true;
-      console.log('Tools initialized successfully');
+      console.log("Tools initialized successfully");
     } catch (error) {
-      console.error('Failed to initialize tools:', error);
-      throw new Error('Tool initialization failed');
+      console.error("Failed to initialize tools:", error);
+      throw new Error("Tool initialization failed");
     }
   }
 }
@@ -70,14 +68,17 @@ async function executeToolCalls(
   for (const toolCall of toolCalls) {
     try {
       // Handle both function and custom tool call types
-      const functionCall = 'function' in toolCall ? toolCall.function : null;
-      
+      const functionCall = "function" in toolCall ? toolCall.function : null;
+
       if (!functionCall) {
-        throw new Error('Invalid tool call format');
+        throw new Error("Invalid tool call format");
       }
 
-      console.log(`Executing tool: ${functionCall.name}`, functionCall.arguments);
-      
+      console.log(
+        `Executing tool: ${functionCall.name}`,
+        functionCall.arguments
+      );
+
       const args = JSON.parse(functionCall.arguments);
       const result = await contextAwareToolRegistry.executeTool(
         functionCall.name,
@@ -86,42 +87,47 @@ async function executeToolCalls(
       );
 
       results.push(result);
-      
+
       const toolCallResult: ToolCall = {
         id: toolCall.id,
         name: functionCall.name,
         arguments: args,
-        result
+        result,
       };
-      
+
       toolCallResults.push(toolCallResult);
 
-      console.log(`Tool ${functionCall.name} executed:`, result.success ? 'SUCCESS' : 'FAILED');
-      
+      console.log(
+        `Tool ${functionCall.name} executed:`,
+        result.success ? "SUCCESS" : "FAILED"
+      );
     } catch (error) {
-      const functionCall = 'function' in toolCall ? toolCall.function : null;
-      const toolName = functionCall?.name || 'unknown';
-      
+      const functionCall = "function" in toolCall ? toolCall.function : null;
+      const toolName = functionCall?.name || "unknown";
+
       console.error(`Error executing tool ${toolName}:`, error);
-      
+
       const errorResult: ToolResult = {
         success: false,
         error: {
-          code: 'TOOL_EXECUTION_ERROR',
-          message: error instanceof Error ? error.message : 'Unknown tool execution error',
-          suggestions: ['Check tool arguments and try again']
-        }
+          code: "TOOL_EXECUTION_ERROR",
+          message:
+            error instanceof Error
+              ? error.message
+              : "Unknown tool execution error",
+          suggestions: ["Check tool arguments and try again"],
+        },
       };
-      
+
       results.push(errorResult);
-      
+
       const toolCallResult: ToolCall = {
         id: toolCall.id,
         name: toolName,
         arguments: {},
-        result: errorResult
+        result: errorResult,
       };
-      
+
       toolCallResults.push(toolCallResult);
     }
   }
@@ -133,25 +139,35 @@ async function executeToolCalls(
  * Format tool results for LLM consumption
  */
 function formatToolResultsForLLM(toolCalls: ToolCall[]): string {
-  if (toolCalls.length === 0) return '';
+  if (toolCalls.length === 0) return "";
 
-  const formattedResults = toolCalls.map(call => {
-    const { name, result } = call;
-    
-    if (result && result.success) {
-      return `Tool "${name}" executed successfully. Result: ${JSON.stringify(result.data, null, 2)}`;
-    } else {
-      return `Tool "${name}" failed. Error: ${result?.error?.message || 'Unknown error'}`;
-    }
-  }).join('\n\n');
+  const formattedResults = toolCalls
+    .map((call) => {
+      const { name, result } = call;
+
+      if (result && result.success) {
+        return `Tool "${name}" executed successfully. Result: ${JSON.stringify(
+          result.data,
+          null,
+          2
+        )}`;
+      } else {
+        return `Tool "${name}" failed. Error: ${
+          result?.error?.message || "Unknown error"
+        }`;
+      }
+    })
+    .join("\n\n");
 
   return `\n\nTool Execution Results:\n${formattedResults}`;
 }
 
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
@@ -159,60 +175,70 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       await chatRateLimiter.check(res, req, 40);
     } catch {
-      return res.status(429).json({ error: 'Too many requests. Please wait a minute before trying again.' });
+      return res
+        .status(429)
+        .json({
+          error: "Too many requests. Please wait a minute before trying again.",
+        });
     }
 
     // Ensure tools are initialized
     await ensureToolsInitialized();
 
-    const { 
-      message, 
-      conversationHistory = [], 
-      currentPage = 'home',
-      currentTheme = 'light',
-      userAgent 
+    const {
+      message,
+      conversationHistory = [],
+      currentPage = "home",
+      currentTheme = "light",
+      userAgent,
     }: ChatRequest = req.body;
 
-    if (!message || typeof message !== 'string') {
-      return res.status(400).json({ error: 'Message is required' });
+    if (!message || typeof message !== "string") {
+      return res.status(400).json({ error: "Message is required" });
     }
 
     if (!process.env.LLM_API_KEY) {
-      throw new Error('LLM API key not configured');
+      throw new Error("LLM API key not configured");
     }
 
     // Create tool context with enhanced detection
     let toolContext: ToolContext = {
       currentPage,
       theme: currentTheme,
-      userAgent: userAgent || req.headers['user-agent'] || 'unknown',
-      sessionId: `session-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
+      userAgent: userAgent || req.headers["user-agent"] || "unknown",
+      sessionId: `session-${Date.now()}-${Math.random()
+        .toString(36)
+        .substring(2, 9)}`,
     };
 
     // Enhance context with page detection from message
     try {
       const detectedContext = contextAwareToolRegistry.detectPageContext({
         chatMessage: message,
-        url: req.headers.referer
+        url: req.headers.referer,
       });
-      
+
       // Use detected page if it has higher confidence than provided page
-      if (detectedContext.currentPage !== 'home' || !currentPage || currentPage === 'home') {
+      if (
+        detectedContext.currentPage !== "home" ||
+        !currentPage ||
+        currentPage === "home"
+      ) {
         toolContext = {
           ...toolContext,
           currentPage: detectedContext.currentPage,
-          currentSection: detectedContext.currentSection
+          currentSection: detectedContext.currentSection,
         };
       }
     } catch (error) {
-      console.warn('Context detection failed, using provided context:', error);
+      console.warn("Context detection failed, using provided context:", error);
     }
 
     const recentMessages = conversationHistory.slice(-10);
 
     // Format conversation history for OpenAI API
     const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
-      { role: "system", content: SYSTEM_PROMPT }
+      { role: "system", content: SYSTEM_PROMPT },
     ];
 
     // Add conversation history
@@ -227,63 +253,67 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     messages.push({ role: "user", content: message });
 
     // Get contextual function definitions for OpenAI
-    const functionDefinitions = contextAwareToolRegistry.getContextualFunctionDefinitions(toolContext);
+    const functionDefinitions =
+      contextAwareToolRegistry.getContextualFunctionDefinitions(toolContext);
 
-    console.log(`Making OpenAI request with ${functionDefinitions.length} available tools`);
+    console.log(
+      `Making OpenAI request with ${functionDefinitions.length} available tools`
+    );
 
     const response = await openai.chat.completions.create({
       model: AI_MODEL,
       messages,
-      tools: functionDefinitions.map(func => ({
-        type: 'function' as const,
+      tools: functionDefinitions.map((func) => ({
+        type: "function" as const,
         function: {
           name: func.name,
           description: func.description,
-          parameters: func.parameters as Record<string, unknown>
-        }
+          parameters: func.parameters as Record<string, unknown>,
+        },
       })),
-      tool_choice: 'auto',
+      tool_choice: "auto",
       top_p: 0.7,
       temperature: 0.8,
     });
 
     const choice = response.choices[0];
     if (!choice) {
-      throw new Error('No response from OpenAI');
+      throw new Error("No response from OpenAI");
     }
 
-    let aiResponse = choice.message?.content || '';
+    let aiResponse = choice.message?.content || "";
     let toolCallResults: ToolCall[] = [];
 
     // Handle tool calls if present
     if (choice.message?.tool_calls && choice.message.tool_calls.length > 0) {
       console.log(`Processing ${choice.message.tool_calls.length} tool calls`);
-      
+
       const { toolCallResults: tcResults } = await executeToolCalls(
         choice.message.tool_calls,
         toolContext
       );
-      
+
       toolCallResults = tcResults;
 
       // Add tool results to conversation for follow-up response
       const toolResultsMessage = formatToolResultsForLLM(toolCallResults);
-      
+
       if (toolResultsMessage) {
         // Make a follow-up call to get a natural response incorporating tool results
-        const followUpMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
-          ...messages,
-          {
-            role: 'assistant',
-            content: aiResponse || 'I\'ll help you with that.',
-            tool_calls: choice.message.tool_calls
-          },
-          ...choice.message.tool_calls.map((toolCall, index) => ({
-            role: 'tool' as const,
-            tool_call_id: toolCall.id,
-            content: JSON.stringify(toolCallResults[index]?.result || {})
-          }))
-        ];
+        const followUpMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] =
+          [
+            ...messages,
+            {
+              role: "assistant",
+              content: aiResponse || "I'll help you with that.",
+              tool_calls: choice.message.tool_calls,
+            },
+            ...choice.message.tool_calls.map((toolCall, index) => ({
+              role: "tool" as const,
+              tool_call_id: toolCall.id,
+              content: JSON.stringify(toolCallResults[index]?.result || {}),
+            })),
+          ];
 
         const followUpResponse = await openai.chat.completions.create({
           model: AI_MODEL,
@@ -292,69 +322,84 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           temperature: 0.8,
         });
 
-        aiResponse = followUpResponse.choices[0]?.message?.content || aiResponse;
+        aiResponse =
+          followUpResponse.choices[0]?.message?.content || aiResponse;
       }
     }
 
     if (!aiResponse) {
-      aiResponse = "I apologize, but I'm having trouble responding right now. Please try asking your question again.";
+      aiResponse =
+        "I apologize, but I'm having trouble responding right now. Please try asking your question again.";
     }
 
     const chatResponse: ChatResponse = {
       response: aiResponse,
-      toolCalls: toolCallResults.length > 0 ? toolCallResults : undefined
+      toolCalls: toolCallResults.length > 0 ? toolCallResults : undefined,
     };
 
-    console.log(`Chat response generated with ${toolCallResults.length} tool calls`);
+    console.log(
+      `Chat response generated with ${toolCallResults.length} tool calls`
+    );
 
     return res.status(200).json(chatResponse);
-
   } catch (error: unknown) {
-    console.error('AI Response Error:', error);
-    console.error('Error details:', {
-      message: error instanceof Error ? error.message : 'Unknown error',
+    console.error("AI Response Error:", error);
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : "Unknown error",
       status: (error as { status?: unknown })?.status,
       type: (error as { type?: unknown })?.type,
-      code: (error as { code?: unknown })?.code
+      code: (error as { code?: unknown })?.code,
     });
 
     // Check if this is a tool initialization error
-    if (error instanceof Error && error.message?.includes('Tool initialization failed')) {
+    if (
+      error instanceof Error &&
+      error.message?.includes("Tool initialization failed")
+    ) {
       return res.status(500).json({
-        error: 'Tool system is currently unavailable. Please try again later.',
-        response: 'I apologize, but my enhanced features are temporarily unavailable. I can still provide basic information about Nikunj Khitha. What would you like to know?'
+        error: "Tool system is currently unavailable. Please try again later.",
+        response:
+          "I apologize, but my enhanced features are temporarily unavailable. I can still provide basic information about Nikunj Khitha. What would you like to know?",
       });
     }
 
     // Provide intelligent fallback responses based on keywords
-    const message = req.body.message?.toLowerCase() || '';
+    const message = req.body.message?.toLowerCase() || "";
 
-    if (message.includes('contact') || message.includes('email')) {
+    if (message.includes("contact") || message.includes("email")) {
       return res.status(200).json({
-        response: `# Contact Nikunj Khitha\n\nYou can connect with Nikunj through various channels:\n\n## 📧 **Email**\n[njkhitha2003@gmail.com](mailto:njkhitha2003@gmail.com)\n\n## 💼 **LinkedIn**\n[Connect on LinkedIn](https://www.linkedin.com/in/Nikunj-Khitha/)\n\n## 🐙 **GitHub**\n[View Projects on GitHub](https://github.com/Nikunj2003)\n\n## 🌐 **Portfolio Website**\n[nikunj.tech](https://nikunj.tech)\n\n---\n\n> **Currently:** Automation Intern at Armorcode Inc.\n> \n> **Interests:** AI development, full-stack engineering, and creating innovative solutions\n> \n> Feel free to reach out for collaborations, job opportunities, or tech discussions!`
+        response: `# Contact Nikunj Khitha\n\nYou can connect with Nikunj through various channels:\n\n## 📧 **Email**\n[njkhitha2003@gmail.com](mailto:njkhitha2003@gmail.com)\n\n## 💼 **LinkedIn**\n[Connect on LinkedIn](https://www.linkedin.com/in/Nikunj-Khitha/)\n\n## 🐙 **GitHub**\n[View Projects on GitHub](https://github.com/Nikunj2003)\n\n## 🌐 **Portfolio Website**\n[nikunj.tech](https://nikunj.tech)\n\n---\n\n> **Currently:** Automation Intern at Armorcode Inc.\n> \n> **Interests:** AI development, full-stack engineering, and creating innovative solutions\n> \n> Feel free to reach out for collaborations, job opportunities, or tech discussions!`,
       });
     }
 
-    if (message.includes('experience') || message.includes('work') || message.includes('job')) {
+    if (
+      message.includes("experience") ||
+      message.includes("work") ||
+      message.includes("job")
+    ) {
       return res.status(200).json({
-        response: `# Nikunj's Professional Experience\n\nNikunj has diverse experience across multiple companies:\n\n## 🔧 **Current: Automation Intern at Armorcode Inc.**\n*Jan 2025 - Aug 2025*\n\n- Building next-gen testing frameworks with \`Spring Boot\`, \`Playwright\` & \`TestNG\`\n- **Won internal AI challenge** by automating documentation for 250+ tools\n- Reduced documentation update time from **72 hours to 45 minutes**\n- Implemented AI auto-heal feature reducing test flakiness by **99%**\n\n## 💻 **SDE Intern at Xansr Software**\n*June 2024 - Jan 2025*\n\n- Developed microservices with \`Node.js\` & \`FastAPI\` achieving **100% test coverage**\n- Built **"Fantasy GPT"** chatbot with 98% accuracy using \`RAG\` & \`LangGraph\`\n- Created **"AIKO"** media assistant for personalized sports highlights\n- Improved API performance by **40%** and reduced deployment time by **42%**\n\n> Would you like to know more about any specific role or project?`
+        response: `# Nikunj's Professional Experience\n\nNikunj has diverse experience across multiple companies:\n\n## 🔧 **Current: Automation Intern at Armorcode Inc.**\n*Jan 2025 - Aug 2025*\n\n- Building next-gen testing frameworks with \`Spring Boot\`, \`Playwright\` & \`TestNG\`\n- **Won internal AI challenge** by automating documentation for 250+ tools\n- Reduced documentation update time from **72 hours to 45 minutes**\n- Implemented AI auto-heal feature reducing test flakiness by **99%**\n\n## 💻 **SDE Intern at Xansr Software**\n*June 2024 - Jan 2025*\n\n- Developed microservices with \`Node.js\` & \`FastAPI\` achieving **100% test coverage**\n- Built **"Fantasy GPT"** chatbot with 98% accuracy using \`RAG\` & \`LangGraph\`\n- Created **"AIKO"** media assistant for personalized sports highlights\n- Improved API performance by **40%** and reduced deployment time by **42%**\n\n> Would you like to know more about any specific role or project?`,
       });
     }
 
-    if (message.includes('skill') || message.includes('technology') || message.includes('tech')) {
+    if (
+      message.includes("skill") ||
+      message.includes("technology") ||
+      message.includes("tech")
+    ) {
       return res.status(200).json({
-        response: `# Nikunj's Technical Skills\n\nNikunj has expertise across multiple technology stacks:\n\n## 🌐 **Full Stack Development**\n- \`React\`, \`Next.js\`, \`Node.js\`, \`Express\`\n- \`FastAPI\`, \`Spring Boot\`, \`Flutter\`\n- \`TailwindCSS\`, \`MongoDB\`, \`MySQL\`, \`Firebase\`\n\n## 🤖 **AI/ML Specialization**\n- \`OpenAI\`, \`Azure AI\`, \`LangChain\`\n- \`RAG\`, \`LangGraph\`, \`Prompt Engineering\`\n- \`LLaMA AI\`, \`Vercel AI SDK\`\n\n## 🚀 **DevOps & Cloud**\n- \`Docker\`, \`Kubernetes\`, \`CI/CD\`\n- \`GitHub Actions\`, \`Jenkins\`\n- \`AWS\`, \`Microsoft Azure\`\n\n## 💻 **Programming Languages**\n- \`JavaScript\`, \`TypeScript\`, \`Java\`\n- \`Python\`, \`PHP\`, \`Dart\`\n\n> What specific technology would you like to know more about?`
+        response: `# Nikunj's Technical Skills\n\nNikunj has expertise across multiple technology stacks:\n\n## 🌐 **Full Stack Development**\n- \`React\`, \`Next.js\`, \`Node.js\`, \`Express\`\n- \`FastAPI\`, \`Spring Boot\`, \`Flutter\`\n- \`TailwindCSS\`, \`MongoDB\`, \`MySQL\`, \`Firebase\`\n\n## 🤖 **AI/ML Specialization**\n- \`OpenAI\`, \`Azure AI\`, \`LangChain\`\n- \`RAG\`, \`LangGraph\`, \`Prompt Engineering\`\n- \`LLaMA AI\`, \`Vercel AI SDK\`\n\n## 🚀 **DevOps & Cloud**\n- \`Docker\`, \`Kubernetes\`, \`CI/CD\`\n- \`GitHub Actions\`, \`Jenkins\`\n- \`AWS\`, \`Microsoft Azure\`\n\n## 💻 **Programming Languages**\n- \`JavaScript\`, \`TypeScript\`, \`Java\`\n- \`Python\`, \`PHP\`, \`Dart\`\n\n> What specific technology would you like to know more about?`,
       });
     }
 
-    if (message.includes('project') || message.includes('portfolio')) {
+    if (message.includes("project") || message.includes("portfolio")) {
       return res.status(200).json({
-        response: `# Nikunj's Key Projects\n\nNikunj has worked on diverse projects spanning multiple domains:\n\n## 🌍 **EarthLink**\n*Enterprise Platform*\n- American Internet service provider platform\n- **Tech Stack:** \`React\`, \`Next.js\`, \`GraphQL\`, \`Microservices\`\n- **Features:** Styled Components, SCSS integration\n\n## 🛒 **Rapid Store**\n*E-commerce Platform*\n- Electronics and gadgets marketplace\n- **Tech Stack:** \`React\`, \`Razorpay\`, \`Context API\`\n- **Features:** Payment integration, Authentication\n\n## 🤖 **Fantasy GPT**\n*AI/ML Project*\n- Sports chatbot for fantasy enthusiasts\n- **Accuracy:** 98% using \`RAG\` & \`LangGraph\`\n- **Tech Stack:** \`Node.js\`, \`AI/ML\`\n\n## 📺 **AIKO**\n*AI Media Assistant*\n- Personalized sports highlights generator\n- **Features:** Real-time commentary, Media processing\n\n## 🎨 **Rapid UI**\n*Open Source*\n- CSS library with pre-defined components\n- **Tech Stack:** \`CSS\`, \`JavaScript\`, Design System\n\n> Which project interests you most? I can share more details!`
+        response: `# Nikunj's Key Projects\n\nNikunj has worked on diverse projects spanning multiple domains:\n\n## 🌍 **EarthLink**\n*Enterprise Platform*\n- American Internet service provider platform\n- **Tech Stack:** \`React\`, \`Next.js\`, \`GraphQL\`, \`Microservices\`\n- **Features:** Styled Components, SCSS integration\n\n## 🛒 **Rapid Store**\n*E-commerce Platform*\n- Electronics and gadgets marketplace\n- **Tech Stack:** \`React\`, \`Razorpay\`, \`Context API\`\n- **Features:** Payment integration, Authentication\n\n## 🤖 **Fantasy GPT**\n*AI/ML Project*\n- Sports chatbot for fantasy enthusiasts\n- **Accuracy:** 98% using \`RAG\` & \`LangGraph\`\n- **Tech Stack:** \`Node.js\`, \`AI/ML\`\n\n## 📺 **AIKO**\n*AI Media Assistant*\n- Personalized sports highlights generator\n- **Features:** Real-time commentary, Media processing\n\n## 🎨 **Rapid UI**\n*Open Source*\n- CSS library with pre-defined components\n- **Tech Stack:** \`CSS\`, \`JavaScript\`, Design System\n\n> Which project interests you most? I can share more details!`,
       });
     }
 
     return res.status(200).json({
-      response: `# Welcome! I'm here to help you learn about Nikunj Khitha\n\n## What would you like to know?\n\n### 🔹 **Professional Experience**\n- Current role at Armorcode Inc.\n- Previous internships and achievements\n- Career progression and impact\n\n### 🔹 **Technical Skills**\n- Programming languages and frameworks\n- AI/ML expertise and tools\n- DevOps and cloud technologies\n\n### 🔹 **AI/ML Projects**\n- Fantasy GPT chatbot (98% accuracy)\n- AIKO media assistant\n- Automation and testing innovations\n\n### 🔹 **Portfolio Projects**\n- Enterprise web applications\n- E-commerce platforms\n- Open source contributions\n\n### 🔹 **Contact Information**\n- How to reach Nikunj for opportunities\n- Professional social links\n\n> Just ask me anything about Nikunj's background, and I'll provide detailed information!`
+      response: `# Welcome! I'm here to help you learn about Nikunj Khitha\n\n## What would you like to know?\n\n### 🔹 **Professional Experience**\n- Current role at Armorcode Inc.\n- Previous internships and achievements\n- Career progression and impact\n\n### 🔹 **Technical Skills**\n- Programming languages and frameworks\n- AI/ML expertise and tools\n- DevOps and cloud technologies\n\n### 🔹 **AI/ML Projects**\n- Fantasy GPT chatbot (98% accuracy)\n- AIKO media assistant\n- Automation and testing innovations\n\n### 🔹 **Portfolio Projects**\n- Enterprise web applications\n- E-commerce platforms\n- Open source contributions\n\n### 🔹 **Contact Information**\n- How to reach Nikunj for opportunities\n- Professional social links\n\n> Just ask me anything about Nikunj's background, and I'll provide detailed information!`,
     });
   }
 }

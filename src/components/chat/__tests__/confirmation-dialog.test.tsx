@@ -1,28 +1,36 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import ConfirmationDialog, { useConfirmationDialog } from '../confirmation-dialog';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import ConfirmationDialog, {
+  useConfirmationDialog,
+} from "../confirmation-dialog";
 
 // Mock framer-motion
-jest.mock('framer-motion', () => ({
+jest.mock("framer-motion", () => ({
   motion: {
-    div: ({ children, ...props }: React.ComponentProps<'div'>) => <div {...props}>{children}</div>,
-    button: ({ children, ...props }: React.ComponentProps<'button'>) => <button {...props}>{children}</button>,
+    div: ({ children, ...props }: React.ComponentProps<"div">) => (
+      <div {...props}>{children}</div>
+    ),
+    button: ({ children, ...props }: React.ComponentProps<"button">) => (
+      <button {...props}>{children}</button>
+    ),
   },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
 }));
 
-describe('ConfirmationDialog', () => {
+describe("ConfirmationDialog", () => {
   const mockOnConfirm = jest.fn();
   const mockOnCancel = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
     // Reset body overflow style
-    document.body.style.overflow = 'unset';
+    document.body.style.overflow = "unset";
   });
 
-  it('renders when open', () => {
+  it("renders when open", () => {
     render(
       <ConfirmationDialog
         isOpen={true}
@@ -33,13 +41,13 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    expect(screen.getByText('Test Title')).toBeInTheDocument();
-    expect(screen.getByText('Test message')).toBeInTheDocument();
-    expect(screen.getByText('Confirm')).toBeInTheDocument();
-    expect(screen.getByText('Cancel')).toBeInTheDocument();
+    expect(screen.getByText("Test Title")).toBeInTheDocument();
+    expect(screen.getByText("Test message")).toBeInTheDocument();
+    expect(screen.getByText("Confirm")).toBeInTheDocument();
+    expect(screen.getByText("Cancel")).toBeInTheDocument();
   });
 
-  it('does not render when closed', () => {
+  it("does not render when closed", () => {
     render(
       <ConfirmationDialog
         isOpen={false}
@@ -50,10 +58,10 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    expect(screen.queryByText('Test Title')).not.toBeInTheDocument();
+    expect(screen.queryByText("Test Title")).not.toBeInTheDocument();
   });
 
-  it('calls onConfirm when confirm button is clicked', () => {
+  it("calls onConfirm when confirm button is clicked", () => {
     render(
       <ConfirmationDialog
         isOpen={true}
@@ -64,11 +72,11 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    fireEvent.click(screen.getByText('Confirm'));
+    fireEvent.click(screen.getByText("Confirm"));
     expect(mockOnConfirm).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onCancel when cancel button is clicked', () => {
+  it("calls onCancel when cancel button is clicked", () => {
     render(
       <ConfirmationDialog
         isOpen={true}
@@ -79,11 +87,11 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    fireEvent.click(screen.getByText('Cancel'));
+    fireEvent.click(screen.getByText("Cancel"));
     expect(mockOnCancel).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onCancel when close button is clicked', () => {
+  it("calls onCancel when close button is clicked", () => {
     render(
       <ConfirmationDialog
         isOpen={true}
@@ -94,11 +102,11 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    fireEvent.click(screen.getByLabelText('Close dialog'));
+    fireEvent.click(screen.getByLabelText("Close dialog"));
     expect(mockOnCancel).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onCancel when backdrop is clicked', () => {
+  it("calls onCancel when backdrop is clicked", () => {
     render(
       <ConfirmationDialog
         isOpen={true}
@@ -110,14 +118,14 @@ describe('ConfirmationDialog', () => {
     );
 
     // Click on the backdrop (first div with backdrop styling)
-    const backdrop = document.querySelector('.bg-black\\/50');
+    const backdrop = document.querySelector(".bg-black\\/50");
     if (backdrop) {
       fireEvent.click(backdrop);
       expect(mockOnCancel).toHaveBeenCalledTimes(1);
     }
   });
 
-  it('handles escape key press', () => {
+  it("handles escape key press", () => {
     render(
       <ConfirmationDialog
         isOpen={true}
@@ -128,11 +136,11 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    fireEvent.keyDown(document, { key: 'Escape' });
+    fireEvent.keyDown(document, { key: "Escape" });
     expect(mockOnCancel).toHaveBeenCalledTimes(1);
   });
 
-  it('does not handle escape key when closed', () => {
+  it("does not handle escape key when closed", () => {
     render(
       <ConfirmationDialog
         isOpen={false}
@@ -143,11 +151,11 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    fireEvent.keyDown(document, { key: 'Escape' });
+    fireEvent.keyDown(document, { key: "Escape" });
     expect(mockOnCancel).not.toHaveBeenCalled();
   });
 
-  it('renders custom button text', () => {
+  it("renders custom button text", () => {
     render(
       <ConfirmationDialog
         isOpen={true}
@@ -160,11 +168,11 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    expect(screen.getByText('Yes, Delete')).toBeInTheDocument();
-    expect(screen.getByText('No, Keep')).toBeInTheDocument();
+    expect(screen.getByText("Yes, Delete")).toBeInTheDocument();
+    expect(screen.getByText("No, Keep")).toBeInTheDocument();
   });
 
-  it('applies destructive variant styling', () => {
+  it("applies destructive variant styling", () => {
     render(
       <ConfirmationDialog
         isOpen={true}
@@ -176,11 +184,11 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    const confirmButton = screen.getByText('Confirm');
-    expect(confirmButton).toHaveClass('bg-red-600');
+    const confirmButton = screen.getByText("Confirm");
+    expect(confirmButton).toHaveClass("bg-red-600");
   });
 
-  it('applies default variant styling', () => {
+  it("applies default variant styling", () => {
     render(
       <ConfirmationDialog
         isOpen={true}
@@ -192,11 +200,11 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    const confirmButton = screen.getByText('Confirm');
-    expect(confirmButton).toHaveClass('bg-blue-600');
+    const confirmButton = screen.getByText("Confirm");
+    expect(confirmButton).toHaveClass("bg-blue-600");
   });
 
-  it('prevents body scroll when open', () => {
+  it("prevents body scroll when open", () => {
     const { rerender } = render(
       <ConfirmationDialog
         isOpen={true}
@@ -207,7 +215,7 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.body.style.overflow).toBe("hidden");
 
     rerender(
       <ConfirmationDialog
@@ -219,23 +227,24 @@ describe('ConfirmationDialog', () => {
       />
     );
 
-    expect(document.body.style.overflow).toBe('unset');
+    expect(document.body.style.overflow).toBe("unset");
   });
 });
 
-describe('useConfirmationDialog hook', () => {
+describe("useConfirmationDialog hook", () => {
   const TestComponent = () => {
-    const { showConfirmation, hideConfirmation, ConfirmationDialog } = useConfirmationDialog();
+    const { showConfirmation, hideConfirmation, ConfirmationDialog } =
+      useConfirmationDialog();
 
     return (
       <div>
         <button
           onClick={() =>
             showConfirmation({
-              title: 'Test Confirmation',
-              message: 'Are you sure?',
-              onConfirm: () => console.log('Confirmed'),
-              onCancel: () => console.log('Cancelled'),
+              title: "Test Confirmation",
+              message: "Are you sure?",
+              onConfirm: () => console.log("Confirmed"),
+              onCancel: () => console.log("Cancelled"),
             })
           }
         >
@@ -247,50 +256,50 @@ describe('useConfirmationDialog hook', () => {
     );
   };
 
-  it('shows confirmation dialog when showConfirmation is called', () => {
+  it("shows confirmation dialog when showConfirmation is called", () => {
     render(<TestComponent />);
 
-    expect(screen.queryByText('Test Confirmation')).not.toBeInTheDocument();
+    expect(screen.queryByText("Test Confirmation")).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByText('Show Confirmation'));
+    fireEvent.click(screen.getByText("Show Confirmation"));
 
-    expect(screen.getByText('Test Confirmation')).toBeInTheDocument();
-    expect(screen.getByText('Are you sure?')).toBeInTheDocument();
+    expect(screen.getByText("Test Confirmation")).toBeInTheDocument();
+    expect(screen.getByText("Are you sure?")).toBeInTheDocument();
   });
 
-  it('hides confirmation dialog when hideConfirmation is called', () => {
+  it("hides confirmation dialog when hideConfirmation is called", () => {
     render(<TestComponent />);
 
     // Show the dialog first
-    fireEvent.click(screen.getByText('Show Confirmation'));
-    expect(screen.getByText('Test Confirmation')).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Show Confirmation"));
+    expect(screen.getByText("Test Confirmation")).toBeInTheDocument();
 
     // Hide it
-    fireEvent.click(screen.getByText('Hide Confirmation'));
-    expect(screen.queryByText('Test Confirmation')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByText("Hide Confirmation"));
+    expect(screen.queryByText("Test Confirmation")).not.toBeInTheDocument();
   });
 
-  it('hides dialog when confirm is clicked', () => {
+  it("hides dialog when confirm is clicked", () => {
     render(<TestComponent />);
 
-    fireEvent.click(screen.getByText('Show Confirmation'));
-    expect(screen.getByText('Test Confirmation')).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Show Confirmation"));
+    expect(screen.getByText("Test Confirmation")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByText('Confirm'));
-    expect(screen.queryByText('Test Confirmation')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByText("Confirm"));
+    expect(screen.queryByText("Test Confirmation")).not.toBeInTheDocument();
   });
 
-  it('hides dialog when cancel is clicked', () => {
+  it("hides dialog when cancel is clicked", () => {
     render(<TestComponent />);
 
-    fireEvent.click(screen.getByText('Show Confirmation'));
-    expect(screen.getByText('Test Confirmation')).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Show Confirmation"));
+    expect(screen.getByText("Test Confirmation")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByText('Cancel'));
-    expect(screen.queryByText('Test Confirmation')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByText("Cancel"));
+    expect(screen.queryByText("Test Confirmation")).not.toBeInTheDocument();
   });
 
-  it('handles destructive variant', () => {
+  it("handles destructive variant", () => {
     const TestComponentDestructive = () => {
       const { showConfirmation, ConfirmationDialog } = useConfirmationDialog();
 
@@ -299,11 +308,11 @@ describe('useConfirmationDialog hook', () => {
           <button
             onClick={() =>
               showConfirmation({
-                title: 'Delete Item',
-                message: 'This action cannot be undone.',
-                variant: 'destructive',
-                confirmText: 'Delete',
-                onConfirm: () => console.log('Deleted'),
+                title: "Delete Item",
+                message: "This action cannot be undone.",
+                variant: "destructive",
+                confirmText: "Delete",
+                onConfirm: () => console.log("Deleted"),
               })
             }
           >
@@ -316,13 +325,15 @@ describe('useConfirmationDialog hook', () => {
 
     render(<TestComponentDestructive />);
 
-    fireEvent.click(screen.getByText('Show Destructive'));
+    fireEvent.click(screen.getByText("Show Destructive"));
 
-    expect(screen.getByText('Delete Item')).toBeInTheDocument();
-    expect(screen.getByText('This action cannot be undone.')).toBeInTheDocument();
-    expect(screen.getByText('Delete')).toBeInTheDocument();
+    expect(screen.getByText("Delete Item")).toBeInTheDocument();
+    expect(
+      screen.getByText("This action cannot be undone.")
+    ).toBeInTheDocument();
+    expect(screen.getByText("Delete")).toBeInTheDocument();
 
-    const deleteButton = screen.getByText('Delete');
-    expect(deleteButton).toHaveClass('bg-red-600');
+    const deleteButton = screen.getByText("Delete");
+    expect(deleteButton).toHaveClass("bg-red-600");
   });
 });

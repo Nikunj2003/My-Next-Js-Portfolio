@@ -2,9 +2,16 @@
  * Base tool implementation with error handling and validation
  */
 
-import { JSONSchema7 } from 'json-schema';
-import Ajv from 'ajv';
-import { PortfolioTool, ToolContext, ToolResult, ToolError, ToolExecutionConfig, ToolExecutionStats } from '@/types/tools';
+import { JSONSchema7 } from "json-schema";
+import Ajv from "ajv";
+import {
+  PortfolioTool,
+  ToolContext,
+  ToolResult,
+  ToolError,
+  ToolExecutionConfig,
+  ToolExecutionStats,
+} from "@/types/tools";
 
 /**
  * Abstract base class for all portfolio tools
@@ -13,7 +20,7 @@ export abstract class BaseTool implements PortfolioTool {
   public readonly name: string;
   public readonly description: string;
   public readonly parameters: JSONSchema7;
-  
+
   private ajv = new Ajv({ allErrors: true });
   private executionStats: ToolExecutionStats[] = [];
 
@@ -27,8 +34,8 @@ export abstract class BaseTool implements PortfolioTool {
    * Execute the tool with validation and error handling
    */
   async execute(
-    args: Record<string, any>, 
-    context: ToolContext, 
+    args: Record<string, any>,
+    context: ToolContext,
     config: ToolExecutionConfig = {}
   ): Promise<ToolResult> {
     const startTime = Date.now();
@@ -39,47 +46,57 @@ export abstract class BaseTool implements PortfolioTool {
       if (config.validateArgs !== false) {
         const validationResult = this.validateArguments(args);
         if (!validationResult.valid) {
-          return this.createErrorResult('INVALID_ARGUMENTS', validationResult.message || 'Invalid arguments', {
-            suggestions: ['Check the tool parameters and try again'],
-            fallback: null
-          });
+          return this.createErrorResult(
+            "INVALID_ARGUMENTS",
+            validationResult.message || "Invalid arguments",
+            {
+              suggestions: ["Check the tool parameters and try again"],
+              fallback: null,
+            }
+          );
         }
       }
 
       // Validate context
       const contextValidation = this.validateContext(context);
       if (!contextValidation.valid) {
-        return this.createErrorResult('INVALID_CONTEXT', contextValidation.message || 'Invalid context');
+        return this.createErrorResult(
+          "INVALID_CONTEXT",
+          contextValidation.message || "Invalid context"
+        );
       }
 
       // Execute with timeout
       const timeout = config.timeout || 10000; // 10 second default
       const executionPromise = this.executeInternal(args, context);
-      
+
       const result = await Promise.race([
         executionPromise,
-        this.createTimeoutPromise(timeout)
+        this.createTimeoutPromise(timeout),
       ]);
 
       // Record successful execution
       this.recordExecution(startTime, true);
-      
-      return result;
 
+      return result;
     } catch (error) {
       // Record failed execution
-      this.recordExecution(startTime, false, error instanceof Error ? error.message : 'Unknown error');
+      this.recordExecution(
+        startTime,
+        false,
+        error instanceof Error ? error.message : "Unknown error"
+      );
 
       // Handle retry logic
       if (config.retry && (config.retryAttempts || 1) > 0) {
         const retryConfig = {
           ...config,
           retryAttempts: (config.retryAttempts || 1) - 1,
-          retry: (config.retryAttempts || 1) > 1
+          retry: (config.retryAttempts || 1) > 1,
         };
-        
+
         // Wait before retry
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         return this.execute(args, context, retryConfig);
       }
 
@@ -90,20 +107,28 @@ export abstract class BaseTool implements PortfolioTool {
   /**
    * Internal execution method to be implemented by subclasses
    */
-  protected abstract executeInternal(args: Record<string, any>, context: ToolContext): Promise<ToolResult>;
+  protected abstract executeInternal(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<ToolResult>;
 
   /**
    * Validate tool arguments against the schema
    */
-  private validateArguments(args: Record<string, any>): { valid: boolean; message?: string } {
+  private validateArguments(args: Record<string, any>): {
+    valid: boolean;
+    message?: string;
+  } {
     const validate = this.ajv.compile(this.parameters);
     const valid = validate(args);
 
     if (!valid) {
-      const errors = validate.errors?.map(err => `${err.instancePath} ${err.message}`).join(', ');
+      const errors = validate.errors
+        ?.map((err) => `${err.instancePath} ${err.message}`)
+        .join(", ");
       return {
         valid: false,
-        message: `Invalid arguments: ${errors}`
+        message: `Invalid arguments: ${errors}`,
       };
     }
 
@@ -113,25 +138,29 @@ export abstract class BaseTool implements PortfolioTool {
   /**
    * Validate tool execution context
    */
-  private validateContext(context: ToolContext): { valid: boolean; message?: string } {
-    if (!context.currentPage || typeof context.currentPage !== 'string') {
+  private validateContext(context: ToolContext): {
+    valid: boolean;
+    message?: string;
+  } {
+    if (!context.currentPage || typeof context.currentPage !== "string") {
       return {
         valid: false,
-        message: 'Invalid context: currentPage is required and must be a string'
+        message:
+          "Invalid context: currentPage is required and must be a string",
       };
     }
 
-    if (!context.theme || !['light', 'dark'].includes(context.theme)) {
+    if (!context.theme || !["light", "dark"].includes(context.theme)) {
       return {
         valid: false,
-        message: 'Invalid context: theme must be either "light" or "dark"'
+        message: 'Invalid context: theme must be either "light" or "dark"',
       };
     }
 
-    if (!context.sessionId || typeof context.sessionId !== 'string') {
+    if (!context.sessionId || typeof context.sessionId !== "string") {
       return {
         valid: false,
-        message: 'Invalid context: sessionId is required and must be a string'
+        message: "Invalid context: sessionId is required and must be a string",
       };
     }
 
@@ -154,32 +183,45 @@ export abstract class BaseTool implements PortfolioTool {
    */
   private handleExecutionError(error: unknown): ToolResult {
     if (error instanceof Error) {
-      if (error.message.includes('timed out')) {
-        return this.createErrorResult('EXECUTION_TIMEOUT', error.message, {
-          suggestions: ['Try again with a simpler request', 'Check if the system is responsive']
+      if (error.message.includes("timed out")) {
+        return this.createErrorResult("EXECUTION_TIMEOUT", error.message, {
+          suggestions: [
+            "Try again with a simpler request",
+            "Check if the system is responsive",
+          ],
         });
       }
 
-      return this.createErrorResult('EXECUTION_ERROR', error.message, {
-        suggestions: ['Check the tool arguments and try again', 'Contact support if the issue persists']
+      return this.createErrorResult("EXECUTION_ERROR", error.message, {
+        suggestions: [
+          "Check the tool arguments and try again",
+          "Contact support if the issue persists",
+        ],
       });
     }
 
-    return this.createErrorResult('UNKNOWN_ERROR', 'An unknown error occurred during tool execution');
+    return this.createErrorResult(
+      "UNKNOWN_ERROR",
+      "An unknown error occurred during tool execution"
+    );
   }
 
   /**
    * Create a standardized error result
    */
-  protected createErrorResult(code: string, message: string, additional?: Partial<ToolError>): ToolResult {
+  protected createErrorResult(
+    code: string,
+    message: string,
+    additional?: Partial<ToolError>
+  ): ToolResult {
     return {
       success: false,
       error: {
         code,
         message,
         suggestions: additional?.suggestions || [],
-        fallback: additional?.fallback
-      }
+        fallback: additional?.fallback,
+      },
     };
   }
 
@@ -190,20 +232,24 @@ export abstract class BaseTool implements PortfolioTool {
     return {
       success: true,
       data,
-      actions
+      actions,
     };
   }
 
   /**
    * Record execution statistics
    */
-  private recordExecution(startTime: number, success: boolean, errorCode?: string): void {
+  private recordExecution(
+    startTime: number,
+    success: boolean,
+    errorCode?: string
+  ): void {
     const stat: ToolExecutionStats = {
       toolName: this.name,
       executionTime: Date.now() - startTime,
       success,
       timestamp: new Date(),
-      errorCode
+      errorCode,
     };
 
     this.executionStats.push(stat);

@@ -2,15 +2,15 @@
  * Navigation tools for controlling Next.js routing and page navigation
  */
 
-import { BaseTool } from './base-tool';
-import { ToolContext, ToolResult, ToolAction } from '@/types/tools';
-import { JSONSchema7 } from 'json-schema';
+import { BaseTool } from "./base-tool";
+import { ToolContext, ToolResult, ToolAction } from "@/types/tools";
+import { JSONSchema7 } from "json-schema";
 
 /**
  * Valid portfolio pages that can be navigated to
  */
-const VALID_PAGES = ['home', 'about', 'projects', 'resume'] as const;
-type ValidPage = typeof VALID_PAGES[number];
+const VALID_PAGES = ["home", "about", "projects", "resume"] as const;
+type ValidPage = (typeof VALID_PAGES)[number];
 
 /**
  * Valid pages array for JSON Schema (mutable version)
@@ -21,10 +21,10 @@ const VALID_PAGES_ARRAY: string[] = [...VALID_PAGES];
  * Valid sections within pages
  */
 const PAGE_SECTIONS: Record<ValidPage, string[]> = {
-  home: ['hero', 'stats', 'skills'],
-  about: ['hero', 'experience', 'background'],
-  projects: ['showcase', 'filters'],
-  resume: ['display', 'download']
+  home: ["hero", "stats", "skills"],
+  about: ["hero", "experience", "background"],
+  projects: ["showcase", "filters"],
+  resume: ["display", "download"],
 };
 
 /**
@@ -33,28 +33,29 @@ const PAGE_SECTIONS: Record<ValidPage, string[]> = {
 export class NavigateToPageTool extends BaseTool {
   constructor() {
     super(
-      'navigate_to_page',
-      'Navigate to a specific page in the portfolio with optional section targeting and smooth scrolling',
+      "navigate_to_page",
+      "Navigate to a specific page in the portfolio with optional section targeting and smooth scrolling",
       {
-        type: 'object',
+        type: "object",
         properties: {
           page: {
-            type: 'string',
+            type: "string",
             enum: VALID_PAGES_ARRAY,
-            description: 'The page to navigate to'
+            description: "The page to navigate to",
           },
           section: {
-            type: 'string',
-            description: 'Optional section within the page to scroll to'
+            type: "string",
+            description: "Optional section within the page to scroll to",
           },
           smooth: {
-            type: 'boolean',
+            type: "boolean",
             default: true,
-            description: 'Whether to use smooth scrolling when navigating to sections'
-          }
+            description:
+              "Whether to use smooth scrolling when navigating to sections",
+          },
         },
-        required: ['page'],
-        additionalProperties: false
+        required: ["page"],
+        additionalProperties: false,
       }
     );
   }
@@ -70,32 +71,39 @@ export class NavigateToPageTool extends BaseTool {
 
     // Validate section if provided
     if (section && !PAGE_SECTIONS[page].includes(section)) {
-      return this.createErrorResult('INVALID_SECTION', `Invalid section "${section}" for page "${page}". Valid sections are: ${PAGE_SECTIONS[page].join(', ')}`, {
-        suggestions: [`Try one of: ${PAGE_SECTIONS[page].join(', ')}`],
-        fallback: { page, section: null }
-      });
+      return this.createErrorResult(
+        "INVALID_SECTION",
+        `Invalid section "${section}" for page "${page}". Valid sections are: ${PAGE_SECTIONS[
+          page
+        ].join(", ")}`,
+        {
+          suggestions: [`Try one of: ${PAGE_SECTIONS[page].join(", ")}`],
+          fallback: { page, section: null },
+        }
+      );
     }
 
     // Convert page names to actual routes
     const pageRoutes: Record<ValidPage, string> = {
-      home: '/',
-      about: '/about',
-      projects: '/projects',
-      resume: '/resume'
+      home: "/",
+      about: "/about",
+      projects: "/projects",
+      resume: "/resume",
     };
 
     const targetRoute = pageRoutes[page];
-    const isCurrentPage = this.getCurrentPageFromRoute(context.currentPage) === page;
+    const isCurrentPage =
+      this.getCurrentPageFromRoute(context.currentPage) === page;
 
     // Create navigation action
     const navigationAction: ToolAction = {
-      type: 'navigate',
+      type: "navigate",
       target: targetRoute,
       data: {
         section,
         smooth,
-        isCurrentPage
-      }
+        isCurrentPage,
+      },
     };
 
     // Prepare response data
@@ -105,7 +113,7 @@ export class NavigateToPageTool extends BaseTool {
       section,
       smooth,
       isCurrentPage,
-      message: this.generateNavigationMessage(page, section, isCurrentPage)
+      message: this.generateNavigationMessage(page, section, isCurrentPage),
     };
 
     return this.createSuccessResult(responseData, [navigationAction]);
@@ -115,17 +123,21 @@ export class NavigateToPageTool extends BaseTool {
    * Extract page name from current route
    */
   private getCurrentPageFromRoute(currentPage: string): ValidPage {
-    if (currentPage === '/' || currentPage === '/home') return 'home';
-    if (currentPage.startsWith('/about')) return 'about';
-    if (currentPage.startsWith('/projects')) return 'projects';
-    if (currentPage.startsWith('/resume')) return 'resume';
-    return 'home'; // fallback
+    if (currentPage === "/" || currentPage === "/home") return "home";
+    if (currentPage.startsWith("/about")) return "about";
+    if (currentPage.startsWith("/projects")) return "projects";
+    if (currentPage.startsWith("/resume")) return "resume";
+    return "home"; // fallback
   }
 
   /**
    * Generate appropriate navigation message
    */
-  private generateNavigationMessage(page: ValidPage, section?: string, isCurrentPage?: boolean): string {
+  private generateNavigationMessage(
+    page: ValidPage,
+    section?: string,
+    isCurrentPage?: boolean
+  ): string {
     if (isCurrentPage && section) {
       return `Scrolling to the ${section} section on the current page.`;
     } else if (isCurrentPage && !section) {
@@ -144,44 +156,44 @@ export class NavigateToPageTool extends BaseTool {
 export class OpenModalTool extends BaseTool {
   constructor() {
     super(
-      'open_modal',
-      'Open a modal dialog for contact forms, project details, or other interactive content',
+      "open_modal",
+      "Open a modal dialog for contact forms, project details, or other interactive content",
       {
-        type: 'object',
+        type: "object",
         properties: {
           modal: {
-            type: 'string',
-            enum: ['contact', 'project-details'],
-            description: 'The type of modal to open'
+            type: "string",
+            enum: ["contact", "project-details"],
+            description: "The type of modal to open",
           },
           data: {
-            type: 'object',
-            description: 'Optional data to pre-populate the modal with',
+            type: "object",
+            description: "Optional data to pre-populate the modal with",
             properties: {
               projectId: {
-                type: 'string',
-                description: 'Project ID for project details modal'
+                type: "string",
+                description: "Project ID for project details modal",
               },
               subject: {
-                type: 'string',
-                description: 'Pre-filled subject for contact form'
+                type: "string",
+                description: "Pre-filled subject for contact form",
               },
               message: {
-                type: 'string',
-                description: 'Pre-filled message for contact form'
-              }
+                type: "string",
+                description: "Pre-filled message for contact form",
+              },
             },
-            additionalProperties: true
-          }
+            additionalProperties: true,
+          },
         },
-        required: ['modal'],
-        additionalProperties: false
+        required: ["modal"],
+        additionalProperties: false,
       }
     );
   }
 
   protected async executeInternal(
-    args: { modal: 'contact' | 'project-details'; data?: Record<string, any> },
+    args: { modal: "contact" | "project-details"; data?: Record<string, any> },
     context: ToolContext
   ): Promise<ToolResult> {
     const { modal, data = {} } = args;
@@ -190,27 +202,35 @@ export class OpenModalTool extends BaseTool {
     // This is redundant but kept for explicit error messages
 
     // Validate project details modal data
-    if (modal === 'project-details' && data.projectId && typeof data.projectId !== 'string') {
-      return this.createErrorResult('INVALID_PROJECT_ID', 'Project ID must be a string', {
-        suggestions: ['Provide a valid project ID string']
-      });
+    if (
+      modal === "project-details" &&
+      data.projectId &&
+      typeof data.projectId !== "string"
+    ) {
+      return this.createErrorResult(
+        "INVALID_PROJECT_ID",
+        "Project ID must be a string",
+        {
+          suggestions: ["Provide a valid project ID string"],
+        }
+      );
     }
 
     // Create modal action
     const modalAction: ToolAction = {
-      type: 'modal',
+      type: "modal",
       target: modal,
       data: {
         ...data,
-        timestamp: Date.now()
-      }
+        timestamp: Date.now(),
+      },
     };
 
     // Prepare response data
     const responseData = {
       modal,
       data,
-      message: this.generateModalMessage(modal, data)
+      message: this.generateModalMessage(modal, data),
     };
 
     return this.createSuccessResult(responseData, [modalAction]);
@@ -219,20 +239,23 @@ export class OpenModalTool extends BaseTool {
   /**
    * Generate appropriate modal opening message
    */
-  private generateModalMessage(modal: string, data: Record<string, any>): string {
+  private generateModalMessage(
+    modal: string,
+    data: Record<string, any>
+  ): string {
     switch (modal) {
-      case 'contact':
+      case "contact":
         if (data.subject) {
           return `Opening contact form with subject: "${data.subject}"`;
         }
-        return 'Opening the contact form for you.';
-      
-      case 'project-details':
+        return "Opening the contact form for you.";
+
+      case "project-details":
         if (data.projectId) {
           return `Opening details for project: ${data.projectId}`;
         }
-        return 'Opening project details modal.';
-      
+        return "Opening project details modal.";
+
       default:
         return `Opening ${modal} modal.`;
     }
@@ -245,94 +268,117 @@ export class OpenModalTool extends BaseTool {
 export class NavigateToSectionTool extends BaseTool {
   constructor() {
     super(
-      'navigate_to_section',
-      'Navigate to a specific section within the current page or any page with smooth scrolling and highlighting',
+      "navigate_to_section",
+      "Navigate to a specific section within the current page or any page with smooth scrolling and highlighting",
       {
-        type: 'object',
+        type: "object",
         properties: {
           section: {
-            type: 'string',
-            description: 'The section to navigate to'
+            type: "string",
+            description: "The section to navigate to",
           },
           page: {
-            type: 'string',
+            type: "string",
             enum: VALID_PAGES_ARRAY,
-            description: 'Optional page to navigate to first (defaults to current page)'
+            description:
+              "Optional page to navigate to first (defaults to current page)",
           },
           smooth: {
-            type: 'boolean',
+            type: "boolean",
             default: true,
-            description: 'Whether to use smooth scrolling'
+            description: "Whether to use smooth scrolling",
           },
           highlight: {
-            type: 'boolean',
+            type: "boolean",
             default: true,
-            description: 'Whether to highlight the section after scrolling'
-          }
+            description: "Whether to highlight the section after scrolling",
+          },
         },
-        required: ['section'],
-        additionalProperties: false
+        required: ["section"],
+        additionalProperties: false,
       }
     );
   }
 
   protected async executeInternal(
-    args: { section: string; page?: ValidPage; smooth?: boolean; highlight?: boolean },
+    args: {
+      section: string;
+      page?: ValidPage;
+      smooth?: boolean;
+      highlight?: boolean;
+    },
     context: ToolContext
   ): Promise<ToolResult> {
     const { section, page, smooth = true, highlight = true } = args;
 
     // Determine target page (current page if not specified)
-    const targetPage = page || this.getCurrentPageFromRoute(context.currentPage);
+    const targetPage =
+      page || this.getCurrentPageFromRoute(context.currentPage);
 
     // Validate that the section exists on the target page
     if (!PAGE_SECTIONS[targetPage]?.includes(section)) {
       const availableSections = PAGE_SECTIONS[targetPage] || [];
-      return this.createErrorResult('INVALID_SECTION', `Section "${section}" not found on ${targetPage} page. Available sections: ${availableSections.join(', ')}`, {
-        suggestions: availableSections.length > 0 
-          ? [`Try one of: ${availableSections.join(', ')}`]
-          : [`Navigate to a different page first`],
-        fallback: { 
-          currentPage: context.currentPage,
-          availableSections 
+      return this.createErrorResult(
+        "INVALID_SECTION",
+        `Section "${section}" not found on ${targetPage} page. Available sections: ${availableSections.join(
+          ", "
+        )}`,
+        {
+          suggestions:
+            availableSections.length > 0
+              ? [`Try one of: ${availableSections.join(", ")}`]
+              : [`Navigate to a different page first`],
+          fallback: {
+            currentPage: context.currentPage,
+            availableSections,
+          },
         }
-      });
+      );
     }
 
     const actions: ToolAction[] = [];
 
     // If we need to navigate to a different page first
-    if (page && this.getCurrentPageFromRoute(context.currentPage) !== targetPage) {
+    if (
+      page &&
+      this.getCurrentPageFromRoute(context.currentPage) !== targetPage
+    ) {
       const pageRoutes: Record<ValidPage, string> = {
-        home: '/',
-        about: '/about',
-        projects: '/projects',
-        resume: '/resume'
+        home: "/",
+        about: "/about",
+        projects: "/projects",
+        resume: "/resume",
       };
 
       actions.push({
-        type: 'navigate',
+        type: "navigate",
         target: pageRoutes[targetPage],
-        data: { section, smooth, highlight }
+        data: { section, smooth, highlight },
       });
     } else {
       // Just scroll to section on current page
       actions.push({
-        type: 'scroll',
+        type: "scroll",
         target: section,
-        data: { smooth, highlight }
+        data: { smooth, highlight },
       });
     }
 
-    const needsPageNavigation = page ? this.getCurrentPageFromRoute(context.currentPage) !== targetPage : false;
-    
+    const needsPageNavigation = page
+      ? this.getCurrentPageFromRoute(context.currentPage) !== targetPage
+      : false;
+
     const responseData = {
       section,
       page: targetPage,
       smooth,
       highlight,
       needsPageNavigation,
-      message: this.generateSectionNavigationMessage(section, targetPage, needsPageNavigation)
+      message: this.generateSectionNavigationMessage(
+        section,
+        targetPage,
+        needsPageNavigation
+      ),
     };
 
     return this.createSuccessResult(responseData, actions);
@@ -342,17 +388,21 @@ export class NavigateToSectionTool extends BaseTool {
    * Extract page name from current route
    */
   private getCurrentPageFromRoute(currentPage: string): ValidPage {
-    if (currentPage === '/' || currentPage === '/home') return 'home';
-    if (currentPage.startsWith('/about')) return 'about';
-    if (currentPage.startsWith('/projects')) return 'projects';
-    if (currentPage.startsWith('/resume')) return 'resume';
-    return 'home'; // fallback
+    if (currentPage === "/" || currentPage === "/home") return "home";
+    if (currentPage.startsWith("/about")) return "about";
+    if (currentPage.startsWith("/projects")) return "projects";
+    if (currentPage.startsWith("/resume")) return "resume";
+    return "home"; // fallback
   }
 
   /**
    * Generate appropriate section navigation message
    */
-  private generateSectionNavigationMessage(section: string, page: ValidPage, needsPageNavigation: boolean): string {
+  private generateSectionNavigationMessage(
+    section: string,
+    page: ValidPage,
+    needsPageNavigation: boolean
+  ): string {
     if (needsPageNavigation) {
       return `Navigating to the ${page} page and scrolling to the ${section} section.`;
     } else {

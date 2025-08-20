@@ -2,34 +2,34 @@
  * Tests for tool execution middleware
  */
 
-import { ToolExecutionMiddleware } from '../tool-execution-middleware';
-import { PortfolioTool, ToolContext, ToolResult } from '@/types/tools';
-import { JSONSchema7 } from 'json-schema';
+import { ToolExecutionMiddleware } from "../tool-execution-middleware";
+import { PortfolioTool, ToolContext, ToolResult } from "@/types/tools";
+import { JSONSchema7 } from "json-schema";
 
 // Mock tool for testing
 const mockTool: PortfolioTool = {
-  name: 'test-tool',
-  description: 'A test tool',
+  name: "test-tool",
+  description: "A test tool",
   parameters: {
-    type: 'object',
+    type: "object",
     properties: {
-      message: { type: 'string', minLength: 1 },
-      count: { type: 'number', minimum: 0 }
+      message: { type: "string", minLength: 1 },
+      count: { type: "number", minimum: 0 },
     },
-    required: ['message']
+    required: ["message"],
   } as JSONSchema7,
-  execute: jest.fn()
+  execute: jest.fn(),
 };
 
 // Mock context
 const mockContext: ToolContext = {
-  currentPage: 'home',
-  theme: 'light',
-  userAgent: 'test-agent',
-  sessionId: 'test-session-123'
+  currentPage: "home",
+  theme: "light",
+  userAgent: "test-agent",
+  sessionId: "test-session-123",
 };
 
-describe('ToolExecutionMiddleware', () => {
+describe("ToolExecutionMiddleware", () => {
   let middleware: ToolExecutionMiddleware;
 
   beforeEach(() => {
@@ -37,45 +37,47 @@ describe('ToolExecutionMiddleware', () => {
     jest.clearAllMocks();
   });
 
-  describe('Basic execution', () => {
-    it('should execute tool successfully with valid arguments', async () => {
+  describe("Basic execution", () => {
+    it("should execute tool successfully with valid arguments", async () => {
       const mockResult: ToolResult = {
         success: true,
-        data: { response: 'test response' }
+        data: { response: "test response" },
       };
 
       (mockTool.execute as jest.Mock).mockResolvedValue(mockResult);
 
       const result = await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'test message', count: 5 },
+        { message: "test message", count: 5 },
         mockContext
       );
 
       expect(result.success).toBe(true);
-      expect(result.data).toEqual({ response: 'test response' });
+      expect(result.data).toEqual({ response: "test response" });
       expect(result.metadata).toBeDefined();
       expect(result.metadata?.executedAt).toBeDefined();
-      expect(result.metadata?.toolName).toBe('test-tool');
+      expect(result.metadata?.toolName).toBe("test-tool");
     });
 
-    it('should handle tool execution errors', async () => {
-      (mockTool.execute as jest.Mock).mockRejectedValue(new Error('Tool execution failed'));
+    it("should handle tool execution errors", async () => {
+      (mockTool.execute as jest.Mock).mockRejectedValue(
+        new Error("Tool execution failed")
+      );
 
       const result = await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'test message' },
+        { message: "test message" },
         mockContext
       );
 
       expect(result.success).toBe(false);
-      expect(result.error?.code).toBe('EXECUTION_ERROR');
-      expect(result.error?.message).toBe('Tool execution failed');
+      expect(result.error?.code).toBe("EXECUTION_ERROR");
+      expect(result.error?.message).toBe("Tool execution failed");
     });
   });
 
-  describe('Argument validation', () => {
-    it('should reject missing required arguments', async () => {
+  describe("Argument validation", () => {
+    it("should reject missing required arguments", async () => {
       const result = await middleware.executeWithMiddleware(
         mockTool,
         { count: 5 }, // missing required 'message'
@@ -83,41 +85,43 @@ describe('ToolExecutionMiddleware', () => {
       );
 
       expect(result.success).toBe(false);
-      expect(result.error?.code).toBe('INVALID_ARGUMENTS');
-      expect(result.error?.message).toContain('Validation failed');
-      expect(result.error?.suggestions).toContain('Missing required property: message');
+      expect(result.error?.code).toBe("INVALID_ARGUMENTS");
+      expect(result.error?.message).toContain("Validation failed");
+      expect(result.error?.suggestions).toContain(
+        "Missing required property: message"
+      );
     });
 
-    it('should reject invalid argument types', async () => {
+    it("should reject invalid argument types", async () => {
       const result = await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'test', count: 'invalid' }, // count should be number
+        { message: "test", count: "invalid" }, // count should be number
         mockContext
       );
 
       expect(result.success).toBe(false);
-      expect(result.error?.code).toBe('INVALID_ARGUMENTS');
-      expect(result.error?.message).toContain('Validation failed');
+      expect(result.error?.code).toBe("INVALID_ARGUMENTS");
+      expect(result.error?.message).toContain("Validation failed");
     });
 
-    it('should reject arguments that violate constraints', async () => {
+    it("should reject arguments that violate constraints", async () => {
       const result = await middleware.executeWithMiddleware(
         mockTool,
-        { message: '', count: -1 }, // empty message, negative count
+        { message: "", count: -1 }, // empty message, negative count
         mockContext
       );
 
       expect(result.success).toBe(false);
-      expect(result.error?.code).toBe('INVALID_ARGUMENTS');
+      expect(result.error?.code).toBe("INVALID_ARGUMENTS");
     });
 
-    it('should accept valid arguments', async () => {
+    it("should accept valid arguments", async () => {
       const mockResult: ToolResult = { success: true, data: {} };
       (mockTool.execute as jest.Mock).mockResolvedValue(mockResult);
 
       const result = await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'valid message', count: 10 },
+        { message: "valid message", count: 10 },
         mockContext
       );
 
@@ -125,8 +129,8 @@ describe('ToolExecutionMiddleware', () => {
     });
   });
 
-  describe('Security validation', () => {
-    it('should reject arguments with script tags', async () => {
+  describe("Security validation", () => {
+    it("should reject arguments with script tags", async () => {
       const result = await middleware.executeWithMiddleware(
         mockTool,
         { message: '<script>alert("xss")</script>' },
@@ -134,11 +138,11 @@ describe('ToolExecutionMiddleware', () => {
       );
 
       expect(result.success).toBe(false);
-      expect(result.error?.code).toBe('SECURITY_VIOLATION');
-      expect(result.error?.message).toContain('potentially unsafe content');
+      expect(result.error?.code).toBe("SECURITY_VIOLATION");
+      expect(result.error?.message).toContain("potentially unsafe content");
     });
 
-    it('should reject arguments with javascript: URLs', async () => {
+    it("should reject arguments with javascript: URLs", async () => {
       const result = await middleware.executeWithMiddleware(
         mockTool,
         { message: 'javascript:alert("xss")' },
@@ -146,15 +150,15 @@ describe('ToolExecutionMiddleware', () => {
       );
 
       expect(result.success).toBe(false);
-      expect(result.error?.code).toBe('SECURITY_VIOLATION');
+      expect(result.error?.code).toBe("SECURITY_VIOLATION");
     });
 
-    it('should reject oversized arguments', async () => {
+    it("should reject oversized arguments", async () => {
       const middleware = new ToolExecutionMiddleware({
-        security: { maxArgumentSize: 100 }
+        security: { maxArgumentSize: 100 },
       });
 
-      const largeMessage = 'x'.repeat(200);
+      const largeMessage = "x".repeat(200);
       const result = await middleware.executeWithMiddleware(
         mockTool,
         { message: largeMessage },
@@ -162,37 +166,37 @@ describe('ToolExecutionMiddleware', () => {
       );
 
       expect(result.success).toBe(false);
-      expect(result.error?.code).toBe('SECURITY_VIOLATION');
-      expect(result.error?.message).toContain('Arguments too large');
+      expect(result.error?.code).toBe("SECURITY_VIOLATION");
+      expect(result.error?.message).toContain("Arguments too large");
     });
 
-    it('should sanitize result data', async () => {
+    it("should sanitize result data", async () => {
       const mockResult: ToolResult = {
         success: true,
         data: {
           content: '<script>alert("xss")</script>Safe content',
-          url: 'javascript:alert("xss")'
-        }
+          url: 'javascript:alert("xss")',
+        },
       };
 
       (mockTool.execute as jest.Mock).mockResolvedValue(mockResult);
 
       const result = await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'test' },
+        { message: "test" },
         mockContext
       );
 
       expect(result.success).toBe(true);
-      expect(result.data?.content).toBe('Safe content');
-      expect(result.data?.url).toBe('');
+      expect(result.data?.content).toBe("Safe content");
+      expect(result.data?.url).toBe("");
     });
   });
 
-  describe('Rate limiting', () => {
-    it('should allow requests within rate limit', async () => {
+  describe("Rate limiting", () => {
+    it("should allow requests within rate limit", async () => {
       const middleware = new ToolExecutionMiddleware({
-        rateLimit: { maxRequests: 5, windowMs: 60000 }
+        rateLimit: { maxRequests: 5, windowMs: 60000 },
       });
 
       const mockResult: ToolResult = { success: true, data: {} };
@@ -209,9 +213,9 @@ describe('ToolExecutionMiddleware', () => {
       }
     });
 
-    it('should reject requests exceeding rate limit', async () => {
+    it("should reject requests exceeding rate limit", async () => {
       const middleware = new ToolExecutionMiddleware({
-        rateLimit: { maxRequests: 2, windowMs: 60000 }
+        rateLimit: { maxRequests: 2, windowMs: 60000 },
       });
 
       const mockResult: ToolResult = { success: true, data: {} };
@@ -230,18 +234,18 @@ describe('ToolExecutionMiddleware', () => {
       // Third request should be rate limited
       const result = await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'test 3' },
+        { message: "test 3" },
         mockContext
       );
 
       expect(result.success).toBe(false);
-      expect(result.error?.code).toBe('RATE_LIMIT_EXCEEDED');
-      expect(result.error?.message).toContain('Rate limit exceeded');
+      expect(result.error?.code).toBe("RATE_LIMIT_EXCEEDED");
+      expect(result.error?.message).toContain("Rate limit exceeded");
     });
 
-    it('should reset rate limit after window expires', async () => {
+    it("should reset rate limit after window expires", async () => {
       const middleware = new ToolExecutionMiddleware({
-        rateLimit: { maxRequests: 1, windowMs: 100 } // 100ms window
+        rateLimit: { maxRequests: 1, windowMs: 100 }, // 100ms window
       });
 
       const mockResult: ToolResult = { success: true, data: {} };
@@ -250,7 +254,7 @@ describe('ToolExecutionMiddleware', () => {
       // First request should succeed
       const result1 = await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'test 1' },
+        { message: "test 1" },
         mockContext
       );
       expect(result1.success).toBe(true);
@@ -258,31 +262,31 @@ describe('ToolExecutionMiddleware', () => {
       // Second request should be rate limited
       const result2 = await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'test 2' },
+        { message: "test 2" },
         mockContext
       );
       expect(result2.success).toBe(false);
 
       // Wait for window to expire
-      await new Promise(resolve => setTimeout(resolve, 150));
+      await new Promise((resolve) => setTimeout(resolve, 150));
 
       // Third request should succeed (new window)
       const result3 = await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'test 3' },
+        { message: "test 3" },
         mockContext
       );
       expect(result3.success).toBe(true);
     });
   });
 
-  describe('Configuration', () => {
-    it('should use custom configuration', async () => {
+  describe("Configuration", () => {
+    it("should use custom configuration", async () => {
       const customConfig = {
         rateLimit: { maxRequests: 10, windowMs: 30000 },
         security: { maxArgumentSize: 5000 },
         validation: { strictMode: false },
-        logging: { enabled: false }
+        logging: { enabled: false },
       };
 
       const middleware = new ToolExecutionMiddleware(customConfig);
@@ -294,9 +298,9 @@ describe('ToolExecutionMiddleware', () => {
       expect(stats.config.logging?.enabled).toBe(false);
     });
 
-    it('should update configuration dynamically', async () => {
+    it("should update configuration dynamically", async () => {
       middleware.updateConfig({
-        rateLimit: { maxRequests: 20, windowMs: 120000 }
+        rateLimit: { maxRequests: 20, windowMs: 120000 },
       });
 
       const stats = middleware.getStats();
@@ -304,14 +308,14 @@ describe('ToolExecutionMiddleware', () => {
       expect(stats.config.rateLimit?.windowMs).toBe(120000);
     });
 
-    it('should clear rate limit cache', async () => {
+    it("should clear rate limit cache", async () => {
       const mockResult: ToolResult = { success: true, data: {} };
       (mockTool.execute as jest.Mock).mockResolvedValue(mockResult);
 
       // Make a request to populate cache
       await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'test' },
+        { message: "test" },
         mockContext
       );
 
@@ -326,15 +330,15 @@ describe('ToolExecutionMiddleware', () => {
     });
   });
 
-  describe('Error handling', () => {
-    it('should handle malformed JSON in arguments', async () => {
+  describe("Error handling", () => {
+    it("should handle malformed JSON in arguments", async () => {
       // This would typically come from JSON.parse errors in real usage
       const circularObj: any = {};
       circularObj.self = circularObj;
 
       const result = await middleware.executeWithMiddleware(
         mockTool,
-        { message: 'test', circular: circularObj },
+        { message: "test", circular: circularObj },
         mockContext
       );
 
@@ -343,20 +347,20 @@ describe('ToolExecutionMiddleware', () => {
       expect(result).toBeDefined();
     });
 
-    it('should handle schema compilation errors', async () => {
+    it("should handle schema compilation errors", async () => {
       const invalidTool: PortfolioTool = {
         ...mockTool,
-        parameters: { type: 'invalid-type' } as any // Invalid schema
+        parameters: { type: "invalid-type" } as any, // Invalid schema
       };
 
       const result = await middleware.executeWithMiddleware(
         invalidTool,
-        { message: 'test' },
+        { message: "test" },
         mockContext
       );
 
       expect(result.success).toBe(false);
-      expect(result.error?.code).toBe('INVALID_ARGUMENTS');
+      expect(result.error?.code).toBe("INVALID_ARGUMENTS");
     });
   });
 });

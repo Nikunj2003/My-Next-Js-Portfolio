@@ -19,7 +19,7 @@ export function useAutosizeTextArea(
     if (!el) return;
 
     // Reset to auto first to measure natural scrollHeight
-    el.style.height = 'auto';
+    el.style.height = "auto";
 
     if (!value && shrinkOnEmpty) {
       el.style.height = defaultHeight;
@@ -27,9 +27,11 @@ export function useAutosizeTextArea(
     }
 
     let newHeight = el.scrollHeight;
-    if (typeof minHeight === 'number') newHeight = Math.max(newHeight, minHeight);
-    if (typeof maxHeight === 'number') newHeight = Math.min(newHeight, maxHeight);
+    if (typeof minHeight === "number")
+      newHeight = Math.max(newHeight, minHeight);
+    if (typeof maxHeight === "number")
+      newHeight = Math.min(newHeight, maxHeight);
 
-    el.style.height = newHeight + 'px';
+    el.style.height = newHeight + "px";
   }, [ref, value, defaultHeight, minHeight, maxHeight, shrinkOnEmpty]);
 }

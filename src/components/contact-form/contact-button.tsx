@@ -40,8 +40,12 @@ export default function ContactButton() {
     const handler = (e: Event) => {
       setIsOpenModal(true);
     };
-    window.addEventListener('open-contact-modal', handler as EventListener);
-    return () => window.removeEventListener('open-contact-modal', handler as EventListener);
+    window.addEventListener("open-contact-modal", handler as EventListener);
+    return () =>
+      window.removeEventListener(
+        "open-contact-modal",
+        handler as EventListener
+      );
   }, []);
 
   // Determine the button text color based on the theme

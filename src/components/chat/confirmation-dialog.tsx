@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { AlertTriangle, X } from 'lucide-react';
-import { classNames } from '@/utility/classNames';
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { AlertTriangle, X } from "lucide-react";
+import { classNames } from "@/utility/classNames";
 
 export interface ConfirmationDialogProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ export interface ConfirmationDialogProps {
   message: string;
   confirmText?: string;
   cancelText?: string;
-  variant?: 'default' | 'destructive';
+  variant?: "default" | "destructive";
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -18,34 +18,34 @@ export default function ConfirmationDialog({
   isOpen,
   title,
   message,
-  confirmText = 'Confirm',
-  cancelText = 'Cancel',
-  variant = 'default',
+  confirmText = "Confirm",
+  cancelText = "Cancel",
+  variant = "default",
   onConfirm,
   onCancel,
 }: ConfirmationDialogProps) {
   // Handle escape key
   React.useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === "Escape" && isOpen) {
         onCancel();
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
   }, [isOpen, onCancel]);
 
   // Prevent body scroll when dialog is open
   React.useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
@@ -95,19 +95,19 @@ export default function ConfirmationDialog({
               <motion.div
                 className={classNames(
                   "mb-4 flex h-12 w-12 items-center justify-center rounded-full",
-                  variant === 'destructive' 
-                    ? "bg-red-100 dark:bg-red-900/30" 
+                  variant === "destructive"
+                    ? "bg-red-100 dark:bg-red-900/30"
                     : "bg-blue-100 dark:bg-blue-900/30"
                 )}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.1, type: "spring", stiffness: 400 }}
               >
-                <AlertTriangle 
-                  size={24} 
+                <AlertTriangle
+                  size={24}
                   className={classNames(
-                    variant === 'destructive' 
-                      ? "text-red-600 dark:text-red-400" 
+                    variant === "destructive"
+                      ? "text-red-600 dark:text-red-400"
                       : "text-blue-600 dark:text-blue-400"
                   )}
                 />
@@ -122,14 +122,12 @@ export default function ConfirmationDialog({
                 <h3 className="mb-2 text-lg font-semibold text-foreground">
                   {title}
                 </h3>
-                <p className="mb-6 text-sm text-muted-foreground">
-                  {message}
-                </p>
+                <p className="mb-6 text-sm text-muted-foreground">{message}</p>
               </motion.div>
 
               {/* Actions */}
               <motion.div
-                className="flex gap-3 justify-end"
+                className="flex justify-end gap-3"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
@@ -146,7 +144,7 @@ export default function ConfirmationDialog({
                   onClick={onConfirm}
                   className={classNames(
                     "rounded-lg px-4 py-2 text-sm font-medium text-white",
-                    variant === 'destructive'
+                    variant === "destructive"
                       ? "bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800"
                       : "bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800"
                   )}
@@ -172,37 +170,40 @@ export function useConfirmationDialog() {
     message: string;
     confirmText?: string;
     cancelText?: string;
-    variant?: 'default' | 'destructive';
+    variant?: "default" | "destructive";
     onConfirm: () => void;
     onCancel: () => void;
   } | null>(null);
 
-  const showConfirmation = React.useCallback((options: {
-    title: string;
-    message: string;
-    confirmText?: string;
-    cancelText?: string;
-    variant?: 'default' | 'destructive';
-    onConfirm: () => void;
-    onCancel?: () => void;
-  }) => {
-    setDialog({
-      isOpen: true,
-      title: options.title,
-      message: options.message,
-      confirmText: options.confirmText,
-      cancelText: options.cancelText,
-      variant: options.variant,
-      onConfirm: () => {
-        options.onConfirm();
-        setDialog(null);
-      },
-      onCancel: () => {
-        options.onCancel?.();
-        setDialog(null);
-      },
-    });
-  }, []);
+  const showConfirmation = React.useCallback(
+    (options: {
+      title: string;
+      message: string;
+      confirmText?: string;
+      cancelText?: string;
+      variant?: "default" | "destructive";
+      onConfirm: () => void;
+      onCancel?: () => void;
+    }) => {
+      setDialog({
+        isOpen: true,
+        title: options.title,
+        message: options.message,
+        confirmText: options.confirmText,
+        cancelText: options.cancelText,
+        variant: options.variant,
+        onConfirm: () => {
+          options.onConfirm();
+          setDialog(null);
+        },
+        onCancel: () => {
+          options.onCancel?.();
+          setDialog(null);
+        },
+      });
+    },
+    []
+  );
 
   const hideConfirmation = React.useCallback(() => {
     setDialog(null);

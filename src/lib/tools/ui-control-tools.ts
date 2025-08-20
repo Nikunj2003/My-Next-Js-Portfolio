@@ -3,9 +3,9 @@
  * These tools handle interface interactions like theme switching and downloads
  */
 
-import { JSONSchema7 } from 'json-schema';
-import { BaseTool } from './base-tool';
-import { ToolContext, ToolResult, ToolAction } from '@/types/tools';
+import { JSONSchema7 } from "json-schema";
+import { BaseTool } from "./base-tool";
+import { ToolContext, ToolResult, ToolAction } from "@/types/tools";
 
 /**
  * Tool to toggle between light and dark themes
@@ -13,65 +13,66 @@ import { ToolContext, ToolResult, ToolAction } from '@/types/tools';
 export class ToggleThemeTool extends BaseTool {
   constructor() {
     super(
-      'toggle_theme',
-      'Switch between light and dark themes or set a specific theme',
+      "toggle_theme",
+      "Switch between light and dark themes or set a specific theme",
       {
-        type: 'object',
+        type: "object",
         properties: {
           theme: {
-            type: 'string',
-            description: 'Theme to set: "light", "dark", or "toggle" to switch to opposite'
-          }
+            type: "string",
+            description:
+              'Theme to set: "light", "dark", or "toggle" to switch to opposite',
+          },
         },
-        additionalProperties: false
+        additionalProperties: false,
       }
     );
   }
 
   protected async executeInternal(
-    args: Record<string, any>, 
+    args: Record<string, any>,
     context: ToolContext
   ): Promise<ToolResult> {
-    const { theme = 'toggle' } = args;
+    const { theme = "toggle" } = args;
 
     try {
-      let targetTheme: 'light' | 'dark';
+      let targetTheme: "light" | "dark";
 
       // Determine target theme
-      if (theme === 'toggle') {
-        targetTheme = context.theme === 'light' ? 'dark' : 'light';
-      } else if (theme === 'light' || theme === 'dark') {
+      if (theme === "toggle") {
+        targetTheme = context.theme === "light" ? "dark" : "light";
+      } else if (theme === "light" || theme === "dark") {
         targetTheme = theme;
       } else {
         return this.createErrorResult(
-          'INVALID_THEME',
+          "INVALID_THEME",
           `Invalid theme value: ${theme}. Must be "light", "dark", or "toggle"`,
           {
-            suggestions: ['Use "light", "dark", or "toggle" as the theme value'],
-            fallback: { currentTheme: context.theme }
+            suggestions: [
+              'Use "light", "dark", or "toggle" as the theme value',
+            ],
+            fallback: { currentTheme: context.theme },
           }
         );
       }
 
       // Check if theme is already set to target
       if (context.theme === targetTheme) {
-        return this.createSuccessResult(
-          {
-            message: `Theme is already set to ${targetTheme}`,
-            currentTheme: targetTheme,
-            changed: false
-          }
-        );
+        return this.createSuccessResult({
+          message: `Theme is already set to ${targetTheme}`,
+          currentTheme: targetTheme,
+          changed: false,
+        });
       }
 
       // Create theme change action
       const themeAction: ToolAction = {
-        type: 'theme',
+        type: "theme",
         target: targetTheme,
         data: {
           previousTheme: context.theme,
-          newTheme: targetTheme
-        }
+          newTheme: targetTheme,
+        },
       };
 
       return this.createSuccessResult(
@@ -79,21 +80,22 @@ export class ToggleThemeTool extends BaseTool {
           message: `Theme switched from ${context.theme} to ${targetTheme}`,
           previousTheme: context.theme,
           newTheme: targetTheme,
-          changed: true
+          changed: true,
         },
         [themeAction]
       );
-
     } catch (error) {
       return this.createErrorResult(
-        'THEME_SWITCH_ERROR',
-        `Failed to switch theme: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        "THEME_SWITCH_ERROR",
+        `Failed to switch theme: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
         {
           suggestions: [
-            'Try again with a valid theme value',
-            'Check if the theme system is properly initialized'
+            "Try again with a valid theme value",
+            "Check if the theme system is properly initialized",
           ],
-          fallback: { currentTheme: context.theme }
+          fallback: { currentTheme: context.theme },
         }
       );
     }
@@ -105,60 +107,56 @@ export class ToggleThemeTool extends BaseTool {
  */
 export class TriggerDownloadTool extends BaseTool {
   constructor() {
-    super(
-      'trigger_download',
-      'Trigger download of files like resume PDF',
-      {
-        type: 'object',
-        properties: {
-          file: {
-            type: 'string',
-            description: 'File to download'
-          },
-          format: {
-            type: 'string',
-            description: 'File format (currently only PDF supported)',
-            default: 'pdf'
-          },
-          trackDownload: {
-            type: 'boolean',
-            description: 'Whether to track this download for analytics',
-            default: true
-          }
+    super("trigger_download", "Trigger download of files like resume PDF", {
+      type: "object",
+      properties: {
+        file: {
+          type: "string",
+          description: "File to download",
         },
-        required: ['file'],
-        additionalProperties: false
-      }
-    );
+        format: {
+          type: "string",
+          description: "File format (currently only PDF supported)",
+          default: "pdf",
+        },
+        trackDownload: {
+          type: "boolean",
+          description: "Whether to track this download for analytics",
+          default: true,
+        },
+      },
+      required: ["file"],
+      additionalProperties: false,
+    });
   }
 
   protected async executeInternal(
-    args: Record<string, any>, 
+    args: Record<string, any>,
     context: ToolContext
   ): Promise<ToolResult> {
-    const { file, format = 'pdf', trackDownload = true } = args;
+    const { file, format = "pdf", trackDownload = true } = args;
 
     try {
       // Validate file type
-      if (file !== 'resume') {
+      if (file !== "resume") {
         return this.createErrorResult(
-          'UNSUPPORTED_FILE',
+          "UNSUPPORTED_FILE",
           `Unsupported file type: ${file}. Currently only "resume" is supported`,
           {
             suggestions: ['Use "resume" as the file parameter'],
-            fallback: { availableFiles: ['resume'] }
+            fallback: { availableFiles: ["resume"] },
           }
         );
       }
 
       // Validate format
-      if (format !== 'pdf') {
+      if (format !== "pdf") {
         return this.createErrorResult(
-          'UNSUPPORTED_FORMAT',
+          "UNSUPPORTED_FORMAT",
           `Unsupported format: ${format}. Currently only "pdf" is supported`,
           {
             suggestions: ['Use "pdf" as the format parameter'],
-            fallback: { availableFormats: ['pdf'] }
+            fallback: { availableFormats: ["pdf"] },
           }
         );
       }
@@ -168,31 +166,31 @@ export class TriggerDownloadTool extends BaseTool {
       let fileName: string;
 
       switch (file) {
-        case 'resume':
-          filePath = '/Nikunj_Resume.pdf';
-          fileName = 'Nikunj_Resume.pdf';
+        case "resume":
+          filePath = "/Nikunj_Resume.pdf";
+          fileName = "Nikunj_Resume.pdf";
           break;
         default:
           return this.createErrorResult(
-            'UNKNOWN_FILE',
+            "UNKNOWN_FILE",
             `Unknown file: ${file}`,
             {
-              suggestions: ['Use "resume" as the file parameter']
+              suggestions: ['Use "resume" as the file parameter'],
             }
           );
       }
 
       // Create download action
       const downloadAction: ToolAction = {
-        type: 'download',
+        type: "download",
         target: filePath,
         data: {
           fileName,
           fileType: file,
           format,
           trackDownload,
-          timestamp: new Date().toISOString()
-        }
+          timestamp: new Date().toISOString(),
+        },
       };
 
       return this.createSuccessResult(
@@ -202,21 +200,22 @@ export class TriggerDownloadTool extends BaseTool {
           format,
           fileName,
           filePath,
-          trackDownload
+          trackDownload,
         },
         [downloadAction]
       );
-
     } catch (error) {
       return this.createErrorResult(
-        'DOWNLOAD_ERROR',
-        `Failed to trigger download: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        "DOWNLOAD_ERROR",
+        `Failed to trigger download: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
         {
           suggestions: [
-            'Check if the file exists',
-            'Try again with valid parameters',
-            'Contact support if the issue persists'
-          ]
+            "Check if the file exists",
+            "Try again with valid parameters",
+            "Contact support if the issue persists",
+          ],
         }
       );
     }
@@ -229,49 +228,49 @@ export class TriggerDownloadTool extends BaseTool {
 export class ManageUIStateTool extends BaseTool {
   constructor() {
     super(
-      'manage_ui_state',
-      'Manage UI state and interface interactions like focus, scroll position, and element visibility',
+      "manage_ui_state",
+      "Manage UI state and interface interactions like focus, scroll position, and element visibility",
       {
-        type: 'object',
+        type: "object",
         properties: {
           action: {
-            type: 'string',
-            description: 'UI action to perform'
+            type: "string",
+            description: "UI action to perform",
           },
           target: {
-            type: 'string',
-            description: 'Target element selector or identifier'
+            type: "string",
+            description: "Target element selector or identifier",
           },
           options: {
-            type: 'object',
+            type: "object",
             properties: {
               smooth: {
-                type: 'boolean',
-                description: 'Use smooth scrolling/transitions',
-                default: true
+                type: "boolean",
+                description: "Use smooth scrolling/transitions",
+                default: true,
               },
               duration: {
-                type: 'number',
-                description: 'Animation duration in milliseconds',
-                default: 300
+                type: "number",
+                description: "Animation duration in milliseconds",
+                default: 300,
               },
               offset: {
-                type: 'number',
-                description: 'Scroll offset in pixels',
-                default: 0
-              }
+                type: "number",
+                description: "Scroll offset in pixels",
+                default: 0,
+              },
             },
-            additionalProperties: false
-          }
+            additionalProperties: false,
+          },
         },
-        required: ['action', 'target'],
-        additionalProperties: false
+        required: ["action", "target"],
+        additionalProperties: false,
       }
     );
   }
 
   protected async executeInternal(
-    args: Record<string, any>, 
+    args: Record<string, any>,
     context: ToolContext
   ): Promise<ToolResult> {
     const { action: rawAction, target, options = {} } = args;
@@ -280,44 +279,46 @@ export class ManageUIStateTool extends BaseTool {
     try {
       // Normalize common alias variants the LLM might produce
       const aliasMap: Record<string, string> = {
-        scroll_to: 'scroll',
-        scrollTo: 'scroll',
-        SCROLL_TO: 'scroll',
-        ScrollTo: 'scroll',
-        scrollsection: 'scroll',
-        'scroll-section': 'scroll',
-        focus_section: 'focus',
-        focusSection: 'focus'
+        scroll_to: "scroll",
+        scrollTo: "scroll",
+        SCROLL_TO: "scroll",
+        ScrollTo: "scroll",
+        scrollsection: "scroll",
+        "scroll-section": "scroll",
+        focus_section: "focus",
+        focusSection: "focus",
       };
       const normalizedAction = aliasMap[rawAction] || rawAction;
 
       // Validate action AFTER normalization
-      const validActions = ['focus', 'scroll', 'highlight', 'show', 'hide'];
+      const validActions = ["focus", "scroll", "highlight", "show", "hide"];
       if (!validActions.includes(normalizedAction)) {
         return this.createErrorResult(
-          'INVALID_ACTION',
-          `Invalid UI action: ${rawAction}. Must be one of: ${validActions.join(', ')} (normalized to: ${normalizedAction})`,
+          "INVALID_ACTION",
+          `Invalid UI action: ${rawAction}. Must be one of: ${validActions.join(
+            ", "
+          )} (normalized to: ${normalizedAction})`,
           {
-            suggestions: [`Use one of: ${validActions.join(', ')}`],
-            fallback: { availableActions: validActions }
+            suggestions: [`Use one of: ${validActions.join(", ")}`],
+            fallback: { availableActions: validActions },
           }
         );
       }
 
       // Validate target
-      if (!target || typeof target !== 'string') {
+      if (!target || typeof target !== "string") {
         return this.createErrorResult(
-          'INVALID_TARGET',
-          'Target must be a non-empty string',
+          "INVALID_TARGET",
+          "Target must be a non-empty string",
           {
-            suggestions: ['Provide a valid element selector or identifier']
+            suggestions: ["Provide a valid element selector or identifier"],
           }
         );
       }
 
       // Create UI state action
       const uiAction: ToolAction = {
-  type: normalizedAction as any, // Type assertion since we validated above
+        type: normalizedAction as any, // Type assertion since we validated above
         target,
         data: {
           smooth,
@@ -326,32 +327,33 @@ export class ManageUIStateTool extends BaseTool {
           timestamp: new Date().toISOString(),
           context: {
             currentPage: context.currentPage,
-            theme: context.theme
-          }
-        }
+            theme: context.theme,
+          },
+        },
       };
 
       return this.createSuccessResult(
         {
-          message: `UI action "${normalizedAction}" applied to target "${target}"` ,
+          message: `UI action "${normalizedAction}" applied to target "${target}"`,
           action: normalizedAction,
           originalAction: rawAction,
           target,
-          options: { smooth, duration, offset }
+          options: { smooth, duration, offset },
         },
         [uiAction]
       );
-
     } catch (error) {
       return this.createErrorResult(
-        'UI_STATE_ERROR',
-        `Failed to manage UI state: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        "UI_STATE_ERROR",
+        `Failed to manage UI state: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
         {
           suggestions: [
-            'Check if the target element exists',
-            'Verify the action is supported',
-            'Try again with valid parameters'
-          ]
+            "Check if the target element exists",
+            "Verify the action is supported",
+            "Try again with valid parameters",
+          ],
         }
       );
     }

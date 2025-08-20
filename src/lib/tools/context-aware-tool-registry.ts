@@ -3,10 +3,19 @@
  * with the existing tool execution system
  */
 
-import { ToolRegistry } from './tool-registry';
-import { ContextualToolSuggestions, ToolSuggestion, ContextualHelp } from './contextual-tool-suggestions';
-import { PageContextDetector, ContextTracker } from './page-context-detector';
-import { PortfolioTool, ToolContext, ToolResult, ToolCall } from '@/types/tools';
+import { ToolRegistry } from "./tool-registry";
+import {
+  ContextualToolSuggestions,
+  ToolSuggestion,
+  ContextualHelp,
+} from "./contextual-tool-suggestions";
+import { PageContextDetector, ContextTracker } from "./page-context-detector";
+import {
+  PortfolioTool,
+  ToolContext,
+  ToolResult,
+  ToolCall,
+} from "@/types/tools";
 
 /**
  * Enhanced tool registry with contextual awareness
@@ -34,17 +43,23 @@ export class ContextAwareToolRegistry extends ToolRegistry {
   /**
    * Get contextual tool suggestions based on current context
    */
-  getContextualSuggestions(context: ToolContext, userMessage?: string): ToolSuggestion[] {
+  getContextualSuggestions(
+    context: ToolContext,
+    userMessage?: string
+  ): ToolSuggestion[] {
     // Track the current context
-    this.contextDetector.trackContext(context, 'suggestion-request');
-    
+    this.contextDetector.trackContext(context, "suggestion-request");
+
     return this.contextualSuggestions.getSuggestions(context, userMessage);
   }
 
   /**
    * Get smart recommendations based on usage patterns
    */
-  getSmartRecommendations(context: ToolContext, userMessage?: string): ToolSuggestion[] {
+  getSmartRecommendations(
+    context: ToolContext,
+    userMessage?: string
+  ): ToolSuggestion[] {
     return this.contextualSuggestions.getSmartRecommendations(
       context,
       this.recentToolUsage,
@@ -67,7 +82,7 @@ export class ContextAwareToolRegistry extends ToolRegistry {
       page: context.currentPage,
       section: context.currentSection,
       intent,
-      theme: context.theme
+      theme: context.theme,
     });
   }
 
@@ -82,21 +97,27 @@ export class ContextAwareToolRegistry extends ToolRegistry {
   ): Promise<ToolResult> {
     // Track context before execution
     this.contextDetector.trackContext(context, `tool-execution:${toolName}`);
-    
+
     // Execute the tool using parent method
     const result = await super.executeTool(toolName, args, context, config);
-    
+
     // Track tool usage for smart recommendations
     this.trackToolUsage(toolName);
-    
+
     // Update context if tool execution resulted in navigation or state changes
     if (result.success && result.actions) {
-      const updatedContext = this.updateContextFromActions(context, result.actions);
+      const updatedContext = this.updateContextFromActions(
+        context,
+        result.actions
+      );
       if (updatedContext) {
-        this.contextDetector.trackContext(updatedContext, `tool-result:${toolName}`);
+        this.contextDetector.trackContext(
+          updatedContext,
+          `tool-result:${toolName}`
+        );
       }
     }
-    
+
     return result;
   }
 
@@ -112,17 +133,19 @@ export class ContextAwareToolRegistry extends ToolRegistry {
   }> {
     const baseFunctions = this.getFunctionDefinitions();
     const suggestions = this.getContextualSuggestions(context);
-    
+
     // Enhance function definitions with contextual relevance
-    return baseFunctions.map(func => {
-      const suggestion = suggestions.find(s => s.tool.name === func.name);
-      
-      return {
-        ...func,
-        relevance: suggestion?.relevance,
-        context: suggestion?.context
-      };
-    }).sort((a, b) => (b.relevance || 0) - (a.relevance || 0));
+    return baseFunctions
+      .map((func) => {
+        const suggestion = suggestions.find((s) => s.tool.name === func.name);
+
+        return {
+          ...func,
+          relevance: suggestion?.relevance,
+          context: suggestion?.context,
+        };
+      })
+      .sort((a, b) => (b.relevance || 0) - (a.relevance || 0));
   }
 
   /**
@@ -135,16 +158,16 @@ export class ContextAwareToolRegistry extends ToolRegistry {
     referrer?: string;
   }): ToolContext {
     const detection = this.contextDetector.detectFromMultipleSources(sources);
-    
+
     const context: ToolContext = {
       currentPage: detection.page,
       currentSection: detection.section,
-      theme: 'light', // Default, should be overridden by caller
-      userAgent: 'unknown', // Default, should be overridden by caller
-      sessionId: `session-${Date.now()}`
+      theme: "light", // Default, should be overridden by caller
+      userAgent: "unknown", // Default, should be overridden by caller
+      sessionId: `session-${Date.now()}`,
     };
-    
-    this.contextDetector.trackContext(context, 'context-detection');
+
+    this.contextDetector.trackContext(context, "context-detection");
     return context;
   }
 
@@ -165,7 +188,11 @@ export class ContextAwareToolRegistry extends ToolRegistry {
   getUsageAnalytics(): {
     recentUsage: string[];
     usagePatterns: Record<string, number>;
-    contextHistory: Array<{ timestamp: Date; context: ToolContext; source: string }>;
+    contextHistory: Array<{
+      timestamp: Date;
+      context: ToolContext;
+      source: string;
+    }>;
     suggestions: ToolSuggestion[];
   } {
     const currentContext = this.contextDetector.getCurrentContext();
@@ -178,7 +205,9 @@ export class ContextAwareToolRegistry extends ToolRegistry {
       recentUsage: [...this.recentToolUsage],
       usagePatterns,
       contextHistory: this.getContextHistory(10),
-      suggestions: currentContext ? this.getContextualSuggestions(currentContext) : []
+      suggestions: currentContext
+        ? this.getContextualSuggestions(currentContext)
+        : [],
     };
   }
 
@@ -202,16 +231,24 @@ export class ContextAwareToolRegistry extends ToolRegistry {
   /**
    * Get tools recommended for specific workflow
    */
-  getWorkflowTools(workflow: 'project-exploration' | 'background-research' | 'contact-flow' | 'resume-flow'): PortfolioTool[] {
+  getWorkflowTools(
+    workflow:
+      | "project-exploration"
+      | "background-research"
+      | "contact-flow"
+      | "resume-flow"
+  ): PortfolioTool[] {
     const workflowMappings = {
-      'project-exploration': ['GetProjects', 'NavigateToPage', 'OpenModal'],
-      'background-research': ['GetExperience', 'GetSkills', 'TriggerDownload'],
-      'contact-flow': ['NavigateToPage', 'OpenModal', 'GetExperience'],
-      'resume-flow': ['TriggerDownload', 'GetExperience', 'GetSkills']
+      "project-exploration": ["GetProjects", "NavigateToPage", "OpenModal"],
+      "background-research": ["GetExperience", "GetSkills", "TriggerDownload"],
+      "contact-flow": ["NavigateToPage", "OpenModal", "GetExperience"],
+      "resume-flow": ["TriggerDownload", "GetExperience", "GetSkills"],
     };
 
     const toolNames = workflowMappings[workflow] || [];
-    return toolNames.map(name => this.get(name)).filter(Boolean) as PortfolioTool[];
+    return toolNames
+      .map((name) => this.get(name))
+      .filter(Boolean) as PortfolioTool[];
   }
 
   /**
@@ -219,7 +256,7 @@ export class ContextAwareToolRegistry extends ToolRegistry {
    */
   private trackToolUsage(toolName: string): void {
     this.recentToolUsage.push(toolName);
-    
+
     // Maintain usage history size
     if (this.recentToolUsage.length > this.maxUsageHistory) {
       this.recentToolUsage.shift();
@@ -230,22 +267,22 @@ export class ContextAwareToolRegistry extends ToolRegistry {
    * Update context based on tool execution results
    */
   private updateContextFromActions(
-    currentContext: ToolContext, 
+    currentContext: ToolContext,
     actions: any[]
   ): ToolContext | null {
     let updatedContext: ToolContext | null = null;
 
     for (const action of actions) {
-      if (action.type === 'navigate' && action.target) {
+      if (action.type === "navigate" && action.target) {
         updatedContext = {
           ...currentContext,
           currentPage: action.target,
-          currentSection: action.data?.section
+          currentSection: action.data?.section,
         };
-      } else if (action.type === 'theme' && action.target) {
+      } else if (action.type === "theme" && action.target) {
         updatedContext = {
           ...currentContext,
-          theme: action.target as 'light' | 'dark'
+          theme: action.target as "light" | "dark",
         };
       }
     }

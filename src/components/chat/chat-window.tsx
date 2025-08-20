@@ -580,8 +580,15 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
           }
           break;
         case 'modal':
-          // This would typically open a modal
-          console.log(`Opening ${action.target} modal`);
+          // Open specific modals via global custom events
+          if (typeof action.target === 'string') {
+            if (action.target.toLowerCase() === 'contact') {
+              window.dispatchEvent(new Event('open-contact-modal'));
+              console.log('Dispatched open-contact-modal event');
+            } else {
+              console.log(`Modal target '${action.target}' not wired yet.`);
+            }
+          }
           break;
   case 'scroll':
           // Actually scroll to the target element

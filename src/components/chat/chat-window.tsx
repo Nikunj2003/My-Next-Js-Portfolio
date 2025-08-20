@@ -801,6 +801,9 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
     "Summarize Nikunj's experience",
     "List notable projects",
     "What are key skills?",
+    "Navigate to Resume page",
+    "Toggle theme",
+    "Download Resume",
   ];
 
   const handleSuggestionClick = (text: string) => {

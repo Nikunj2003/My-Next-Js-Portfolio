@@ -11,12 +11,9 @@ import {
   useAnimationGate,
 } from "@/contexts/animation-gate";
 import "@/styles/globals.css";
-import dynamic from "next/dynamic";
+import FluidCursor from "@/components/fluid-cursor";
 
-const CursorTrailCanvas = dynamic(
-  () => import("@/components/cursor-trail-canvas"),
-  { ssr: false }
-);
+
 
 // Page transition variants
 const pageVariants = {
@@ -83,12 +80,7 @@ function AppContent({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      {/* Cursor trail effect - only render on desktop for performance */}
-      {typeof window !== "undefined" &&
-      window.innerWidth >= 1024 &&
-      !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? (
-        <CursorTrailCanvas className="pointer-events-none fixed inset-0 -z-10 h-full w-full" />
-      ) : null}
+      <FluidCursor />
 
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <MainLayout onWelcomeFinished={() => setAnimationsReady(true)}>

@@ -72,7 +72,7 @@ export default function PageTransitionAnimation() {
           clipPath: { duration: isMobile ? 0.65 : 0.8 },
         }}
       >
-        {/* Central Star Logo */}
+        {/* Central star logo (dot background removed) */}
         <motion.div
           className="flex items-center justify-center"
           initial={{ scale: 0, rotate: -180, opacity: 0 }}
@@ -88,43 +88,18 @@ export default function PageTransitionAnimation() {
           }}
         >
           <motion.div
-            className={`rounded-full border-2 border-background/30 bg-background/20 ${
-              isMobile ? "p-4" : "p-6"
-            } shadow-2xl backdrop-blur-xl will-change-transform`}
-            animate={{
-              rotate: animationsEnabled ? [0, 360] : 0,
-              scale: animationsEnabled
-                ? (isMobile ? [1, 1.06, 1] : [1, 1.1, 1])
-                : 1,
-              boxShadow: animationsEnabled && !isMobile
-                ? [
-                    "0 0 0px rgba(255,255,255,0)",
-                    "0 0 30px rgba(255,255,255,0.5)",
-                    "0 0 0px rgba(255,255,255,0)",
-                  ]
-                : undefined,
-            }}
-            transition={{
-              rotate: animationsEnabled
-                ? { duration: 4, repeat: Infinity, ease: "linear" }
-                : undefined,
-              scale: animationsEnabled
-                ? { duration: 2.4, repeat: Infinity, repeatType: "reverse" }
-                : undefined,
-              ...(!isMobile && animationsEnabled
-                ? {
-                    boxShadow: {
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                    },
-                  }
-                : {}),
-            }}
+            className={`flex items-center justify-center rounded-full border-2 border-background/30 bg-background/10 backdrop-blur-xl will-change-transform ${
+              isMobile ? "h-20 w-20" : "h-28 w-28"
+            }`}
+            style={{ transformOrigin: "50% 50%" }}
+            animate={animationsEnabled ? { rotate: [0, 360] } : { rotate: 0 }}
+            transition={
+              animationsEnabled
+                ? { duration: 12, repeat: Infinity, ease: "linear" }
+                : undefined
+            }
           >
-            <Sparkles
-              className={`${isMobile ? "h-10 w-10" : "h-12 w-12"} text-background drop-shadow-lg`}
-            />
+            <Sparkles className={`${isMobile ? "h-10 w-10" : "h-12 w-12"} text-background drop-shadow-lg`} />
           </motion.div>
         </motion.div>
 
@@ -160,40 +135,7 @@ export default function PageTransitionAnimation() {
           ))}
         </motion.div>
 
-        {/* Floating particles around the logo */}
-        <motion.div
-          className="pointer-events-none absolute inset-0"
-          initial={{ opacity: 0 }}
-            // Mobile: fade in a bit quicker for snappiness
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ delay: 0.25, duration: isMobile ? 0.25 : 0.3 }}
-        >
-          {particles.map(({ i, x, y }) => (
-            <motion.div
-              key={i}
-              className={`absolute rounded-full bg-background/70 will-change-transform ${
-                isMobile ? "h-1.5 w-1.5" : "h-2 w-2"
-              }`}
-              style={{
-                left: "50%",
-                top: "50%",
-                transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`,
-              }}
-              animate={{
-                scale: animationsEnabled ? [0, 1, 0] : 0,
-                opacity: animationsEnabled ? [0, isMobile ? 0.7 : 0.8, 0] : 0,
-                rotate: animationsEnabled ? [0, 360] : 0,
-              }}
-              transition={{
-                duration: isMobile ? 1.8 : 2,
-                delay: i * particleDelayStep,
-                repeat: animationsEnabled ? Infinity : 0,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </motion.div>
+  {/* Floating particles removed per request */}
       </motion.div>
 
       {/* Secondary overlay for smoother transition */}

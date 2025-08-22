@@ -39,7 +39,7 @@ export default function MainLayout(props: MainLayoutProps) {
         Skip to content
       </a>
       <div className={classNames("min-h-screen", montserrat.className)}>
-        <Navbar routes={routes} />
+        {!isFullScreen && <Navbar routes={routes} />}
         <main id="content">{props.children}</main>
       </div>
       <Footer />

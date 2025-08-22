@@ -1281,8 +1281,10 @@ export default function ChatWindow({
         {/* Input */}
         <motion.div
           className={classNames(
-            "border-t border-border/60 bg-background/50 backdrop-blur-xl",
-            isFullScreen ? "p-6 md:p-8" : "p-4"
+            "border-t backdrop-blur-xl",
+            isFullScreen
+              ? "border-border/40 bg-background/30 p-6 md:p-8"
+              : "border-border/60 bg-background/50 p-4"
           )}
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

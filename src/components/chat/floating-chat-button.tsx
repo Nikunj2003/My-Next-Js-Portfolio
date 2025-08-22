@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { MessageCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { classNames } from "@/utility/classNames";
+import { useChatContext } from "@/contexts/chat-context";
 import ChatWindow from "./chat-window";
 
 export default function FloatingChatButton() {

@@ -21,7 +21,7 @@ export default function FloatingChatButton() {
         {isOpen && (
           <ChatWindow
             isOpen={isOpen}
-            onClose={() => toggleChat()}
+            onClose={() => closeChat()}
             isFullScreen={isFullScreen}
             onToggleFullScreen={toggleFullScreen}
           />

@@ -28,7 +28,12 @@ export default function FloatingChatButton() {
       {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
-          <ChatWindow isOpen={isOpen} onClose={() => setIsOpen(false)} />
+          <ChatWindow
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            isFullScreen={isFullScreen}
+            onToggleFullScreen={toggleFullScreen}
+          />
         )}
       </AnimatePresence>
 

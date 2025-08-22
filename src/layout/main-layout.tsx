@@ -8,6 +8,7 @@ import WelcomeScreen from "@/components/welcome-screen";
 import FloatingChatButton from "@/components/chat/floating-chat-button";
 import { routes } from "@/data/navigationRoutes";
 import { classNames } from "@/utility/classNames";
+import { useChatContext } from "@/contexts/chat-context";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -20,6 +21,7 @@ export interface MainLayoutProps {
 
 export default function MainLayout(props: MainLayoutProps) {
   const [isWelcomeFinished, setIsWelcomeFinished] = useState(false);
+  const { isFullScreen } = useChatContext();
 
   const handleWelcomeFinished = () => {
     setIsWelcomeFinished(true);
@@ -37,7 +39,7 @@ export default function MainLayout(props: MainLayoutProps) {
         Skip to content
       </a>
       <div className={classNames("min-h-screen", montserrat.className)}>
-        <Navbar routes={routes} />
+        {!isFullScreen && <Navbar routes={routes} />}
         <main id="content">{props.children}</main>
       </div>
       <Footer />

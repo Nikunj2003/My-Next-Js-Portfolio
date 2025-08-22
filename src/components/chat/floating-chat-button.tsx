@@ -1,15 +1,11 @@
-import { useState } from "react";
 import { MessageCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { classNames } from "@/utility/classNames";
+import { useChatContext } from "@/contexts/chat-context";
 import ChatWindow from "./chat-window";
 
 export default function FloatingChatButton() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleChat = () => {
-    setIsOpen(!isOpen);
-  };
+  const { isOpen, isFullScreen, isExitingFullScreen, toggleChat, toggleFullScreen, closeChat } = useChatContext();
 
   // Variants for smoother morph-style transition between icons
   const iconVariants = {
@@ -23,12 +19,18 @@ export default function FloatingChatButton() {
       {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
-          <ChatWindow isOpen={isOpen} onClose={() => setIsOpen(false)} />
+          <ChatWindow
+            isOpen={isOpen}
+            onClose={() => closeChat()}
+            isFullScreen={isFullScreen}
+            onToggleFullScreen={toggleFullScreen}
+          />
         )}
       </AnimatePresence>
 
-      {/* Floating Chat Button */}
-      <motion.button
+      {/* Floating Chat Button - Hide when in full-screen mode */}
+      {!isFullScreen && (
+        <motion.button
         onClick={toggleChat}
         className={classNames(
           "fixed bottom-6 right-6 z-40",
@@ -43,14 +45,18 @@ export default function FloatingChatButton() {
         )}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        initial={{ scale: 0, opacity: 0 }}
+        initial={isExitingFullScreen ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{
-          type: "spring",
-          stiffness: 260,
-          damping: 20,
-          delay: 0.5,
-        }}
+        transition={
+          isExitingFullScreen
+            ? { duration: 0 }
+            : {
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+                delay: 0.5,
+              }
+        }
         aria-label={isOpen ? "Close chat" : "Open chat"}
       >
         <motion.div
@@ -101,7 +107,8 @@ export default function FloatingChatButton() {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.button>
+        </motion.button>
+      )}
     </>
   );
 }

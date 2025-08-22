@@ -10,6 +10,7 @@ import {
   AnimationGateProvider,
   useAnimationGate,
 } from "@/contexts/animation-gate";
+import { ChatProvider } from "@/contexts/chat-context";
 import "@/styles/globals.css";
 import FluidCursor from "@/components/fluid-cursor";
 
@@ -43,7 +44,9 @@ const pageTransition = {
 export default function App(props: AppProps) {
   return (
     <AnimationGateProvider>
-      <AppContent {...props} />
+      <ChatProvider>
+        <AppContent {...props} />
+      </ChatProvider>
     </AnimationGateProvider>
   );
 }

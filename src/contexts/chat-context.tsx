@@ -20,10 +20,24 @@ interface ChatProviderProps {
 export function ChatProvider({ children }: ChatProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isExitingFullScreen, setIsExitingFullScreen] = useState(false);
+
+  // Reset the exit flag after a short delay
+  useEffect(() => {
+    if (isExitingFullScreen) {
+      const timeout = setTimeout(() => {
+        setIsExitingFullScreen(false);
+      }, 100); // Small delay to ensure components render without animation
+      return () => clearTimeout(timeout);
+    }
+  }, [isExitingFullScreen]);
 
   const toggleChat = () => {
     if (isOpen) {
-      // When closing chat, reset full-screen state
+      // When closing chat, check if we're exiting full-screen
+      if (isFullScreen) {
+        setIsExitingFullScreen(true);
+      }
       setIsOpen(false);
       setIsFullScreen(false);
     } else {
@@ -33,11 +47,18 @@ export function ChatProvider({ children }: ChatProviderProps) {
   };
 
   const closeChat = () => {
+    if (isFullScreen) {
+      setIsExitingFullScreen(true);
+    }
     setIsOpen(false);
     setIsFullScreen(false);
   };
 
   const toggleFullScreen = () => {
+    if (isFullScreen) {
+      // If we're currently in full-screen, we're exiting
+      setIsExitingFullScreen(true);
+    }
     setIsFullScreen(!isFullScreen);
   };
 

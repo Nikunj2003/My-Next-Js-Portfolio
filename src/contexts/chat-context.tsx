@@ -21,7 +21,19 @@ export function ChatProvider({ children }: ChatProviderProps) {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const toggleChat = () => {
-    setIsOpen(!isOpen);
+    if (isOpen) {
+      // When closing chat, reset full-screen state
+      setIsOpen(false);
+      setIsFullScreen(false);
+    } else {
+      // When opening chat, just open it
+      setIsOpen(true);
+    }
+  };
+
+  const closeChat = () => {
+    setIsOpen(false);
+    setIsFullScreen(false);
   };
 
   const toggleFullScreen = () => {
@@ -35,6 +47,7 @@ export function ChatProvider({ children }: ChatProviderProps) {
     setIsFullScreen,
     toggleChat,
     toggleFullScreen,
+    closeChat,
   };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;

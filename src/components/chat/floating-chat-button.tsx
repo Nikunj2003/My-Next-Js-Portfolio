@@ -5,7 +5,7 @@ import { useChatContext } from "@/contexts/chat-context";
 import ChatWindow from "./chat-window";
 
 export default function FloatingChatButton() {
-  const { isOpen, isFullScreen, toggleChat, toggleFullScreen } = useChatContext();
+  const { isOpen, isFullScreen, toggleChat, toggleFullScreen, closeChat } = useChatContext();
 
   // Variants for smoother morph-style transition between icons
   const iconVariants = {

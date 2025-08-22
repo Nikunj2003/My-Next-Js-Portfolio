@@ -9,6 +9,7 @@ import ThemeSwitch from "@/components/utility/theme-switch";
 import MobileMenu from "@/components/utility/mobile-menu";
 import { classNames } from "@/utility/classNames";
 import ContactButton from "@/components/contact-form/contact-button";
+import { useChatContext } from "@/contexts/chat-context";
 
 export type NavbarRoute = {
   title: string;

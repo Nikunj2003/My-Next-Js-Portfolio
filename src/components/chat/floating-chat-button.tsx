@@ -21,15 +21,16 @@ export default function FloatingChatButton() {
         {isOpen && (
           <ChatWindow
             isOpen={isOpen}
-            onClose={() => setIsOpen(false)}
+            onClose={() => toggleChat()}
             isFullScreen={isFullScreen}
             onToggleFullScreen={toggleFullScreen}
           />
         )}
       </AnimatePresence>
 
-      {/* Floating Chat Button */}
-      <motion.button
+      {/* Floating Chat Button - Hide when in full-screen mode */}
+      {!isFullScreen && (
+        <motion.button
         onClick={toggleChat}
         className={classNames(
           "fixed bottom-6 right-6 z-40",
@@ -102,7 +103,8 @@ export default function FloatingChatButton() {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.button>
+        </motion.button>
+      )}
     </>
   );
 }

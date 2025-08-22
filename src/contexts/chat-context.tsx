@@ -7,6 +7,7 @@ interface ChatContextType {
   setIsFullScreen: (fullScreen: boolean) => void;
   toggleChat: () => void;
   toggleFullScreen: () => void;
+  closeChat: () => void;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);

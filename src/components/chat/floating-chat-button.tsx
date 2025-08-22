@@ -45,14 +45,18 @@ export default function FloatingChatButton() {
         )}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        initial={{ scale: 0, opacity: 0 }}
+        initial={isExitingFullScreen ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{
-          type: "spring",
-          stiffness: 260,
-          damping: 20,
-          delay: 0.5,
-        }}
+        transition={
+          isExitingFullScreen
+            ? { duration: 0 }
+            : {
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+                delay: 0.5,
+              }
+        }
         aria-label={isOpen ? "Close chat" : "Open chat"}
       >
         <motion.div

@@ -963,7 +963,10 @@ export default function ChatWindow({
         {/* Messages */}
         <div
           ref={messagesContainerRef}
-          className="relative flex-1 space-y-4 overflow-y-auto scroll-smooth p-4"
+          className={classNames(
+            "relative flex-1 space-y-4 overflow-y-auto scroll-smooth",
+            isFullScreen ? "p-6 md:p-8" : "p-4"
+          )}
         >
           <div className="pointer-events-none absolute left-0 right-0 top-0 z-10 h-6 bg-gradient-to-b from-background via-background/70 to-transparent" />
           <AnimatePresence mode="popLayout">

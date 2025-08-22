@@ -10,6 +10,7 @@ import {
   AnimationGateProvider,
   useAnimationGate,
 } from "@/contexts/animation-gate";
+import { ChatProvider } from "@/contexts/chat-context";
 import "@/styles/globals.css";
 import FluidCursor from "@/components/fluid-cursor";
 

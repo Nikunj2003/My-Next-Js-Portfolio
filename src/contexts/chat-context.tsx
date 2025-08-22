@@ -1,8 +1,9 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 interface ChatContextType {
   isOpen: boolean;
   isFullScreen: boolean;
+  isExitingFullScreen: boolean;
   setIsOpen: (open: boolean) => void;
   setIsFullScreen: (fullScreen: boolean) => void;
   toggleChat: () => void;

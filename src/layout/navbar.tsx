@@ -46,9 +46,9 @@ export default function Navbar({ routes }: NavbarProps) {
   return (
     <motion.header
       className="sticky top-0 z-50 mt-2 px-6 py-8 sm:mt-8 sm:px-14 md:px-20"
-      initial={{ y: -100, opacity: 0 }}
+      initial={isExitingFullScreen ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={isExitingFullScreen ? { duration: 0 } : { duration: 0.6, ease: "easeOut" }}
     >
       <div className="mx-auto flex items-center justify-between lg:max-w-7xl">
         {/* Mobile Menu Logo for Small Screens */}

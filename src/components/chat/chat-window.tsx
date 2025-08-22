@@ -894,7 +894,10 @@ export default function ChatWindow({
       >
         {/* Header */}
         <motion.div
-          className="relative flex items-center justify-between border-b border-border/60 bg-accent/10 p-4 backdrop-blur-xl"
+          className={classNames(
+            "relative flex items-center justify-between border-b border-border/60 bg-accent/10 backdrop-blur-xl",
+            isFullScreen ? "p-6 md:p-8" : "p-4"
+          )}
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.3 }}

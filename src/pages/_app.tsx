@@ -44,7 +44,9 @@ const pageTransition = {
 export default function App(props: AppProps) {
   return (
     <AnimationGateProvider>
-      <AppContent {...props} />
+      <ChatProvider>
+        <AppContent {...props} />
+      </ChatProvider>
     </AnimationGateProvider>
   );
 }

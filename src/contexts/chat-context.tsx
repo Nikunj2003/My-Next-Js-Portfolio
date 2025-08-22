@@ -65,6 +65,7 @@ export function ChatProvider({ children }: ChatProviderProps) {
   const value: ChatContextType = {
     isOpen,
     isFullScreen,
+    isExitingFullScreen,
     setIsOpen,
     setIsFullScreen,
     toggleChat,

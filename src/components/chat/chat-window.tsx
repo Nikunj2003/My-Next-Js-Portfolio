@@ -333,6 +333,11 @@ export default function ChatWindow({
   isFullScreen = false,
   onToggleFullScreen,
 }: ChatWindowProps) {
+  // Track first render to avoid re-playing entrance animation on each fullscreen toggle
+  const firstRenderRef = useRef(true);
+  useEffect(() => {
+    firstRenderRef.current = false;
+  }, []);
   const router = useRouter();
   // Add highlight styles to the document head if not already present
   useEffect(() => {
@@ -347,14 +352,29 @@ export default function ChatWindow({
           animation: highlight-pulse 2s ease-in-out;
           scroll-margin-top: 2rem;
         }
-        
+          updateActionStatus(actionId, "in-progress");
+          const autoShrinkEligible = ["navigate", "scroll", "download", "modal", "theme"] as const;
+          const autoShrinkTools = new Set([
+            "manage_ui_state",
+            "open_modal",
+            "navigate_to_page",
+            "navigate_to_section",
+          ]);
+          if (
+            isFullScreen &&
+            onToggleFullScreen &&
+            originTool &&
+            autoShrinkTools.has(originTool)
+          ) {
+            onToggleFullScreen();
+          }
+          // Auto-exit fullscreen ONLY for specific tools (not all actions)
+          if (isFullScreen && onToggleFullScreen && autoShrinkEligible.includes(action.type)) {
+            onToggleFullScreen();
+          }
         @keyframes highlight-pulse {
           0% { 
-            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
-            background-color: rgba(59, 130, 246, 0.1);
-          }
-          50% { 
-            box-shadow: 0 0 0 10px rgba(59, 130, 246, 0.1);
+          // Enhanced API call to get tool execution results
             background-color: rgba(59, 130, 246, 0.05);
           }
           100% { 
@@ -391,6 +411,8 @@ export default function ChatWindow({
   // const [showScrollToBottom, setShowScrollToBottom] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
+  // Input focus animation removed per user request
+  // (keeping placeholder for potential future minimal logic)
 
   // Navigation actions
   const { actions, addAction, updateActionStatus, removeAction } =
@@ -564,7 +586,7 @@ export default function ChatWindow({
             );
             for (const action of toolCall.result.actions) {
               const actionId = addAction(action.type, action.target);
-              executeAction(actionId, action as ToolAction);
+              executeAction(actionId, action as ToolAction, toolCall.name);
             }
           }
         }
@@ -626,8 +648,29 @@ export default function ChatWindow({
     });
   };
 
-  const executeAction = async (actionId: string, action: ToolAction) => {
+  const executeAction = async (
+    actionId: string,
+    action: ToolAction,
+    originToolName?: string
+  ) => {
     updateActionStatus(actionId, "in-progress");
+
+    // Only auto-minimize when the originating tool is one of these
+    const autoShrinkTools = new Set([
+      "manage_ui_state",
+      "open_modal",
+      "navigate_to_page",
+      "navigate_to_section",
+    ]);
+    const wasFullScreen = isFullScreen;
+    if (
+      wasFullScreen &&
+      onToggleFullScreen &&
+      originToolName &&
+      autoShrinkTools.has(originToolName)
+    ) {
+      onToggleFullScreen();
+    }
 
     try {
       // Simulate action execution with appropriate delays
@@ -645,10 +688,13 @@ export default function ChatWindow({
               : `/${action.target}`;
             // Normalize root/home aliases
             const targetPath = targetPathRaw === "/home" ? "/" : targetPathRaw;
-            // Use Next.js router push to preserve transition provider state (avoiding full reload / welcome screen rerun)
-            router
-              .push(targetPath)
-              .catch((err) => console.error("Router navigation failed", err));
+            // Slight delay if we just auto-minimized to allow morph animation to be perceptible
+            const navDelay = wasFullScreen ? 120 : 0;
+            setTimeout(() => {
+              router
+                .push(targetPath)
+                .catch((err) => console.error("Router navigation failed", err));
+            }, navDelay);
             console.log(`Navigating (SPA) to ${targetPath}`);
           } else {
             console.error("Invalid navigation target:", action.target);
@@ -827,71 +873,75 @@ export default function ChatWindow({
       <NavigationIndicator actions={actions} onDismiss={removeAction} />
 
       <motion.div
+        layout
+        layoutId="chat-window"
         initial={
-          prefersReducedMotion
-            ? { opacity: 0 }
-            : isFullScreen
-            ? {
-                opacity: 0,
-                scale: 0.95,
-              }
-            : {
-                opacity: 0,
-                scale: 0.8,
-                y: 20,
-                rotateX: -15,
-              }
+          firstRenderRef.current
+            ? prefersReducedMotion
+              ? { opacity: 0 }
+              : isFullScreen
+              ? { opacity: 0, scale: 0.95 }
+              : { opacity: 0, scale: 0.8, y: 20, rotateX: -15 }
+            : false
         }
-        animate={
-          prefersReducedMotion
-            ? { opacity: 1 }
+        animate={{
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          rotateX: 0,
+          borderRadius: prefersReducedMotion
+            ? (isFullScreen ? 0 : 16)
             : isFullScreen
-            ? {
-                opacity: 1,
-                scale: 1,
-              }
-            : {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                rotateX: 0,
-              }
-        }
-        exit={
-          prefersReducedMotion
-            ? { opacity: 0 }
-            : isFullScreen
-            ? {
-                opacity: 0,
-                scale: 0.95,
-              }
-            : {
-                opacity: 0,
-                scale: 0.8,
-                y: 20,
-                rotateX: 15,
-              }
-        }
+            ? 0
+            : 16,
+          boxShadow: isFullScreen
+            ? "0 8px 40px -10px rgba(0,0,0,0.35)"
+            : "0 8px 28px -4px rgba(0,0,0,0.30)",
+          backdropFilter: isFullScreen ? "blur(28px)" : "blur(22px)",
+          WebkitBackdropFilter: isFullScreen ? "blur(28px)" : "blur(22px)",
+          transition: {
+            borderRadius: { duration: 0.35, ease: [0.4, 0, 0.2, 1] },
+          },
+        }}
+        exit={{
+          opacity: 0,
+          scale: prefersReducedMotion ? 1 : 0.9,
+          y: prefersReducedMotion ? 0 : 10,
+          rotateX: prefersReducedMotion ? 0 : 10,
+          transition: { duration: 0.25 }
+        }}
         transition={{
+          layout: {
+            type: "spring",
+            stiffness: 260,
+            damping: 34,
+            mass: 0.7,
+          },
           type: "spring",
-          stiffness: isFullScreen ? 400 : 300,
-          damping: isFullScreen ? 35 : 30,
-          mass: isFullScreen ? 0.6 : 0.8,
+          stiffness: isFullScreen ? 300 : 260,
+            // slightly higher damping to remove bounce
+          damping: isFullScreen ? 36 : 34,
+          mass: isFullScreen ? 0.6 : 0.7,
         }}
         className={classNames(
           "fixed z-40",
+          // positioning classes kept for accessibility & layout; layout animation will smooth between states
           isFullScreen
             ? "inset-0 h-screen w-screen"
             : "bottom-24 right-6 h-[32rem] w-80 sm:w-96",
           isFullScreen
-            ? "bg-background/80 border-0 shadow-none backdrop-blur-2xl"
-            : "bg-background/55 border border-border/60 shadow-2xl backdrop-blur-xl",
+            ? "bg-background/80 border-0 shadow-none"
+            : "bg-background/55 border border-border/60 shadow-2xl",
           "flex flex-col overflow-hidden",
-          isFullScreen ? "rounded-none" : "rounded-lg"
+          // radius handled also via animation for smooth morph
+          isFullScreen ? "rounded-none" : "rounded-lg",
+          // refine backdrop blur layering
+          "backdrop-saturate-150"
         )}
         style={{
           perspective: "1000px",
           transformStyle: "preserve-3d",
+          willChange: "width,height,transform,border-radius,box-shadow,backdrop-filter",
         }}
       >
         {/* Header */}
@@ -1308,10 +1358,9 @@ export default function ChatWindow({
               ))}
             </motion.div>
           )}
-          <motion.div className="flex items-end gap-3" layout>
-            <motion.textarea
+          <div className="flex items-end gap-3">
+            <textarea
               ref={(el: HTMLTextAreaElement | null) => {
-                // assign to both refs safely
                 if (textareaRef && "current" in textareaRef) {
                   (
                     textareaRef as React.MutableRefObject<HTMLTextAreaElement | null>
@@ -1336,42 +1385,33 @@ export default function ChatWindow({
                 "rounded-lg border border-border bg-background",
                 "text-foreground placeholder:text-muted-foreground",
                 "focus:border-transparent focus:outline-none focus:ring-2 focus:ring-accent",
-                "scrollbar-thin scrollbar-thumb-accent/30 scrollbar-track-transparent transition-all duration-200",
+                "scrollbar-thin scrollbar-thumb-accent/30 scrollbar-track-transparent",
                 "max-h-40"
               )}
               style={{ padding: "10px 12px 11px 10px", lineHeight: "1.35" }}
               disabled={isLoading}
-              whileFocus={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              aria-label="Chat input"
             />
-            <motion.button
+            <button
               onClick={handleSendMessage}
               disabled={!inputValue.trim() || isLoading}
               className={classNames(
-                "self-center rounded-lg p-3 transition-colors",
+                "self-center rounded-lg p-3",
                 "bg-accent hover:bg-accent-light disabled:bg-muted",
-                // Remove generic accent foreground so we can control icon color explicitly
                 "disabled:text-muted-foreground",
                 "disabled:cursor-not-allowed"
               )}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{
-                scale: { type: "spring", stiffness: 400, damping: 25 },
-              }}
               aria-label="Send message"
             >
               <Send
                 size={16}
                 className={classNames(
-                  // Icon should be white in light mode and black in dark mode (consistent with other icons)
                   "text-white dark:text-black",
-                  // Dim when disabled
                   (!inputValue.trim() || isLoading) && "text-muted-foreground dark:text-muted-foreground"
                 )}
               />
-            </motion.button>
-          </motion.div>
+            </button>
+          </div>
         </motion.div>
       </motion.div>
     </>

@@ -883,7 +883,9 @@ export default function ChatWindow({
           isFullScreen
             ? "inset-0 h-screen w-screen"
             : "bottom-24 right-6 h-[32rem] w-80 sm:w-96",
-          "bg-background/55 border border-border/60 shadow-2xl backdrop-blur-xl",
+          isFullScreen
+            ? "bg-background/80 border-0 shadow-none backdrop-blur-2xl"
+            : "bg-background/55 border border-border/60 shadow-2xl backdrop-blur-xl",
           "flex flex-col overflow-hidden",
           isFullScreen ? "rounded-none" : "rounded-lg"
         )}

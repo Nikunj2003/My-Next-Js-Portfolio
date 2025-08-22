@@ -830,6 +830,11 @@ export default function ChatWindow({
         initial={
           prefersReducedMotion
             ? { opacity: 0 }
+            : isFullScreen
+            ? {
+                opacity: 0,
+                scale: 0.95,
+              }
             : {
                 opacity: 0,
                 scale: 0.8,
@@ -840,6 +845,11 @@ export default function ChatWindow({
         animate={
           prefersReducedMotion
             ? { opacity: 1 }
+            : isFullScreen
+            ? {
+                opacity: 1,
+                scale: 1,
+              }
             : {
                 opacity: 1,
                 scale: 1,
@@ -850,6 +860,11 @@ export default function ChatWindow({
         exit={
           prefersReducedMotion
             ? { opacity: 0 }
+            : isFullScreen
+            ? {
+                opacity: 0,
+                scale: 0.95,
+              }
             : {
                 opacity: 0,
                 scale: 0.8,
@@ -859,9 +874,9 @@ export default function ChatWindow({
         }
         transition={{
           type: "spring",
-          stiffness: 300,
-          damping: 30,
-          mass: 0.8,
+          stiffness: isFullScreen ? 400 : 300,
+          damping: isFullScreen ? 35 : 30,
+          mass: isFullScreen ? 0.6 : 0.8,
         }}
         className={classNames(
           "fixed z-40",

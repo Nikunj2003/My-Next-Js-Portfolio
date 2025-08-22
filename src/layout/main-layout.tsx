@@ -21,6 +21,7 @@ export interface MainLayoutProps {
 
 export default function MainLayout(props: MainLayoutProps) {
   const [isWelcomeFinished, setIsWelcomeFinished] = useState(false);
+  const { isFullScreen } = useChatContext();
 
   const handleWelcomeFinished = () => {
     setIsWelcomeFinished(true);

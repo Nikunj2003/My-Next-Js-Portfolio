@@ -12,6 +12,8 @@ import {
   Palette,
   ExternalLink,
   Trash2,
+  Maximize,
+  Minimize,
 } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
@@ -36,6 +38,8 @@ interface Message {
 interface ChatWindowProps {
   isOpen: boolean;
   onClose: () => void;
+  isFullScreen?: boolean;
+  onToggleFullScreen?: () => void;
 }
 
 // Normalize incoming (possibly LLM-generated) action type variants to canonical ones
@@ -323,7 +327,12 @@ function ActionIndicator({ action }: { action: ToolAction }) {
   );
 }
 
-export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
+export default function ChatWindow({
+  isOpen,
+  onClose,
+  isFullScreen = false,
+  onToggleFullScreen,
+}: ChatWindowProps) {
   const router = useRouter();
   // Add highlight styles to the document head if not already present
   useEffect(() => {
@@ -855,10 +864,13 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
           mass: 0.8,
         }}
         className={classNames(
-          "fixed bottom-24 right-6 z-40",
-          "h-[32rem] w-80 sm:w-96",
-          "bg-background/55 rounded-lg border border-border/60 shadow-2xl backdrop-blur-xl",
-          "flex flex-col overflow-hidden"
+          "fixed z-40",
+          isFullScreen
+            ? "inset-0 h-screen w-screen"
+            : "bottom-24 right-6 h-[32rem] w-80 sm:w-96",
+          "bg-background/55 border border-border/60 shadow-2xl backdrop-blur-xl",
+          "flex flex-col overflow-hidden",
+          isFullScreen ? "rounded-none" : "rounded-lg"
         )}
         style={{
           perspective: "1000px",
@@ -904,6 +916,21 @@ export default function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
             >
               <Trash2 size={16} className="text-muted-foreground" />
             </motion.button>
+            {onToggleFullScreen && (
+              <motion.button
+                onClick={onToggleFullScreen}
+                className="rounded p-1 transition-colors hover:bg-muted"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label={isFullScreen ? "Minimize chat" : "Maximize chat"}
+              >
+                {isFullScreen ? (
+                  <Minimize size={16} className="text-muted-foreground" />
+                ) : (
+                  <Maximize size={16} className="text-muted-foreground" />
+                )}
+              </motion.button>
+            )}
             <motion.button
               onClick={onClose}
               className="rounded p-1 transition-colors hover:bg-muted"

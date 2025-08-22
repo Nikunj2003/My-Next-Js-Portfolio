@@ -8,6 +8,7 @@ import WelcomeScreen from "@/components/welcome-screen";
 import FloatingChatButton from "@/components/chat/floating-chat-button";
 import { routes } from "@/data/navigationRoutes";
 import { classNames } from "@/utility/classNames";
+import { useChatContext } from "@/contexts/chat-context";
 
 const montserrat = Montserrat({
   subsets: ["latin"],

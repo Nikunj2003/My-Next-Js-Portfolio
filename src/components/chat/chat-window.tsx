@@ -925,7 +925,7 @@ export default function ChatWindow({
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.3 }}
             >
-              Ask about Nikunj
+              {isFullScreen ? "AI Assistant - Ask about Nikunj" : "Ask about Nikunj"}
             </motion.h3>
           </div>
           <div className="flex items-center gap-1">

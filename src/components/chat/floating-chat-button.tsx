@@ -6,9 +6,14 @@ import ChatWindow from "./chat-window";
 
 export default function FloatingChatButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleFullScreen = () => {
+    setIsFullScreen(!isFullScreen);
   };
 
   // Variants for smoother morph-style transition between icons

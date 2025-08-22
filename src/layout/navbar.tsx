@@ -25,6 +25,7 @@ export interface NavbarProps {
 export default function Navbar({ routes }: NavbarProps) {
   const pathName = usePathname();
   const { resolvedTheme } = useTheme();
+  const { isExitingFullScreen } = useChatContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

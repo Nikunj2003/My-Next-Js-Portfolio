@@ -1156,14 +1156,23 @@ export default function ChatWindow({
               )}
               aria-label="Send message"
             >
-              <Send
-                size={16}
-                className={classNames(
-                  "text-white dark:text-black",
-                  (!inputValue.trim() || isLoading) &&
-                    "text-muted-foreground dark:text-muted-foreground"
-                )}
-              />
+              {(() => {
+                const isDisabled = !inputValue.trim() || isLoading;
+                return (
+                  <Send
+                    size={16}
+                    className={classNames(
+                      isDisabled
+                        ? // When disabled: black in light mode, muted in dark mode
+                          resolvedTheme === "dark"
+                          ? "text-muted-foreground"
+                          : "text-black"
+                        : // When active: white in light mode (for accent bg), black in dark mode
+                          "text-white dark:text-black"
+                    )}
+                  />
+                );
+              })()}
             </button>
           </div>
         </motion.div>

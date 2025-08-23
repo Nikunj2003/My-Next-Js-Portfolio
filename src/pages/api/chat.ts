@@ -341,6 +341,30 @@ export default async function handler(
           .filter((m) => m.sender === "user")
           .map((m) => m.content.toLowerCase());
 
+        // --- Topic Categorization Helpers (lightweight, heuristic) ---
+        const categoryKeywords: Record<string, RegExp> = {
+          experience: /(experience|role|intern|work|company|job|position|impact|responsibilit)/i,
+            skills: /(skill|stack|technology|tech|framework|language|tool)/i,
+          projects: /(project|build|develop|app|application|platform|system|tool)/i,
+          achievements: /(achieve|award|won|improv|result|reduced|increase|coverage|accuracy|milestone)/i,
+          contact: /(contact|reach|email|linkedin|connect|collaborate|hire)/i,
+          career_goals: /(goal|future|plan|aspiration|next|aim)/i,
+        };
+
+        const detectCategoriesFromConversation = (): Set<string> => {
+          const s = new Set<string>();
+          const corpus = [...recentMessages.map((m) => m.content), message].join("\n");
+          for (const [cat, rx] of Object.entries(categoryKeywords)) {
+            if (rx.test(corpus)) s.add(cat);
+          }
+          return s;
+        };
+
+        const usedCategories = Array.from(detectCategoriesFromConversation());
+        const desiredCategories = Object.keys(categoryKeywords).filter(
+          (c) => !usedCategories.includes(c)
+        );
+
         const suggestionMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] =
           [
             { role: "system", content: suggestionPromptSystem },
@@ -356,7 +380,7 @@ export default async function handler(
             { role: "assistant", content: aiResponse.slice(0, 4000) },
             {
               role: "user",
-              content: "Generate the JSON array of follow-up questions now.",
+              content: `Generate ONLY a JSON array of 3-6 diverse follow-up questions now. Ensure topical diversity. Recently covered categories (avoid over-repeating): ${usedCategories.join(",") || "none"}. Prefer including some of: ${desiredCategories.join(",") || "(reuse any with new angle)"}. Remember: no more than 2 in the same category.`,
             },
           ];
 
@@ -398,7 +422,49 @@ export default async function handler(
               arr.findIndex((t) => t.toLowerCase() === s.toLowerCase()) === i
           )
           .slice(0, 6);
-        return cleaned;
+        // Post-process for category diversity
+        const categorize = (q: string): string => {
+          for (const [cat, rx] of Object.entries(categoryKeywords)) {
+            if (rx.test(q)) return cat;
+          }
+          return "other";
+        };
+
+        const maxPerCategory = 1; // strict: only one per category to enforce breadth
+        const catCount: Record<string, number> = {};
+        const diversified: string[] = [];
+        for (const q of cleaned) {
+          const cat = categorize(q);
+          catCount[cat] = catCount[cat] || 0;
+          if (catCount[cat] < maxPerCategory) {
+            diversified.push(q);
+            catCount[cat]++;
+          }
+          if (diversified.length >= 6) break;
+        }
+
+        // Fallback library for missing categories
+        const fallbackByCategory: Record<string, string[]> = {
+          experience: ["What recent impact has Nikunj made in his current role?"],
+          skills: ["Which technical skills does Nikunj use most day to day?"],
+          projects: ["Which project best showcases Nikunj's problem-solving?"],
+          achievements: ["Can you highlight one of Nikunj's standout achievements?"],
+          contact: ["What's the best way to connect with Nikunj for collaboration?"],
+          career_goals: ["What future goals is Nikunj focusing on next?"],
+        };
+
+        if (diversified.length < 3) {
+          // Add fallbacks from unused categories
+            for (const cat of Object.keys(fallbackByCategory)) {
+            if (diversified.length >= 6) break;
+            if (!diversified.some((q) => categorize(q) === cat)) {
+              const fb = fallbackByCategory[cat][0];
+              if (fb) diversified.push(fb);
+            }
+          }
+        }
+
+        return diversified.slice(0, 6);
       } catch (e) {
         console.warn("Suggestion generation failed:", e);
         return [];

@@ -81,15 +81,15 @@ export default function NavigationIndicator({
   const getStatusColor = (status: NavigationAction["status"]) => {
     switch (status) {
       case "pending":
-  return "text-amber-600 dark:text-amber-400";
+        return "text-amber-600 dark:text-amber-400";
       case "in-progress":
-  return "text-accent";
+        return "text-accent";
       case "completed":
-  return "text-emerald-500 dark:text-emerald-400";
+        return "text-emerald-500 dark:text-emerald-400";
       case "failed":
-  return "text-rose-500 dark:text-rose-400";
+        return "text-rose-500 dark:text-rose-400";
       default:
-  return "text-foreground/70";
+        return "text-foreground/70";
     }
   };
 

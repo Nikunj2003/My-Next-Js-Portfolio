@@ -14,8 +14,6 @@ import { ChatProvider } from "@/contexts/chat-context";
 import "@/styles/globals.css";
 import FluidCursor from "@/components/fluid-cursor";
 
-
-
 // Page transition variants
 const pageVariants = {
   initial: {

@@ -44,9 +44,7 @@ export default function Navbar({ routes }: NavbarProps) {
   if (!mounted) return null;
 
   return (
-    <header
-      className="sticky top-0 z-50 mt-2 px-6 py-8 sm:mt-8 sm:px-14 md:px-20"
-    >
+    <header className="sticky top-0 z-50 mt-2 px-6 py-8 sm:mt-8 sm:px-14 md:px-20">
       <div className="mx-auto flex items-center justify-between lg:max-w-7xl">
         {/* Mobile Menu Logo for Small Screens */}
         <div className="md:hidden">
@@ -68,10 +66,7 @@ export default function Navbar({ routes }: NavbarProps) {
               const isActive = pathName === href;
 
               return (
-                <li
-                  key={index}
-                  className="relative"
-                >
+                <li key={index} className="relative">
                   <Link
                     href={href}
                     className={classNames(
@@ -89,9 +84,7 @@ export default function Navbar({ routes }: NavbarProps) {
           </ul>
 
           {/* Right Side: Theme Switch & Contact Button */}
-          <div
-            className="ml-auto flex items-center gap-4"
-          >
+          <div className="ml-auto flex items-center gap-4">
             <div>
               <ThemeSwitch />
             </div>
@@ -102,9 +95,7 @@ export default function Navbar({ routes }: NavbarProps) {
         </nav>
 
         {/* Desktop Menu Logo */}
-        <div
-          className="hidden md:block"
-        >
+        <div className="hidden md:block">
           <MenuLogo open={isModalOpen} toggle={toggleModal} />
         </div>
       </div>

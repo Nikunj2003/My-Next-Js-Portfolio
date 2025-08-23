@@ -41,7 +41,7 @@ export interface EducationItem {
   subjects: string[];
 }
 
-export type ExploreLinkIcon = 'code' | 'user' | 'award' | 'briefcase';
+export type ExploreLinkIcon = "code" | "user" | "award" | "briefcase";
 export interface ExploreLink {
   href: string;
   iconName: ExploreLinkIcon;
@@ -268,10 +268,30 @@ const education: EducationItem[] = [
 ];
 
 const exploreLinks: ExploreLink[] = [
-  { href: "/projects", iconName: 'code', label: "Projects", description: "View my latest work" },
-  { href: "/about", iconName: 'user', label: "About Me", description: "Learn more about me" },
-  { href: "/#skills", iconName: 'award', label: "Skills", description: "Technical expertise" },
-  { href: "/about#experience", iconName: 'briefcase', label: "Experience", description: "Professional journey" },
+  {
+    href: "/projects",
+    iconName: "code",
+    label: "Projects",
+    description: "View my latest work",
+  },
+  {
+    href: "/about",
+    iconName: "user",
+    label: "About Me",
+    description: "Learn more about me",
+  },
+  {
+    href: "/#skills",
+    iconName: "award",
+    label: "Skills",
+    description: "Technical expertise",
+  },
+  {
+    href: "/about#experience",
+    iconName: "briefcase",
+    label: "Experience",
+    description: "Professional journey",
+  },
 ];
 
 const resumeData: ResumeData = {

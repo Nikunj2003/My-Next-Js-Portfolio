@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, XCircle, Navigation, Download, Palette, ExternalLink, Bot } from "lucide-react";
+import {
+  CheckCircle,
+  XCircle,
+  Navigation,
+  Download,
+  Palette,
+  ExternalLink,
+  Bot,
+} from "lucide-react";
 import { ToolCall } from "@/types/tools";
 import { classNames } from "@/utility/classNames";
 import { ActionIndicator } from "./action-indicator";
@@ -167,16 +175,19 @@ export function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
                 >
                   <p className="mb-1 font-medium">Error Details:</p>
                   <p className="mb-2 text-xs">{result.error.message}</p>
-                  {result.error.suggestions && result.error.suggestions.length > 0 && (
-                    <div>
-                      <p className="mb-1 font-medium">Suggestions:</p>
-                      <ul className="list-inside list-disc space-y-1">
-                        {result.error.suggestions.map((s, i) => (
-                          <li key={i} className="text-xs">{s}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  {result.error.suggestions &&
+                    result.error.suggestions.length > 0 && (
+                      <div>
+                        <p className="mb-1 font-medium">Suggestions:</p>
+                        <ul className="list-inside list-disc space-y-1">
+                          {result.error.suggestions.map((s, i) => (
+                            <li key={i} className="text-xs">
+                              {s}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                 </motion.div>
               )}
 

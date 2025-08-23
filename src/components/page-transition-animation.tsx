@@ -9,12 +9,12 @@ export default function PageTransitionAnimation() {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     if (typeof window === "undefined") return;
-  const mq = window.matchMedia("(max-width: 639.9px)");
-  const apply = () => setIsMobile(mq.matches);
-  apply(); // initial
-  const handler = () => apply();
-  mq.addEventListener("change", handler);
-  return () => mq.removeEventListener("change", handler);
+    const mq = window.matchMedia("(max-width: 639.9px)");
+    const apply = () => setIsMobile(mq.matches);
+    apply(); // initial
+    const handler = () => apply();
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
   // Detect low resource devices (very rough heuristic) to lighten effect even on desktop.
@@ -39,23 +39,26 @@ export default function PageTransitionAnimation() {
   if (prefersReducedMotion) return null;
 
   // Tunable parameters (kept very close to original for desktop; trimmed for mobile)
-  const circleCount = (isMobile || isLowPerf) ? 2 : 3;
-  const particleCount = (isLowPerf && !isMobile) ? 8 : (isMobile ? 6 : 12);
-  const particleRadius = isMobile ? 90 : (isLowPerf ? 130 : 150);
+  const circleCount = isMobile || isLowPerf ? 2 : 3;
+  const particleCount = isLowPerf && !isMobile ? 8 : isMobile ? 6 : 12;
+  const particleRadius = isMobile ? 90 : isLowPerf ? 130 : 150;
   const particleDelayStep = isMobile ? 0.12 : 0.1;
   const animationsEnabled = isPageVisible; // reduced separately by prefersReducedMotion already
 
   // Precompute particle positions (memo to avoid recalculation per frame re-render)
   const particles = useMemo(() => {
     return Array.from({ length: particleCount }, (_, i) => {
-      const angle = (i * (360 / particleCount)) * (Math.PI / 180);
+      const angle = i * (360 / particleCount) * (Math.PI / 180);
       const x = Math.round(Math.cos(angle) * particleRadius * 100) / 100;
       const y = Math.round(Math.sin(angle) * particleRadius * 100) / 100;
       return { i, x, y };
     });
   }, [particleCount, particleRadius]);
 
-  const circles = useMemo(() => Array.from({ length: circleCount }), [circleCount]);
+  const circles = useMemo(
+    () => Array.from({ length: circleCount }),
+    [circleCount]
+  );
 
   return (
     <>
@@ -99,7 +102,11 @@ export default function PageTransitionAnimation() {
                 : undefined
             }
           >
-            <Sparkles className={`${isMobile ? "h-10 w-10" : "h-12 w-12"} text-background drop-shadow-lg`} />
+            <Sparkles
+              className={`${
+                isMobile ? "h-10 w-10" : "h-12 w-12"
+              } text-background drop-shadow-lg`}
+            />
           </motion.div>
         </motion.div>
 
@@ -117,11 +124,15 @@ export default function PageTransitionAnimation() {
               className="absolute rounded-full border border-background/30 will-change-transform"
               style={{
                 width: `${(isMobile ? 100 : 120) + i * (isMobile ? 50 : 60)}px`,
-                height: `${(isMobile ? 100 : 120) + i * (isMobile ? 50 : 60)}px`,
+                height: `${
+                  (isMobile ? 100 : 120) + i * (isMobile ? 50 : 60)
+                }px`,
               }}
               animate={{
                 scale: animationsEnabled
-                  ? (isMobile ? [1, 1.22, 1] : [1, 1.3, 1])
+                  ? isMobile
+                    ? [1, 1.22, 1]
+                    : [1, 1.3, 1]
                   : 1,
                 opacity: animationsEnabled ? [0.28, 0.1, 0.28] : 0.22,
               }}
@@ -135,7 +146,7 @@ export default function PageTransitionAnimation() {
           ))}
         </motion.div>
 
-  {/* Floating particles removed per request */}
+        {/* Floating particles removed per request */}
       </motion.div>
 
       {/* Secondary overlay for smoother transition */}
@@ -159,7 +170,7 @@ export default function PageTransitionAnimation() {
         exit={{ clipPath: "circle(0% at 70% 30%)" }}
         transition={{
           delay: 0.1,
-            // Slightly reduced duration on mobile keeps perceived speed consistent
+          // Slightly reduced duration on mobile keeps perceived speed consistent
           duration: isMobile ? 0.65 : 0.8,
           ease: [0.76, 0, 0.24, 1],
         }}

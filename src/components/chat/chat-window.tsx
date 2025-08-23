@@ -8,7 +8,9 @@ import { useTheme } from "next-themes";
 import { classNames } from "@/utility/classNames";
 import { useAutosizeTextArea } from "@/hooks/useAutoSizeTextarea";
 import { ToolAction } from "@/types/tools";
-import NavigationIndicator, { useNavigationActions } from "./navigation-indicator";
+import NavigationIndicator, {
+  useNavigationActions,
+} from "./navigation-indicator";
 import { ToolExecutionResult } from "./components/tool-execution-result";
 import { normalizeActionType } from "./hooks/use-normalize-action-type";
 import { ChatMessage, ChatWindowProps } from "./types";
@@ -217,7 +219,7 @@ export default function ChatWindow({
     const text = (overrideText ?? inputValue).trim();
     if (!text || isLoading) return;
 
-  const userMessage: ChatMessage = {
+    const userMessage: ChatMessage = {
       id: Date.now().toString(),
       content: text,
       sender: "user",
@@ -289,7 +291,7 @@ export default function ChatWindow({
       }
 
       // Create AI message with tool execution results
-  const aiMessage: ChatMessage = {
+      const aiMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         content:
           data.response ||
@@ -297,7 +299,7 @@ export default function ChatWindow({
         sender: "ai",
         timestamp: new Date(),
         toolCalls: data.toolCalls,
-  suggestions: data.suggestions,
+        suggestions: data.suggestions,
       };
 
       wasNearBottomBeforeAIRef.current = isNearBottom();
@@ -308,7 +310,7 @@ export default function ChatWindow({
       }
     } catch (error) {
       console.error("Chat API error:", error);
-  const errorMessage: ChatMessage = {
+      const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         content:
           "I apologize, but I'm having trouble responding right now. Please try asking your question again.",
@@ -595,7 +597,9 @@ export default function ChatWindow({
           y: 0,
           rotateX: 0,
           borderRadius: prefersReducedMotion
-            ? (isFullScreen ? 0 : 16)
+            ? isFullScreen
+              ? 0
+              : 16
             : isFullScreen
             ? 0
             : 16,
@@ -613,7 +617,7 @@ export default function ChatWindow({
           scale: prefersReducedMotion ? 1 : 0.9,
           y: prefersReducedMotion ? 0 : 10,
           rotateX: prefersReducedMotion ? 0 : 10,
-          transition: { duration: 0.25 }
+          transition: { duration: 0.25 },
         }}
         transition={{
           layout: {
@@ -624,7 +628,7 @@ export default function ChatWindow({
           },
           type: "spring",
           stiffness: isFullScreen ? 300 : 260,
-            // slightly higher damping to remove bounce
+          // slightly higher damping to remove bounce
           damping: isFullScreen ? 36 : 34,
           mass: isFullScreen ? 0.6 : 0.7,
         }}
@@ -635,7 +639,7 @@ export default function ChatWindow({
             ? "inset-0 h-screen w-screen"
             : "bottom-24 right-6 h-[32rem] w-80 sm:w-96",
           isFullScreen
-            ? "bg-background/80 border-0 shadow-none"
+            ? "border-0 bg-background/80 shadow-none"
             : "bg-background/55 border border-border/60 shadow-2xl",
           "flex flex-col overflow-hidden",
           // radius handled also via animation for smooth morph
@@ -646,7 +650,8 @@ export default function ChatWindow({
         style={{
           perspective: "1000px",
           transformStyle: "preserve-3d",
-          willChange: "width,height,transform,border-radius,box-shadow,backdrop-filter",
+          willChange:
+            "width,height,transform,border-radius,box-shadow,backdrop-filter",
         }}
       >
         {/* Header */}
@@ -680,7 +685,9 @@ export default function ChatWindow({
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.3 }}
             >
-              {isFullScreen ? "AI Assistant - Ask about Nikunj" : "Ask about Nikunj"}
+              {isFullScreen
+                ? "AI Assistant - Ask about Nikunj"
+                : "Ask about Nikunj"}
             </motion.h3>
           </div>
           <div className="flex items-center gap-1">
@@ -936,42 +943,44 @@ export default function ChatWindow({
                     </motion.div>
                   )}
                   {/* AI Smart Follow-up Suggestions */}
-                  {message.sender === 'ai' && message.suggestions && message.suggestions.length > 0 && (
-                    <motion.div
-                      className="mt-3 flex flex-wrap gap-2"
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.55, duration: 0.3 }}
-                    >
-                      {message.suggestions.map((s, i) => (
-                        <button
-                          key={i}
-                          onClick={() => handleSuggestionClick(s)}
-                          onDoubleClick={() => handleSuggestionDoubleClick(s)}
-                          className="group relative overflow-hidden rounded-full bg-accent/10 px-3 py-1 text-[11px] text-foreground transition-colors hover:bg-accent/20 focus:outline-none focus:ring-2 focus:ring-accent/50 select-none"
-                          aria-label={`Ask: ${s}`}
-                          title="Double-click to send"
-                        >
-                          <span className="relative z-10 flex items-center gap-1">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              className="h-3 w-3 opacity-60"
-                            >
-                              <path d="M12 19l-7-7 7-7" />
-                              <path d="M19 19l-7-7 7-7" />
-                            </svg>
-                            {s}
-                          </span>
-                        </button>
-                      ))}
-                    </motion.div>
-                  )}
+                  {message.sender === "ai" &&
+                    message.suggestions &&
+                    message.suggestions.length > 0 && (
+                      <motion.div
+                        className="mt-3 flex flex-wrap gap-2"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.55, duration: 0.3 }}
+                      >
+                        {message.suggestions.map((s, i) => (
+                          <button
+                            key={i}
+                            onClick={() => handleSuggestionClick(s)}
+                            onDoubleClick={() => handleSuggestionDoubleClick(s)}
+                            className="group relative select-none overflow-hidden rounded-full bg-accent/10 px-3 py-1 text-[11px] text-foreground transition-colors hover:bg-accent/20 focus:outline-none focus:ring-2 focus:ring-accent/50"
+                            aria-label={`Ask: ${s}`}
+                            title="Double-click to send"
+                          >
+                            <span className="relative z-10 flex items-center gap-1">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="h-3 w-3 opacity-60"
+                              >
+                                <path d="M12 19l-7-7 7-7" />
+                                <path d="M19 19l-7-7 7-7" />
+                              </svg>
+                              {s}
+                            </span>
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
                   <motion.span
                     className="mt-1 block text-[10px] uppercase tracking-wide opacity-60 transition-opacity group-hover:opacity-80"
                     initial={{ opacity: 0, x: -10 }}
@@ -1094,7 +1103,7 @@ export default function ChatWindow({
                   key={s}
                   onClick={() => handleSuggestionClick(s)}
                   onDoubleClick={() => handleSuggestionDoubleClick(s)}
-                  className="rounded-full bg-accent/10 px-3 py-1 text-xs text-foreground transition-colors hover:bg-accent/20 select-none"
+                  className="select-none rounded-full bg-accent/10 px-3 py-1 text-xs text-foreground transition-colors hover:bg-accent/20"
                   title="Double-click to send"
                 >
                   {s}
@@ -1151,7 +1160,8 @@ export default function ChatWindow({
                 size={16}
                 className={classNames(
                   "text-white dark:text-black",
-                  (!inputValue.trim() || isLoading) && "text-muted-foreground dark:text-muted-foreground"
+                  (!inputValue.trim() || isLoading) &&
+                    "text-muted-foreground dark:text-muted-foreground"
                 )}
               />
             </button>

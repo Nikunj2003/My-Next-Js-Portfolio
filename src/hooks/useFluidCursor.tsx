@@ -1,13 +1,13 @@
 // @ts-nocheck
 const useFluidCursor = () => {
-  const canvas = document.getElementById('fluid');
+  const canvas = document.getElementById("fluid");
   resizeCanvas();
 
   let config = {
     SIM_RESOLUTION: 128,
     DYE_RESOLUTION: 1440,
     CAPTURE_RESOLUTION: 1512,
-    DENSITY_DISSIPATION: 0.5, 
+    DENSITY_DISSIPATION: 0.5,
     VELOCITY_DISSIPATION: 3,
     PRESSURE: 0.1,
     PRESSURE_ITERATIONS: 20,
@@ -21,7 +21,6 @@ const useFluidCursor = () => {
     TRANSPARENT: true,
   };
 
-
   let accentPalette = [];
   const violetBases = [
     { r: 109 / 255, g: 93 / 255, b: 254 / 255 }, // #6D5DFE
@@ -34,9 +33,9 @@ const useFluidCursor = () => {
     try {
       const root = document.documentElement;
       const cs = getComputedStyle(root);
-      const accent = cs.getPropertyValue('--accent').trim();
-      const accentLight = cs.getPropertyValue('--accent-light').trim();
-      const accentDark = cs.getPropertyValue('--accent-dark').trim();
+      const accent = cs.getPropertyValue("--accent").trim();
+      const accentLight = cs.getPropertyValue("--accent-light").trim();
+      const accentDark = cs.getPropertyValue("--accent-dark").trim();
       const found = [accentDark, accent, accentLight].filter(Boolean);
       if (found.length === 0) return; // fallback later
       accentPalette = found
@@ -52,7 +51,10 @@ const useFluidCursor = () => {
     refreshAccentPalette();
     pointers.forEach((p) => (p.color = generateColor()));
   });
-  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
 
   // Initial palette
   refreshAccentPalette();
@@ -89,21 +91,21 @@ const useFluidCursor = () => {
       preserveDrawingBuffer: false,
     };
 
-    let gl = canvas.getContext('webgl2', params);
+    let gl = canvas.getContext("webgl2", params);
     const isWebGL2 = !!gl;
     if (!isWebGL2)
       gl =
-        canvas.getContext('webgl', params) ||
-        canvas.getContext('experimental-webgl', params);
+        canvas.getContext("webgl", params) ||
+        canvas.getContext("experimental-webgl", params);
 
     let halfFloat;
     let supportLinearFiltering;
     if (isWebGL2) {
-      gl.getExtension('EXT_color_buffer_float');
-      supportLinearFiltering = gl.getExtension('OES_texture_float_linear');
+      gl.getExtension("EXT_color_buffer_float");
+      supportLinearFiltering = gl.getExtension("OES_texture_float_linear");
     } else {
-      halfFloat = gl.getExtension('OES_texture_half_float');
-      supportLinearFiltering = gl.getExtension('OES_texture_half_float_linear');
+      halfFloat = gl.getExtension("OES_texture_half_float");
+      supportLinearFiltering = gl.getExtension("OES_texture_half_float_linear");
     }
 
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -277,9 +279,9 @@ const useFluidCursor = () => {
 
   function addKeywords(source, keywords) {
     if (keywords == null) return source;
-    let keywordsString = '';
+    let keywordsString = "";
     keywords.forEach((keyword) => {
-      keywordsString += '#define ' + keyword + '\n';
+      keywordsString += "#define " + keyword + "\n";
     });
 
     return keywordsString + source;
@@ -506,7 +508,7 @@ const useFluidCursor = () => {
            float decay = 1.0 + dissipation * dt;
            gl_FragColor = result / decay;
        }`,
-    ext.supportLinearFiltering ? null : ['MANUAL_FILTERING']
+    ext.supportLinearFiltering ? null : ["MANUAL_FILTERING"]
   );
 
   const divergenceShader = compileShader(
@@ -934,7 +936,7 @@ const useFluidCursor = () => {
 
   function updateKeywords() {
     let displayKeywords = [];
-    if (config.SHADING) displayKeywords.push('SHADING');
+    if (config.SHADING) displayKeywords.push("SHADING");
     displayMaterial.setKeywords(displayKeywords);
   }
 
@@ -1123,7 +1125,7 @@ const useFluidCursor = () => {
     if (displayMaterial.uniforms.darkMode)
       gl.uniform1f(
         displayMaterial.uniforms.darkMode,
-        document.documentElement.classList.contains('dark') ? 1.0 : 0.0
+        document.documentElement.classList.contains("dark") ? 1.0 : 0.0
       );
     gl.uniform1i(displayMaterial.uniforms.uTexture, dye.read.attach(0));
     blit(target);
@@ -1173,7 +1175,7 @@ const useFluidCursor = () => {
     return radius;
   }
 
-  window.addEventListener('mousedown', (e) => {
+  window.addEventListener("mousedown", (e) => {
     let pointer = pointers[0];
     let posX = scaleByPixelRatio(e.clientX);
     let posY = scaleByPixelRatio(e.clientY);
@@ -1181,7 +1183,7 @@ const useFluidCursor = () => {
     clickSplat(pointer);
   });
 
-  document.body.addEventListener('mousemove', function handleFirstMouseMove(e) {
+  document.body.addEventListener("mousemove", function handleFirstMouseMove(e) {
     let pointer = pointers[0];
     let posX = scaleByPixelRatio(e.clientX);
     let posY = scaleByPixelRatio(e.clientY);
@@ -1191,10 +1193,10 @@ const useFluidCursor = () => {
     updatePointerMoveData(pointer, posX, posY, color);
 
     // Remove this event listener after the first mousemove event
-    document.body.removeEventListener('mousemove', handleFirstMouseMove);
+    document.body.removeEventListener("mousemove", handleFirstMouseMove);
   });
 
-  window.addEventListener('mousemove', (e) => {
+  window.addEventListener("mousemove", (e) => {
     let pointer = pointers[0];
     let posX = scaleByPixelRatio(e.clientX);
     let posY = scaleByPixelRatio(e.clientY);
@@ -1204,7 +1206,7 @@ const useFluidCursor = () => {
   });
 
   document.body.addEventListener(
-    'touchstart',
+    "touchstart",
     function handleFirstTouchStart(e) {
       const touches = e.targetTouches;
       let pointer = pointers[0];
@@ -1218,11 +1220,11 @@ const useFluidCursor = () => {
       }
 
       // Remove this event listener after the first touchstart event
-      document.body.removeEventListener('touchstart', handleFirstTouchStart);
+      document.body.removeEventListener("touchstart", handleFirstTouchStart);
     }
   );
 
-  window.addEventListener('touchstart', (e) => {
+  window.addEventListener("touchstart", (e) => {
     const touches = e.targetTouches;
     let pointer = pointers[0];
     for (let i = 0; i < touches.length; i++) {
@@ -1233,7 +1235,7 @@ const useFluidCursor = () => {
   });
 
   window.addEventListener(
-    'touchmove',
+    "touchmove",
     (e) => {
       const touches = e.targetTouches;
       let pointer = pointers[0];
@@ -1246,7 +1248,7 @@ const useFluidCursor = () => {
     false
   );
 
-  window.addEventListener('touchend', (e) => {
+  window.addEventListener("touchend", (e) => {
     const touches = e.changedTouches;
     let pointer = pointers[0];
 
@@ -1298,7 +1300,7 @@ const useFluidCursor = () => {
   }
 
   function generateColor() {
-    const isDark = document.documentElement.classList.contains('dark');
+    const isDark = document.documentElement.classList.contains("dark");
 
     // If accent palette present, derive color from it with slight jitter
     if (accentPalette.length) {
@@ -1314,7 +1316,7 @@ const useFluidCursor = () => {
       let g = clamp01(base.g + jitter());
       let b = clamp01(base.b + jitter());
       // Intensity scaling: brighter on dark theme, subtler on light
-  const intensity = isDark ? 0.22 : 0.15; // dimmer for subtler appearance
+      const intensity = isDark ? 0.22 : 0.15; // dimmer for subtler appearance
       return { r: r * intensity, g: g * intensity, b: b * intensity };
     }
 
@@ -1323,7 +1325,7 @@ const useFluidCursor = () => {
     const saturation = 0.55 + Math.random() * 0.35;
     const value = 0.75 + Math.random() * 0.25;
     let c = HSVtoRGB(hue / 360, saturation, value);
-  const intensity = isDark ? 0.2 : 0.14; // dimmer fallback
+    const intensity = isDark ? 0.2 : 0.14; // dimmer fallback
     c.r *= intensity;
     c.g *= intensity;
     c.b *= intensity;
@@ -1340,21 +1342,40 @@ const useFluidCursor = () => {
     const parts = triplet.split(/\s+/).filter(Boolean);
     if (parts.length < 3) return { r: 255, g: 255, b: 255 };
     const h = parseFloat(parts[0]);
-    const s = parseFloat(parts[1].replace('%', '')) / 100;
-    const l = parseFloat(parts[2].replace('%', '')) / 100;
+    const s = parseFloat(parts[1].replace("%", "")) / 100;
+    const l = parseFloat(parts[2].replace("%", "")) / 100;
     // HSL -> RGB conversion
     const c = (1 - Math.abs(2 * l - 1)) * s;
     const hp = h / 60;
     const x = c * (1 - Math.abs((hp % 2) - 1));
-    let r1 = 0, g1 = 0, b1 = 0;
-    if (hp >= 0 && hp < 1) { r1 = c; g1 = x; }
-    else if (hp < 2) { r1 = x; g1 = c; }
-    else if (hp < 3) { g1 = c; b1 = x; }
-    else if (hp < 4) { g1 = x; b1 = c; }
-    else if (hp < 5) { r1 = x; b1 = c; }
-    else { r1 = c; b1 = x; }
+    let r1 = 0,
+      g1 = 0,
+      b1 = 0;
+    if (hp >= 0 && hp < 1) {
+      r1 = c;
+      g1 = x;
+    } else if (hp < 2) {
+      r1 = x;
+      g1 = c;
+    } else if (hp < 3) {
+      g1 = c;
+      b1 = x;
+    } else if (hp < 4) {
+      g1 = x;
+      b1 = c;
+    } else if (hp < 5) {
+      r1 = x;
+      b1 = c;
+    } else {
+      r1 = c;
+      b1 = x;
+    }
     const m = l - c / 2;
-    return { r: Math.round((r1 + m) * 255), g: Math.round((g1 + m) * 255), b: Math.round((b1 + m) * 255) };
+    return {
+      r: Math.round((r1 + m) * 255),
+      g: Math.round((g1 + m) * 255),
+      b: Math.round((b1 + m) * 255),
+    };
   }
 
   function HSVtoRGB(h, s, v) {

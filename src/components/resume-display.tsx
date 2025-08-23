@@ -112,13 +112,13 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
 
   const renderExploreIcon = (iconName: string) => {
     switch (iconName) {
-      case 'code':
+      case "code":
         return <Code size={20} />;
-      case 'user':
+      case "user":
         return <User size={20} />;
-      case 'award':
+      case "award":
         return <Award size={20} />;
-      case 'briefcase':
+      case "briefcase":
         return <Briefcase size={20} />;
       default:
         return <ExternalLink size={20} />;
@@ -138,7 +138,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
       >
-  {/* Header Section */}
+        {/* Header Section */}
         <motion.div
           variants={itemVariants}
           className="mb-8 border-b border-accent/20 pb-6 text-center"
@@ -200,7 +200,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
           </div>
         </motion.div>
 
-  {/* Technical Skills Section */}
+        {/* Technical Skills Section */}
         <motion.section variants={itemVariants} className="mb-8">
           <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-accent md:text-3xl">
             <Code className="text-accent" size={32} />
@@ -232,7 +232,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
           </div>
         </motion.section>
 
-  {/* Professional Experience Section */}
+        {/* Professional Experience Section */}
         <motion.section variants={itemVariants} className="mb-8">
           <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-accent md:text-3xl">
             <Briefcase className="text-accent" size={32} />
@@ -288,7 +288,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
           </div>
         </motion.section>
 
-  {/* Projects Section */}
+        {/* Projects Section */}
         <motion.section variants={itemVariants} className="mb-8">
           <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-accent md:text-3xl">
             <ExternalLink className="text-accent" size={32} />
@@ -343,7 +343,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
           </div>
         </motion.section>
 
-  {/* Hackathons & Achievements */}
+        {/* Hackathons & Achievements */}
         <motion.section variants={itemVariants} className="mb-8">
           <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-accent md:text-3xl">
             <Award className="text-accent" size={32} />
@@ -398,7 +398,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
           ))}
         </motion.section>
 
-  {/* Education */}
+        {/* Education */}
         <motion.section variants={itemVariants} className="mb-8">
           <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-accent md:text-3xl">
             <GraduationCap className="text-accent" size={32} />
@@ -452,7 +452,7 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
           ))}
         </motion.section>
 
-  {/* Navigation Links */}
+        {/* Navigation Links */}
         <motion.section variants={itemVariants} className="mb-8">
           <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-accent md:text-3xl">
             <ExternalLink className="text-accent" size={32} />
@@ -460,16 +460,16 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
           </h2>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      {exploreLinks.map((link) => (
+            {exploreLinks.map((link) => (
               <motion.div key={link.href} variants={itemVariants}>
                 <Link
-          href={link.href}
-          onClick={(e) => smoothScrollToSection(link.href, e)}
+                  href={link.href}
+                  onClick={(e) => smoothScrollToSection(link.href, e)}
                   className={`${sectionBackgroundColor} group block rounded-xl border border-accent/10 p-4 transition-all duration-300 hover:scale-105 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/10`}
                 >
                   <div className="mb-2 flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/20 text-accent transition-all duration-300 group-hover:bg-accent group-hover:text-white">
-            {renderExploreIcon(link.iconName)}
+                      {renderExploreIcon(link.iconName)}
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground transition-colors group-hover:text-accent">

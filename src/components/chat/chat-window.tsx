@@ -1,331 +1,21 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
-import {
-  Send,
-  User,
-  Bot,
-  X,
-  CheckCircle,
-  XCircle,
-  Navigation,
-  Download,
-  Palette,
-  ExternalLink,
-  Trash2,
-  Maximize,
-  Minimize,
-} from "lucide-react";
+import { Send, User, Bot, X, Trash2, Maximize, Minimize } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useTheme } from "next-themes";
 import { classNames } from "@/utility/classNames";
 import { useAutosizeTextArea } from "@/hooks/useAutoSizeTextarea";
-import { ToolCall, ToolAction } from "@/types/tools";
-import NavigationIndicator, {
-  useNavigationActions,
-} from "./navigation-indicator";
+import { ToolAction } from "@/types/tools";
+import NavigationIndicator, { useNavigationActions } from "./navigation-indicator";
+import { ToolExecutionResult } from "./components/tool-execution-result";
+import { normalizeActionType } from "./hooks/use-normalize-action-type";
+import { ChatMessage, ChatWindowProps } from "./types";
 
-interface Message {
-  id: string;
-  content: string;
-  sender: "user" | "ai";
-  timestamp: Date;
-  toolCalls?: ToolCall[];
-  isToolExecution?: boolean;
-}
+// (Types & helpers moved to modular files for maintainability)
 
-interface ChatWindowProps {
-  isOpen: boolean;
-  onClose: () => void;
-  isFullScreen?: boolean;
-  onToggleFullScreen?: () => void;
-}
-
-// Normalize incoming (possibly LLM-generated) action type variants to canonical ones
-function normalizeActionType(raw: string): ToolAction["type"] {
-  const lower = raw.toLowerCase();
-  if (
-    lower === "scrollto" ||
-    lower === "scroll_to" ||
-    lower === "scroll-section" ||
-    lower === "scrollsection"
-  )
-    return "scroll";
-  // Already valid types -> return as-is when matching
-  switch (lower) {
-    case "navigate":
-    case "download":
-    case "theme":
-    case "modal":
-    case "scroll":
-      return lower as ToolAction["type"];
-    default:
-      // Fallback: try partial match
-      if (lower.startsWith("scroll")) return "scroll";
-      return "scroll"; // safe default (or could throw)
-  }
-}
-
-// Tool execution result component
-function ToolExecutionResult({ toolCall }: { toolCall: ToolCall }) {
-  const { name, result } = toolCall;
-  const isSuccess = result?.success ?? false;
-  const hasActions = result?.actions && result.actions.length > 0;
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const getToolIcon = (toolName: string) => {
-    if (toolName.includes("Navigate") || toolName.includes("navigate"))
-      return Navigation;
-    if (toolName.includes("Download") || toolName.includes("download"))
-      return Download;
-    if (toolName.includes("Theme") || toolName.includes("theme"))
-      return Palette;
-    if (toolName.includes("Modal") || toolName.includes("modal"))
-      return ExternalLink;
-    return Bot;
-  };
-
-  const ToolIcon = getToolIcon(name);
-
-  // Get summary message for collapsed state
-  const getSummaryMessage = () => {
-    if (isSuccess) {
-      if (hasActions && result?.actions) {
-        const action = result.actions[0];
-        switch (action.type) {
-          case "navigate":
-            return `Navigated to ${action.target}`;
-          case "download":
-            return `Downloaded ${action.target}`;
-          case "theme":
-            return `Switched to ${action.target} theme`;
-          case "modal":
-            return `Opened ${action.target}`;
-          case "scroll":
-            return `Scrolled to ${action.target}`;
-          default:
-            return "Action completed successfully";
-        }
-      }
-      return "Executed successfully";
-    } else {
-      return result?.error?.message || "Execution failed";
-    }
-  };
-
-  return (
-    <motion.div
-      className={classNames(
-        "cursor-pointer rounded-lg border text-xs transition-all duration-200",
-        isSuccess
-          ? "border-green-200 bg-green-50 hover:bg-green-100 dark:border-green-800 dark:bg-green-950/30 dark:hover:bg-green-950/50"
-          : "border-red-200 bg-red-50 hover:bg-red-100 dark:border-red-800 dark:bg-red-950/30 dark:hover:bg-red-950/50"
-      )}
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      onClick={() => setIsExpanded(!isExpanded)}
-    >
-      {/* Collapsed Header */}
-      <div className="flex items-center gap-2 p-3">
-        <motion.div
-          className={classNames(
-            "flex h-5 w-5 items-center justify-center rounded-full",
-            isSuccess ? "bg-green-500" : "bg-red-500"
-          )}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.1, type: "spring", stiffness: 400 }}
-        >
-          {isSuccess ? (
-            <CheckCircle size={12} className="text-white" />
-          ) : (
-            <XCircle size={12} className="text-white" />
-          )}
-        </motion.div>
-
-        <div className="flex flex-1 items-center gap-1">
-          <ToolIcon
-            size={14}
-            className={
-              isSuccess
-                ? "text-green-700 dark:text-green-300"
-                : "text-red-700 dark:text-red-300"
-            }
-          />
-          <span
-            className={classNames(
-              "font-medium",
-              isSuccess
-                ? "text-green-800 dark:text-green-200"
-                : "text-red-800 dark:text-red-200"
-            )}
-          >
-            {name.replace(/([A-Z])/g, " $1").trim()}
-          </span>
-        </div>
-
-        {/* Summary message */}
-        <span
-          className={classNames(
-            "ml-2 flex-1 truncate text-right text-xs",
-            isSuccess
-              ? "text-green-600 dark:text-green-400"
-              : "text-red-600 dark:text-red-400"
-          )}
-        >
-          {getSummaryMessage()}
-        </span>
-
-        {/* Expand/Collapse indicator */}
-        <motion.div
-          animate={{ rotate: isExpanded ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-          className={classNames(
-            "ml-2",
-            isSuccess
-              ? "text-green-600 dark:text-green-400"
-              : "text-red-600 dark:text-red-400"
-          )}
-        >
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-            <path
-              d="M3 4.5L6 7.5L9 4.5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </motion.div>
-      </div>
-
-      {/* Expanded Details */}
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="border-current/20 border-t"
-          >
-            <div className="p-3 pt-2">
-              {/* Success data */}
-              {isSuccess && result?.data !== undefined && (
-                <motion.div
-                  className="mb-2 text-green-700 dark:text-green-300"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  <p className="mb-1 font-medium">Result:</p>
-                  {typeof result.data === "string" ? (
-                    <p className="text-xs">{result.data}</p>
-                  ) : (
-                    <pre className="whitespace-pre-wrap rounded bg-green-100 p-2 font-mono text-xs dark:bg-green-900/30">
-                      {JSON.stringify(result.data, null, 2)}
-                    </pre>
-                  )}
-                </motion.div>
-              )}
-
-              {/* Error details */}
-              {!isSuccess && result?.error && (
-                <motion.div
-                  className="mb-2 text-red-700 dark:text-red-300"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  <p className="mb-1 font-medium">Error Details:</p>
-                  <p className="mb-2 text-xs">{result.error.message}</p>
-                  {result.error.suggestions &&
-                    result.error.suggestions.length > 0 && (
-                      <div>
-                        <p className="mb-1 font-medium">Suggestions:</p>
-                        <ul className="list-inside list-disc space-y-1">
-                          {result.error.suggestions.map((suggestion, index) => (
-                            <li key={index} className="text-xs">
-                              {suggestion}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                </motion.div>
-              )}
-
-              {/* Actions performed */}
-              {hasActions && (
-                <motion.div
-                  className="space-y-1"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <p
-                    className={classNames(
-                      "font-medium",
-                      isSuccess
-                        ? "text-green-800 dark:text-green-200"
-                        : "text-red-800 dark:text-red-200"
-                    )}
-                  >
-                    Actions Performed:
-                  </p>
-                  {result!.actions!.map((action, index) => (
-                    <ActionIndicator key={index} action={action} />
-                  ))}
-                </motion.div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
-
-// Action indicator component
-function ActionIndicator({ action }: { action: ToolAction }) {
-  const getActionIcon = (type: string) => {
-    switch (type) {
-      case "navigate":
-        return Navigation;
-      case "download":
-        return Download;
-      case "theme":
-        return Palette;
-      case "modal":
-        return ExternalLink;
-      default:
-        return Bot;
-    }
-  };
-
-  const ActionIcon = getActionIcon(action.type);
-
-  return (
-    <motion.div
-      className="flex items-center gap-2 text-xs text-green-600 dark:text-green-400"
-      initial={{ opacity: 0, x: -10 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ type: "spring", stiffness: 300 }}
-    >
-      <ActionIcon size={12} />
-      <span>
-        {action.type === "navigate" && `Navigating to ${action.target}`}
-        {action.type === "download" && `Downloading ${action.target}`}
-        {action.type === "theme" && `Switching to ${action.target} theme`}
-        {action.type === "modal" && `Opening ${action.target} modal`}
-        {action.type === "scroll" && `Scrolling to ${action.target}`}
-      </span>
-    </motion.div>
-  );
-}
+// Subcomponents extracted to /components/chat/components
 
 export default function ChatWindow({
   isOpen,
@@ -386,7 +76,7 @@ export default function ChatWindow({
       document.head.appendChild(style);
     }
   }, []);
-  const [messages, setMessages] = useState<Message[]>([
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "welcome",
       content:
@@ -523,12 +213,13 @@ export default function ChatWindow({
   //   return () => el.removeEventListener('scroll', handler);
   // }, []);
 
-  const handleSendMessage = async () => {
-    if (!inputValue.trim() || isLoading) return;
+  const handleSendMessage = async (overrideText?: string) => {
+    const text = (overrideText ?? inputValue).trim();
+    if (!text || isLoading) return;
 
-    const userMessage: Message = {
+  const userMessage: ChatMessage = {
       id: Date.now().toString(),
-      content: inputValue.trim(),
+      content: text,
       sender: "user",
       timestamp: new Date(),
     };
@@ -537,7 +228,12 @@ export default function ChatWindow({
     pendingUserMessageIdRef.current = userMessage.id;
     // Defer scroll until after DOM updates to ensure accurate bottom position
     pendingScrollRef.current = "bottom";
-    setInputValue("");
+    if (overrideText !== undefined) {
+      // Clear only after submitting overridden text so user can type new content
+      setInputValue("");
+    } else {
+      setInputValue("");
+    }
     // Force shrink immediately after clearing large pasted content
     requestAnimationFrame(() => {
       if (textareaRef.current) {
@@ -555,7 +251,7 @@ export default function ChatWindow({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: inputValue.trim(),
+          message: text,
           conversationHistory: messages,
           currentPage: window.location.pathname.slice(1) || "home",
           currentTheme: document.documentElement.classList.contains("dark")
@@ -593,7 +289,7 @@ export default function ChatWindow({
       }
 
       // Create AI message with tool execution results
-      const aiMessage: Message = {
+  const aiMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         content:
           data.response ||
@@ -601,6 +297,7 @@ export default function ChatWindow({
         sender: "ai",
         timestamp: new Date(),
         toolCalls: data.toolCalls,
+  suggestions: data.suggestions,
       };
 
       wasNearBottomBeforeAIRef.current = isNearBottom();
@@ -611,7 +308,7 @@ export default function ChatWindow({
       }
     } catch (error) {
       console.error("Chat API error:", error);
-      const errorMessage: Message = {
+  const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         content:
           "I apologize, but I'm having trouble responding right now. Please try asking your question again.",
@@ -861,10 +558,18 @@ export default function ChatWindow({
     "Download Resume",
   ];
 
+  // Single click: populate input only
   const handleSuggestionClick = (text: string) => {
     setInputValue(text);
     setHasInteracted(true);
-    setTimeout(() => handleSendMessage(), 10);
+  };
+
+  // Double click: auto send this suggestion
+  const handleSuggestionDoubleClick = (text: string) => {
+    setInputValue(text); // reflect quickly in UI
+    setHasInteracted(true);
+    // Use microtask to avoid any race with state batching
+    Promise.resolve().then(() => handleSendMessage(text));
   };
 
   return (
@@ -1230,6 +935,43 @@ export default function ChatWindow({
                       ))}
                     </motion.div>
                   )}
+                  {/* AI Smart Follow-up Suggestions */}
+                  {message.sender === 'ai' && message.suggestions && message.suggestions.length > 0 && (
+                    <motion.div
+                      className="mt-3 flex flex-wrap gap-2"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.55, duration: 0.3 }}
+                    >
+                      {message.suggestions.map((s, i) => (
+                        <button
+                          key={i}
+                          onClick={() => handleSuggestionClick(s)}
+                          onDoubleClick={() => handleSuggestionDoubleClick(s)}
+                          className="group relative overflow-hidden rounded-full bg-accent/10 px-3 py-1 text-[11px] text-foreground transition-colors hover:bg-accent/20 focus:outline-none focus:ring-2 focus:ring-accent/50 select-none"
+                          aria-label={`Ask: ${s}`}
+                          title="Double-click to send"
+                        >
+                          <span className="relative z-10 flex items-center gap-1">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="h-3 w-3 opacity-60"
+                            >
+                              <path d="M12 19l-7-7 7-7" />
+                              <path d="M19 19l-7-7 7-7" />
+                            </svg>
+                            {s}
+                          </span>
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
                   <motion.span
                     className="mt-1 block text-[10px] uppercase tracking-wide opacity-60 transition-opacity group-hover:opacity-80"
                     initial={{ opacity: 0, x: -10 }}
@@ -1351,7 +1093,9 @@ export default function ChatWindow({
                 <button
                   key={s}
                   onClick={() => handleSuggestionClick(s)}
-                  className="rounded-full bg-accent/10 px-3 py-1 text-xs text-foreground transition-colors hover:bg-accent/20"
+                  onDoubleClick={() => handleSuggestionDoubleClick(s)}
+                  className="rounded-full bg-accent/10 px-3 py-1 text-xs text-foreground transition-colors hover:bg-accent/20 select-none"
+                  title="Double-click to send"
                 >
                   {s}
                 </button>
@@ -1393,7 +1137,7 @@ export default function ChatWindow({
               aria-label="Chat input"
             />
             <button
-              onClick={handleSendMessage}
+              onClick={() => handleSendMessage()}
               disabled={!inputValue.trim() || isLoading}
               className={classNames(
                 "self-center rounded-lg p-3",

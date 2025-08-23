@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import OpenAI from "openai";
-import { AI_MODEL, SYSTEM_PROMPT } from "@/config/ai";
+import { AI_MODEL, SYSTEM_PROMPT, SUGGESTION_SYSTEM_PROMPT } from "@/config/ai";
 import { rateLimiterApi, getUserId } from "@/utility/rate-limiter";
 import { toolRegistry, initializeAllTools } from "@/lib/tools";
 import { contextAwareToolRegistry } from "@/lib/tools/context-aware-tool-registry";
@@ -25,6 +25,7 @@ interface ChatResponse {
   response: string;
   actions?: unknown[];
   toolCalls?: ToolCall[];
+  suggestions?: string[];
 }
 
 const openai = new OpenAI({
@@ -283,6 +284,8 @@ export default async function handler(
 
     let aiResponse = choice.message?.content || "";
     let toolCallResults: ToolCall[] = [];
+    // capture original user message for suggestion generation later
+    const originalUserMessage = message;
 
     // Handle tool calls if present
     if (choice.message?.tool_calls && choice.message.tool_calls.length > 0) {
@@ -331,10 +334,64 @@ export default async function handler(
       aiResponse =
         "I apologize, but I'm having trouble responding right now. Please try asking your question again.";
     }
+    // AI-driven follow-up suggestions: separate model call requesting ONLY a JSON array of questions
+  const generateAISuggestions = async (): Promise<string[]> => {
+      try {
+  const suggestionPromptSystem = SUGGESTION_SYSTEM_PROMPT;
+
+        const priorUserTexts = conversationHistory
+          .filter((m) => m.sender === 'user')
+          .map((m) => m.content.toLowerCase());
+
+        const suggestionMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+          { role: 'system', content: suggestionPromptSystem },
+          // Provide compressed conversation context for relevance
+          { role: 'user', content: `Conversation so far (truncated to recent):\n${recentMessages.map(m=>`${m.sender === 'user' ? 'User' : 'AI'}: ${m.content}`).join('\n')}` },
+          { role: 'assistant', content: aiResponse.slice(0, 4000) },
+          { role: 'user', content: 'Generate the JSON array of follow-up questions now.' }
+        ];
+
+        const suggestionResp = await openai.chat.completions.create({
+          model: AI_MODEL,
+          messages: suggestionMessages,
+          temperature: 0.7,
+          top_p: 0.9,
+        });
+
+        let raw = suggestionResp.choices[0]?.message?.content?.trim() || '[]';
+        // Strip markdown fences if any
+        raw = raw.replace(/^```(?:json)?/i, '').replace(/```$/i, '').trim();
+        let parsed: unknown = [];
+        try {
+          parsed = JSON.parse(raw);
+        } catch (e) {
+          // Attempt to extract JSON array substring
+            const match = raw.match(/\[[\s\S]*\]/);
+            if (match) {
+              try { parsed = JSON.parse(match[0]); } catch { parsed = []; }
+            }
+        }
+        if (!Array.isArray(parsed)) return [];
+        const cleaned = (parsed as unknown[])
+          .filter((v) => typeof v === 'string')
+          .map((s) => (s as string).trim())
+          .filter((s) => s.length > 0 && s.length <= 120)
+          .filter((s) => !priorUserTexts.includes(s.toLowerCase()))
+          .filter((s, i, arr) => arr.findIndex(t => t.toLowerCase() === s.toLowerCase()) === i)
+          .slice(0, 6);
+        return cleaned;
+      } catch (e) {
+        console.warn('Suggestion generation failed:', e);
+        return [];
+      }
+  };
+
+    const followUpSuggestions = await generateAISuggestions();
 
     const chatResponse: ChatResponse = {
       response: aiResponse,
       toolCalls: toolCallResults.length > 0 ? toolCallResults : undefined,
+      suggestions: followUpSuggestions.length ? followUpSuggestions : undefined,
     };
 
     console.log(

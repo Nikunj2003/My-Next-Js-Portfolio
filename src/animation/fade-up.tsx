@@ -28,7 +28,7 @@ export default function FadeUp({
     },
   } as const;
 
-  const initial = prefersReducedMotion ? { opacity: 0 } : { y: 80, opacity: 0 };
+  const initial = prefersReducedMotion ? { opacity: 0 } : { y: 40, opacity: 0 };
   const animate = prefersReducedMotion ? { opacity: 1 } : animation;
 
   // Avoid triggering any Framer Motion lifecycle before the global gate opens.

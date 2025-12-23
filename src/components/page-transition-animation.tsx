@@ -27,39 +27,47 @@ export default function PageTransitionAnimation() {
     }
   }, []);
 
-  // Pause ongoing infinite animations when tab not visible to save battery / CPU.
-  const [isPageVisible, setIsPageVisible] = useState(true);
-  useEffect(() => {
-    const onVisibility = () => setIsPageVisible(!document.hidden);
-    document.addEventListener("visibilitychange", onVisibility);
-    return () => document.removeEventListener("visibilitychange", onVisibility);
-  }, []);
+  // Use lightweight mode for mobile and low-perf devices
+  const useLightMode = isMobile || isLowPerf;
 
-  // If user prefers reduced motion, don't render heavy transition.
-  if (prefersReducedMotion) return null;
-
-  // Tunable parameters (kept very close to original for desktop; trimmed for mobile)
-  const circleCount = isMobile || isLowPerf ? 2 : 3;
-  const particleCount = isLowPerf && !isMobile ? 8 : isMobile ? 6 : 12;
-  const particleRadius = isMobile ? 90 : isLowPerf ? 130 : 150;
-  const particleDelayStep = isMobile ? 0.12 : 0.1;
-  const animationsEnabled = isPageVisible; // reduced separately by prefersReducedMotion already
-
-  // Precompute particle positions (memo to avoid recalculation per frame re-render)
-  const particles = useMemo(() => {
-    return Array.from({ length: particleCount }, (_, i) => {
-      const angle = i * (360 / particleCount) * (Math.PI / 180);
-      const x = Math.round(Math.cos(angle) * particleRadius * 100) / 100;
-      const y = Math.round(Math.sin(angle) * particleRadius * 100) / 100;
-      return { i, x, y };
-    });
-  }, [particleCount, particleRadius]);
-
+  // IMPORTANT: All hooks must be called before any early returns (Rules of Hooks)
+  const circleCount = 3;
   const circles = useMemo(
     () => Array.from({ length: circleCount }),
     [circleCount]
   );
 
+  // If user prefers reduced motion, don't render heavy transition.
+  if (prefersReducedMotion) return null;
+
+  // MOBILE: Simple, fast fade transition (no clipPath, no blur)
+  if (useLightMode) {
+    return (
+      <motion.div
+        className="fixed inset-0 z-[60] flex h-screen w-screen items-center justify-center bg-accent"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{
+          duration: 0.3,
+          ease: "easeOut",
+        }}
+      >
+        {/* Simple centered icon - no blur, no rotation */}
+        <motion.div
+          className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-background/30 bg-background/10"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.8, opacity: 0 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+        >
+          <Sparkles className="h-8 w-8 text-background" />
+        </motion.div>
+      </motion.div>
+    );
+  }
+
+  // DESKTOP: Full animated transition with circles
   return (
     <>
       {/* Full screen overlay - covers entire viewport */}
@@ -69,13 +77,12 @@ export default function PageTransitionAnimation() {
         animate={{ clipPath: "circle(100% at 50% 50%)" }}
         exit={{ clipPath: "circle(0% at 50% 50%)" }}
         transition={{
-          // Slightly slower on desktop for a smoother reveal; a hair faster on mobile
-          duration: isMobile ? 0.5 : 0.6,
+          duration: 0.6,
           ease: [0.76, 0, 0.24, 1],
-          clipPath: { duration: isMobile ? 0.65 : 0.8 },
+          clipPath: { duration: 0.8 },
         }}
       >
-        {/* Central star logo (dot background removed) */}
+        {/* Central star logo */}
         <motion.div
           className="flex items-center justify-center"
           initial={{ scale: 0, rotate: -180, opacity: 0 }}
@@ -83,30 +90,20 @@ export default function PageTransitionAnimation() {
           exit={{ scale: 0, rotate: 180, opacity: 0 }}
           transition={{
             delay: 0.1,
-            duration: isMobile ? 0.45 : 0.5,
+            duration: 0.5,
             ease: [0.76, 0, 0.24, 1],
             type: "spring",
-            stiffness: isMobile ? 140 : 120,
-            damping: isMobile ? 14 : 12,
+            stiffness: 120,
+            damping: 12,
           }}
         >
           <motion.div
-            className={`flex items-center justify-center rounded-full border-2 border-background/30 bg-background/10 backdrop-blur-xl will-change-transform ${
-              isMobile ? "h-20 w-20" : "h-28 w-28"
-            }`}
+            className="flex h-28 w-28 items-center justify-center rounded-full border-2 border-background/30 bg-background/10 backdrop-blur-xl will-change-transform"
             style={{ transformOrigin: "50% 50%" }}
-            animate={animationsEnabled ? { rotate: [0, 360] } : { rotate: 0 }}
-            transition={
-              animationsEnabled
-                ? { duration: 12, repeat: Infinity, ease: "linear" }
-                : undefined
-            }
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
           >
-            <Sparkles
-              className={`${
-                isMobile ? "h-10 w-10" : "h-12 w-12"
-              } text-background drop-shadow-lg`}
-            />
+            <Sparkles className="h-12 w-12 text-background drop-shadow-lg" />
           </motion.div>
         </motion.div>
 
@@ -123,30 +120,22 @@ export default function PageTransitionAnimation() {
               key={i}
               className="absolute rounded-full border border-background/30 will-change-transform"
               style={{
-                width: `${(isMobile ? 100 : 120) + i * (isMobile ? 50 : 60)}px`,
-                height: `${
-                  (isMobile ? 100 : 120) + i * (isMobile ? 50 : 60)
-                }px`,
+                width: `${120 + i * 60}px`,
+                height: `${120 + i * 60}px`,
               }}
               animate={{
-                scale: animationsEnabled
-                  ? isMobile
-                    ? [1, 1.22, 1]
-                    : [1, 1.3, 1]
-                  : 1,
-                opacity: animationsEnabled ? [0.28, 0.1, 0.28] : 0.22,
+                scale: [1, 1.3, 1],
+                opacity: [0.28, 0.1, 0.28],
               }}
               transition={{
-                duration: (isMobile ? 2.2 : 2) + i * 0.5,
-                repeat: animationsEnabled ? Infinity : 0,
+                duration: 2 + i * 0.5,
+                repeat: Infinity,
                 delay: i * 0.2,
                 ease: "easeInOut",
               }}
             />
           ))}
         </motion.div>
-
-        {/* Floating particles removed per request */}
       </motion.div>
 
       {/* Secondary overlay for smoother transition */}
@@ -157,7 +146,7 @@ export default function PageTransitionAnimation() {
         exit={{ clipPath: "circle(0% at 30% 70%)" }}
         transition={{
           delay: 0.05,
-          duration: isMobile ? 0.6 : 0.7,
+          duration: 0.7,
           ease: [0.76, 0, 0.24, 1],
         }}
       />
@@ -170,8 +159,7 @@ export default function PageTransitionAnimation() {
         exit={{ clipPath: "circle(0% at 70% 30%)" }}
         transition={{
           delay: 0.1,
-          // Slightly reduced duration on mobile keeps perceived speed consistent
-          duration: isMobile ? 0.65 : 0.8,
+          duration: 0.8,
           ease: [0.76, 0, 0.24, 1],
         }}
       />

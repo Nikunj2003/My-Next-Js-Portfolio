@@ -1,18 +1,26 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "next-themes";
 import { AnimatePresence, motion } from "framer-motion";
 import MainLayout from "@/layout/main-layout";
-import PageTransitionAnimation from "@/components/page-transition-animation";
 import {
   AnimationGateProvider,
   useAnimationGate,
 } from "@/contexts/animation-gate";
 import { ChatProvider } from "@/contexts/chat-context";
 import "@/styles/globals.css";
-import FluidCursor from "@/components/fluid-cursor";
+
+// Dynamic imports for heavy animation components to reduce initial bundle
+const FluidCursor = dynamic(() => import("@/components/fluid-cursor"), {
+  ssr: false,
+});
+const PageTransitionAnimation = dynamic(
+  () => import("@/components/page-transition-animation"),
+  { ssr: false }
+);
 
 // Page transition variants
 const pageVariants = {

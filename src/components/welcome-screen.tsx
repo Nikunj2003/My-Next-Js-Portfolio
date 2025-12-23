@@ -106,7 +106,7 @@ export default function WelcomeScreen({
       try {
         e.preventDefault();
         e.stopPropagation();
-      } catch {}
+      } catch { }
     };
     window.addEventListener("wheel", prevent, { passive: false });
     window.addEventListener("touchmove", prevent, { passive: false });
@@ -118,7 +118,7 @@ export default function WelcomeScreen({
       if (typeof document !== "undefined") {
         try {
           delete (document.documentElement as any).dataset.scrollLock;
-        } catch {}
+        } catch { }
         document.body.style.overflow = "";
         document.documentElement.style.overflow = "";
       }
@@ -185,14 +185,23 @@ export default function WelcomeScreen({
             <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
             <div className="bg-accent-light/15 absolute -bottom-40 -left-40 h-96 w-96 rounded-full blur-3xl" />
 
-            {/* Floating elements */}
-            {[...Array(15)].map((_, i) => (
+            {/* Floating elements - reduced for performance, stable positions */}
+            {[
+              { left: "10%", top: "15%", duration: 3.2 },
+              { left: "25%", top: "70%", duration: 3.8 },
+              { left: "40%", top: "30%", duration: 4.1 },
+              { left: "55%", top: "80%", duration: 3.5 },
+              { left: "70%", top: "20%", duration: 4.4 },
+              { left: "85%", top: "60%", duration: 3.9 },
+              { left: "15%", top: "45%", duration: 4.2 },
+              { left: "80%", top: "40%", duration: 3.6 },
+            ].map((particle, i) => (
               <motion.div
                 key={i}
                 className="absolute h-1 w-1 rounded-full bg-accent/30"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
+                  left: particle.left,
+                  top: particle.top,
                 }}
                 animate={{
                   y: [-10, 10, -10],
@@ -200,9 +209,9 @@ export default function WelcomeScreen({
                   scale: [0.5, 1, 0.5],
                 }}
                 transition={{
-                  duration: 3 + Math.random() * 2,
+                  duration: particle.duration,
                   repeat: Infinity,
-                  delay: i * 0.2,
+                  delay: i * 0.15,
                 }}
               />
             ))}

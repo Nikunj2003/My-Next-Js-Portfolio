@@ -20,13 +20,23 @@ export const FlipWords = ({
     setIsAnimating(true);
   }, [currentWord, words]);
 
+  // Pause animations when tab is hidden to save CPU
+  const [isVisible, setIsVisible] = useState(true);
+
   useEffect(() => {
-    if (!isAnimating) {
-      setTimeout(() => {
+    const handler = () => setIsVisible(!document.hidden);
+    document.addEventListener("visibilitychange", handler);
+    return () => document.removeEventListener("visibilitychange", handler);
+  }, []);
+
+  useEffect(() => {
+    if (!isAnimating && isVisible) {
+      const timeoutId = setTimeout(() => {
         startAnimation();
       }, duration);
+      return () => clearTimeout(timeoutId);
     }
-  }, [isAnimating, duration, startAnimation]);
+  }, [isAnimating, duration, startAnimation, isVisible]);
 
   return (
     <AnimatePresence

@@ -91,7 +91,7 @@ export default function Home() {
 
       {/* About Summary Section */}
       <AnimatePresence>
-        <FadeUp key="about-title" duration={0.6} whileInView={true}>
+        <FadeUp key="about-title" duration={0.2} whileInView={true}>
           <section className="px-6 py-16 sm:px-14 md:px-20">
             <div className="mx-auto max-w-7xl">
               <div className="rounded-2xl border border-border bg-muted/20 p-6 shadow-lg ring-1 ring-zinc-200/50 backdrop-blur-lg dark:ring-accent/20 sm:p-8 md:p-12">

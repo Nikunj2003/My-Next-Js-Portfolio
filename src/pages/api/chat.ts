@@ -153,9 +153,8 @@ function formatToolResultsForLLM(toolCalls: ToolCall[]): string {
           2
         )}`;
       } else {
-        return `Tool "${name}" failed. Error: ${
-          result?.error?.message || "Unknown error"
-        }`;
+        return `Tool "${name}" failed. Error: ${result?.error?.message || "Unknown error"
+          }`;
       }
     })
     .join("\n\n");
@@ -344,7 +343,7 @@ export default async function handler(
         // --- Topic Categorization Helpers (lightweight, heuristic) ---
         const categoryKeywords: Record<string, RegExp> = {
           experience: /(experience|role|intern|work|company|job|position|impact|responsibilit)/i,
-            skills: /(skill|stack|technology|tech|framework|language|tool)/i,
+          skills: /(skill|stack|technology|tech|framework|language|tool)/i,
           projects: /(project|build|develop|app|application|platform|system|tool)/i,
           achievements: /(achieve|award|won|improv|result|reduced|increase|coverage|accuracy|milestone)/i,
           contact: /(contact|reach|email|linkedin|connect|collaborate|hire)/i,
@@ -455,7 +454,7 @@ export default async function handler(
 
         if (diversified.length < 3) {
           // Add fallbacks from unused categories
-            for (const cat of Object.keys(fallbackByCategory)) {
+          for (const cat of Object.keys(fallbackByCategory)) {
             if (diversified.length >= 6) break;
             if (!diversified.some((q) => categorize(q) === cat)) {
               const fb = fallbackByCategory[cat][0];
@@ -510,7 +509,7 @@ export default async function handler(
 
     if (message.includes("contact") || message.includes("email")) {
       return res.status(200).json({
-        response: `# Contact Nikunj Khitha\n\nYou can connect with Nikunj through various channels:\n\n## 📧 **Email**\n[njkhitha2003@gmail.com](mailto:njkhitha2003@gmail.com)\n\n## 💼 **LinkedIn**\n[Connect on LinkedIn](https://www.linkedin.com/in/Nikunj-Khitha/)\n\n## 🐙 **GitHub**\n[View Projects on GitHub](https://github.com/Nikunj2003)\n\n## 🌐 **Portfolio Website**\n[nikunj.tech](https://nikunj.tech)\n\n---\n\n> **Currently:** Automation Intern at Armorcode Inc.\n> \n> **Interests:** AI development, full-stack engineering, and creating innovative solutions\n> \n> Feel free to reach out for collaborations, job opportunities, or tech discussions!`,
+        response: `# Contact Nikunj Khitha\n\nYou can connect with Nikunj through various channels:\n\n## 📧 **Email**\n[njkhitha2003@gmail.com](mailto:njkhitha2003@gmail.com)\n\n## 📱 **Phone**\n+91 9540234616\n\n## 💼 **LinkedIn**\n[Connect on LinkedIn](https://www.linkedin.com/in/nikunj-khitha)\n\n## 🐙 **GitHub**\n[View Projects on GitHub](https://github.com/Nikunj2003)\n\n## 🌐 **Portfolio Website**\n[nikunj.tech](https://nikunj.tech)\n\n---\n\n> **Currently:** Associate Engineer at Armorcode Inc.\n> \n> **Interests:** Generative AI platforms, full-stack engineering, and enterprise solutions\n> \n> Feel free to reach out for collaborations, job opportunities, or tech discussions!`,
       });
     }
 
@@ -520,7 +519,7 @@ export default async function handler(
       message.includes("job")
     ) {
       return res.status(200).json({
-        response: `# Nikunj's Professional Experience\n\nNikunj has diverse experience across multiple companies:\n\n## 🔧 **Current: Automation Intern at Armorcode Inc.**\n*Jan 2025 - Aug 2025*\n\n- Building next-gen testing frameworks with \`Spring Boot\`, \`Playwright\` & \`TestNG\`\n- **Won internal AI challenge** by automating documentation for 250+ tools\n- Reduced documentation update time from **72 hours to 45 minutes**\n- Implemented AI auto-heal feature reducing test flakiness by **99%**\n\n## 💻 **SDE Intern at Xansr Software**\n*June 2024 - Jan 2025*\n\n- Developed microservices with \`Node.js\` & \`FastAPI\` achieving **100% test coverage**\n- Built **"Fantasy GPT"** chatbot with 98% accuracy using \`RAG\` & \`LangGraph\`\n- Created **"AIKO"** media assistant for personalized sports highlights\n- Improved API performance by **40%** and reduced deployment time by **42%**\n\n> Would you like to know more about any specific role or project?`,
+        response: `# Nikunj's Professional Experience\n\nNikunj has diverse experience across multiple companies:\n\n## 🚀 **Current: Associate Engineer at Armorcode Inc.**\n*Dec 2025 - Present*\n\n- Architecting enterprise-scale **GraphRAG platform** with \`Neo4j\` & \`PGVector\`\n- Unifying 500,000+ data entities from 5+ enterprise systems\n- Achieving **40% improved retrieval accuracy** and saving **$15,000+ annually**\n- Building backend for core platform with \`Java\` & \`Spring Boot\`\n\n## 🤖 **AI Automation Intern at Armorcode Inc.**\n*Jan 2025 - Nov 2025*\n\n- Built **documentation automation** using \`CrewAI\` & \`MCP\` servers\n- Reduced update latency by **99%** (72h to 45m)\n- Established universal LLM access layer with \`LiteLLM\`\n\n## 💻 **SDE Intern at Xansr Software**\n*June 2024 - Jan 2025*\n\n- Built **"Fantasy GPT"** chatbot with 98% accuracy using \`RAG\` & \`LangGraph\`\n- Created **"AIKO"** media assistant for personalized sports highlights\n- Improved API performance by **40%**\n\n> Would you like to know more about any specific role or project?`,
       });
     }
 
@@ -530,18 +529,18 @@ export default async function handler(
       message.includes("tech")
     ) {
       return res.status(200).json({
-        response: `# Nikunj's Technical Skills\n\nNikunj has expertise across multiple technology stacks:\n\n## 🌐 **Full Stack Development**\n- \`React\`, \`Next.js\`, \`Node.js\`, \`Express\`\n- \`FastAPI\`, \`Spring Boot\`, \`Flutter\`\n- \`TailwindCSS\`, \`MongoDB\`, \`MySQL\`, \`Firebase\`\n\n## 🤖 **AI/ML Specialization**\n- \`OpenAI\`, \`Azure AI\`, \`LangChain\`\n- \`RAG\`, \`LangGraph\`, \`Prompt Engineering\`\n- \`LLaMA AI\`, \`Vercel AI SDK\`\n\n## 🚀 **DevOps & Cloud**\n- \`Docker\`, \`Kubernetes\`, \`CI/CD\`\n- \`GitHub Actions\`, \`Jenkins\`\n- \`AWS\`, \`Microsoft Azure\`\n\n## 💻 **Programming Languages**\n- \`JavaScript\`, \`TypeScript\`, \`Java\`\n- \`Python\`, \`PHP\`, \`Dart\`\n\n> What specific technology would you like to know more about?`,
+        response: `# Nikunj's Technical Skills\n\nNikunj has expertise across multiple technology stacks:\n\n## 🤖 **Generative AI & ML**\n- \`RAG\`, \`GraphRAG\`, \`LightRAG\`, \`Agentic AI\`\n- \`CrewAI\`, \`LangGraph\`, \`MCP\`, \`Prompt Engineering\`\n- \`AWS Bedrock\`, \`Gemini AI\`, \`Claude\`, \`Azure AI\`, \`LangChain\`\n\n## 🌐 **Full Stack Development**\n- \`Java\`, \`Spring Boot\`, \`Python\`, \`FastAPI\`\n- \`TypeScript\`, \`Node.js\`, \`Next.js\`, \`ReactJS\`\n- \`Prisma\`, \`Kafka\`, \`RabbitMQ\`, \`SQS\`\n\n## 🗄️ **Databases & Data**\n- \`Neo4j (Graph)\`, \`PostgreSQL (SQL/Vector)\`\n- \`MongoDB\`, \`Elasticsearch\`, \`AWS S3\`, \`Firebase\`\n\n## 🚀 **DevOps & Cloud**\n- \`AWS\`, \`Azure\`, \`Google Cloud\`\n- \`Docker\`, \`Kubernetes\`, \`CI/CD\`\n- \`GitHub Actions\`, \`Jenkins\`, \`Nginx\`, \`Grafana\`\n\n## 🛠️ **Dev Tools**\n- \`LiteLLM\`, \`Claude Code\`, \`Gemini CLI\`, \`n8n\`\n- \`Vercel\`, \`Swagger\`, \`Auth0\`, \`Postman\`\n\n> What specific technology would you like to know more about?`,
       });
     }
 
     if (message.includes("project") || message.includes("portfolio")) {
       return res.status(200).json({
-        response: `# Nikunj's Key Projects\n\nNikunj has worked on diverse projects spanning multiple domains:\n\n## 🌍 **EarthLink**\n*Enterprise Platform*\n- American Internet service provider platform\n- **Tech Stack:** \`React\`, \`Next.js\`, \`GraphQL\`, \`Microservices\`\n- **Features:** Styled Components, SCSS integration\n\n## 🛒 **Rapid Store**\n*E-commerce Platform*\n- Electronics and gadgets marketplace\n- **Tech Stack:** \`React\`, \`Razorpay\`, \`Context API\`\n- **Features:** Payment integration, Authentication\n\n## 🤖 **Fantasy GPT**\n*AI/ML Project*\n- Sports chatbot for fantasy enthusiasts\n- **Accuracy:** 98% using \`RAG\` & \`LangGraph\`\n- **Tech Stack:** \`Node.js\`, \`AI/ML\`\n\n## 📺 **AIKO**\n*AI Media Assistant*\n- Personalized sports highlights generator\n- **Features:** Real-time commentary, Media processing\n\n## 🎨 **Rapid UI**\n*Open Source*\n- CSS library with pre-defined components\n- **Tech Stack:** \`CSS\`, \`JavaScript\`, Design System\n\n> Which project interests you most? I can share more details!`,
+        response: `# Nikunj's Key Projects\n\nNikunj has worked on diverse projects spanning multiple domains:\n\n## 🦙 **LLaMa-MCP-Streamlit**\n*AI/ML Project - Featured on mcp.so*\n- Full-stack AI app with Python & Streamlit using MCP\n- **Recognition:** 40+ GitHub stars, featured on official MCP directory\n- **Tech Stack:** \`Python\`, \`MCP\`, \`LLaMa\`, \`Azure OpenAI\`\n\n## 🎨 **CodeNex Images**\n*AI SaaS Platform*\n- AI image generation platform with Google Gemini\n- **Tech Stack:** \`React\`, \`TypeScript\`, \`Node.js\`, \`Auth0\`, \`MongoDB\`\n\n## 🤖 **Fantasy GPT**\n*AI/ML Project*\n- Sports chatbot for fantasy enthusiasts\n- **Accuracy:** 98% using \`RAG\` & \`LangGraph\`\n\n## 📺 **AIKO**\n*AI Media Assistant*\n- Personalized sports highlights with real-time commentary\n- **Accuracy:** 96.67% AI-generated highlights\n\n## 📊 **GraphRAG Platform**\n*Enterprise Solution*\n- Unified 500,000+ data entities from 5+ systems\n- **Tech Stack:** \`Neo4j\`, \`PGVector\`, \`Java\`, \`Spring Boot\`\n\n> Which project interests you most? I can share more details!`,
       });
     }
 
     return res.status(200).json({
-      response: `# Welcome! I'm here to help you learn about Nikunj Khitha\n\n## What would you like to know?\n\n### 🔹 **Professional Experience**\n- Current role at Armorcode Inc.\n- Previous internships and achievements\n- Career progression and impact\n\n### 🔹 **Technical Skills**\n- Programming languages and frameworks\n- AI/ML expertise and tools\n- DevOps and cloud technologies\n\n### 🔹 **AI/ML Projects**\n- Fantasy GPT chatbot (98% accuracy)\n- AIKO media assistant\n- Automation and testing innovations\n\n### 🔹 **Portfolio Projects**\n- Enterprise web applications\n- E-commerce platforms\n- Open source contributions\n\n### 🔹 **Contact Information**\n- How to reach Nikunj for opportunities\n- Professional social links\n\n> Just ask me anything about Nikunj's background, and I'll provide detailed information!`,
+      response: `# Welcome! I'm here to help you learn about Nikunj Khitha\n\n## What would you like to know?\n\n### 🔹 **Professional Experience**\n- Associate Engineer at Armorcode Inc.\n- Building enterprise-scale GenAI platforms\n- GraphRAG and full-stack development\n\n### 🔹 **Technical Skills**\n- Generative AI: RAG, GraphRAG, CrewAI, AWS Bedrock\n- Full Stack: Java, Spring Boot, Python, TypeScript\n- DevOps: AWS, Docker, Kubernetes\n\n### 🔹 **AI/ML Projects**\n- LLaMa-MCP-Streamlit (Featured on mcp.so)\n- CodeNex Images (AI SaaS)\n- Fantasy GPT (98% accuracy)\n\n### 🔹 **Key Achievements**\n- Architected platform serving 200+ enterprise customers\n- Reduced LLM costs by 50%, saving $15,000+ annually\n- 40+ GitHub stars on open source projects\n\n### 🔹 **Contact Information**\n- How to reach Nikunj for opportunities\n- Professional social links\n\n> Just ask me anything about Nikunj's background, and I'll provide detailed information!`,
     });
   }
 }

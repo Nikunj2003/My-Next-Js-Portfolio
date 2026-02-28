@@ -22,13 +22,23 @@ export const EXPERIENCE: ExperienceShowcaseListItemProps[] = [
       "My time at Xansr was a deep dive into AI and scalable back-end systems. I was responsible for developing microservices with Node.js and FastAPI, where I applied Test-Driven Development to hit 100% test coverage and increase API performance by 40%. To streamline our workflow, I designed and implemented CI/CD pipelines using Docker and GitHub Actions, which cut our deployment time by 42%. I'm especially proud of two AI projects I engineered: 'Fantasy GPT,' a chatbot for sports fans that I built to 98% accuracy using RAG and LangGraph, and 'AIKO,' a media assistant that generates personalized sports highlights with real-time commentary. I also built the data foundation for these services, creating scalable ETL pipelines with MSSQL and Azure that ensured 100% data accuracy.",
   },
   {
-    title: "Automation Intern",
+    title: "AI Automation Intern",
     organisation: {
       name: "Armorcode Inc.",
       href: "https://www.armorcode.com/",
     },
-    date: "Jan 2025 - Aug 2025",
+    date: "Jan 2025 - Nov 2025",
     description:
-      "At Armorcode, I'm focused on building next-generation testing and automation solutions. I co-developed a powerful Spring Boot test framework with Playwright and TestNG that runs dynamic, parallel tests. I deployed Report Portal on AWS using Docker and even built custom plugins for it with Java and React. A highlight for me was building a CrewAI agent with AWS Bedrock to automatically query and visualize our test data. I also won an internal AI challenge by creating a system that automates documentation for over 250 tools, slashing update times from 72 hours to just 45 minutes. To improve our test stability, I implemented an AI-based auto-heal feature that cut UI test flakiness by 99% and built n8n pipelines to fully automate our GitHub PR reviews.",
+      "At Armorcode, I focused on backend development for the core platform agent using Java and Spring Boot. I designed and implemented new APIs, refined AI prompts for security workflows, and managed the AWS S3 vector knowledge base. I spearheaded AI-driven code-to-documentation automation using CrewAI and MCP servers, generating documentation for 250+ security integrations and reducing update latency by 99% (72h to 45m). I also established a universal LLM access layer by building an OpenAI-compatible proxy API supporting Gemini and Claude, deployed LiteLLM for monitoring 15+ AI APIs with centralized cost management.",
+  },
+  {
+    title: "Associate Engineer",
+    organisation: {
+      name: "Armorcode Inc.",
+      href: "https://www.armorcode.com/",
+    },
+    date: "Dec 2025 - Present",
+    description:
+      "Promoted to Associate Engineer, I now architect enterprise-scale GenAI platforms serving 200+ enterprise customers. I designed a GraphRAG platform using Neo4j and PGVector unifying 500,000+ data entities from 5+ systems (Jira, Qmetry, Zendesk), achieving 40% improved retrieval accuracy. I orchestrated advanced GraphRAG and LightRAG ETL pipelines, reducing LLM data indexing costs by 50% and saving $15,000+ annually. I enhanced the core Armorcode platform backend (Java, Spring Boot), deploying 10+ REST APIs serving 5,000+ daily requests with 99.8% uptime. I devised end-to-end automation suites for enterprise operations (Zendesk support, QA triage, HR screening, marketing AI images) using n8n, Java microservices, and Python scripts, eliminating 200+ manual hours monthly.",
   },
 ];

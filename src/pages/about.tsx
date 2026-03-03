@@ -59,15 +59,6 @@ export default function About() {
         />
       </Head>
 
-      <section className="px-6 pb-2 pt-10 sm:px-14 md:px-20">
-        <div className="mx-auto max-w-7xl">
-          <p className="text-base font-medium leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-lg">
-            I am Nikunj Khitha, a software development engineer focused on AI,
-            full-stack web platforms, and cloud-native product delivery.
-          </p>
-        </div>
-      </section>
-
       <AboutHero />
       <SectionDivider />
       <ExperienceShowcaseList title="Experience" details={EXPERIENCE} />

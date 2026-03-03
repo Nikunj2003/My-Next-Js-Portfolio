@@ -1,5 +1,5 @@
 import { SVGMotionProps, motion } from "framer-motion";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { classNames } from "@/utility/classNames";
 

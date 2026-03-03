@@ -65,9 +65,9 @@ export default function WelcomeScreen({
     window.addEventListener("touchmove", onTouchMove, { passive: false });
 
     return () => {
-      window.removeEventListener("wheel", onWheel as any);
-      window.removeEventListener("touchstart", onTouchStart as any);
-      window.removeEventListener("touchmove", onTouchMove as any);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
       // Restore background scroll
       document.body.style.overflow = prevBodyOverflow;
       document.documentElement.style.overflow = prevDocOverflow;
@@ -87,7 +87,7 @@ export default function WelcomeScreen({
   const handleClose = () => {
     // Mark that we are suppressing background scroll even after overlay unmounts
     if (typeof document !== "undefined") {
-      (document.documentElement as any).dataset.scrollLock = "true";
+      document.documentElement.dataset.scrollLock = "true";
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
     }
@@ -102,7 +102,7 @@ export default function WelcomeScreen({
     }
 
     // Temporarily prevent wheel/touch scroll bleeding-through for a short time
-    const prevent = (e: any) => {
+    const prevent = (e: WheelEvent | TouchEvent) => {
       try {
         e.preventDefault();
         e.stopPropagation();
@@ -113,11 +113,11 @@ export default function WelcomeScreen({
 
     // Release lock shortly after to avoid momentum scroll
     setTimeout(() => {
-      window.removeEventListener("wheel", prevent as any);
-      window.removeEventListener("touchmove", prevent as any);
+      window.removeEventListener("wheel", prevent);
+      window.removeEventListener("touchmove", prevent);
       if (typeof document !== "undefined") {
         try {
-          delete (document.documentElement as any).dataset.scrollLock;
+          delete document.documentElement.dataset.scrollLock;
         } catch { }
         document.body.style.overflow = "";
         document.documentElement.style.overflow = "";

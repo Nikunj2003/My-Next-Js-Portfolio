@@ -11,6 +11,7 @@ import {
   ToolError,
   ToolExecutionConfig,
   ToolExecutionStats,
+  ToolAction,
 } from "@/types/tools";
 
 /**
@@ -34,12 +35,11 @@ export abstract class BaseTool implements PortfolioTool {
    * Execute the tool with validation and error handling
    */
   async execute(
-    args: Record<string, any>,
+    args: Record<string, unknown>,
     context: ToolContext,
     config: ToolExecutionConfig = {}
   ): Promise<ToolResult> {
     const startTime = Date.now();
-    const executionId = `${this.name}-${Date.now()}`;
 
     try {
       // Validate arguments if requested
@@ -108,14 +108,14 @@ export abstract class BaseTool implements PortfolioTool {
    * Internal execution method to be implemented by subclasses
    */
   protected abstract executeInternal(
-    args: Record<string, any>,
+    args: Record<string, unknown>,
     context: ToolContext
   ): Promise<ToolResult>;
 
   /**
    * Validate tool arguments against the schema
    */
-  private validateArguments(args: Record<string, any>): {
+  private validateArguments(args: Record<string, unknown>): {
     valid: boolean;
     message?: string;
   } {
@@ -228,7 +228,10 @@ export abstract class BaseTool implements PortfolioTool {
   /**
    * Create a successful result
    */
-  protected createSuccessResult(data?: any, actions?: any[]): ToolResult {
+  protected createSuccessResult(
+    data?: unknown,
+    actions?: ToolAction[]
+  ): ToolResult {
     return {
       success: true,
       data,

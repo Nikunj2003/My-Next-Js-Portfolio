@@ -332,7 +332,10 @@ describe("UI Control Tools", () => {
   describe("Error Handling", () => {
     it("should handle invalid context in ToggleThemeTool", async () => {
       const tool = new ToggleThemeTool();
-      const invalidContext = { ...mockContext, theme: "invalid" as any };
+      const invalidContext = {
+        ...mockContext,
+        theme: "invalid" as unknown as ToolContext["theme"],
+      };
 
       const result = await tool.execute({ theme: "toggle" }, invalidContext);
 

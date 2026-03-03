@@ -89,7 +89,7 @@ function AppContent({ Component, pageProps }: AppProps) {
       router.events.off("routeChangeComplete", handleRouteChangeComplete);
       router.events.off("routeChangeError", handleRouteChangeComplete);
     };
-  }, [router]);
+  }, [router, setAnimationsReady]);
 
   return (
     <>

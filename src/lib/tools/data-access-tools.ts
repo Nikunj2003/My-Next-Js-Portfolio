@@ -73,9 +73,10 @@ export class GetProjectsTool extends BaseTool {
   }
 
   protected async executeInternal(
-    args: Record<string, any>,
-    _context: ToolContext
+    args: Record<string, unknown>,
+    context: ToolContext
   ): Promise<ToolResult> {
+    void context;
     try {
       const {
         category,
@@ -87,7 +88,7 @@ export class GetProjectsTool extends BaseTool {
         includeBlogs = false,
       } = args;
 
-      let allProjects: any[] = [];
+      const allProjects: Array<Record<string, unknown>> = [];
 
       // Combine different project sources
       if (includeShowcase) {
@@ -299,9 +300,10 @@ export class GetExperienceTool extends BaseTool {
   }
 
   protected async executeInternal(
-    args: Record<string, any>,
-    _context: ToolContext
+    args: Record<string, unknown>,
+    context: ToolContext
   ): Promise<ToolResult> {
+    void context;
     try {
       const {
         company,
@@ -535,7 +537,9 @@ export class GetExperienceTool extends BaseTool {
   /**
    * Calculate total duration across all experience
    */
-  private calculateTotalDuration(experience: any[]): string {
+  private calculateTotalDuration(
+    experience: Array<{ duration: string }>
+  ): string {
     const totalMonths = experience.reduce((total, exp) => {
       const duration = exp.duration;
       const matches = duration.match(/(\d+)\s*year|(\d+)\s*month/g);
@@ -719,9 +723,10 @@ export class GetSkillsTool extends BaseTool {
   }
 
   protected async executeInternal(
-    args: Record<string, any>,
-    _context: ToolContext
+    args: Record<string, unknown>,
+    context: ToolContext
   ): Promise<ToolResult> {
+    void context;
     try {
       const {
         category,
@@ -772,7 +777,17 @@ export class GetSkillsTool extends BaseTool {
       }
 
       // Format results based on groupBy
-      let results: any;
+      let results:
+        | { skills: Array<Record<string, unknown>>; totalCount: number }
+        | {
+            categories: Array<{
+              category: string;
+              skills: Array<Record<string, unknown>>;
+              skillCount: number;
+            }>;
+            totalCategories: number;
+            totalSkills: number;
+          };
 
       if (groupBy === "flat") {
         const allSkills = skillsData.flatMap((section) =>
@@ -888,7 +903,8 @@ export class GetSkillsTool extends BaseTool {
   /**
    * Infer proficiency level based on skill and context
    */
-  private inferProficiencyLevel(skillName: string, _category: string): string {
+  private inferProficiencyLevel(skillName: string, category: string): string {
+    void category;
     // Expert level skills (primary technologies)
     const expertSkills = [
       "React",

@@ -3,11 +3,6 @@
  */
 
 import { initializeNavigationTools, toolRegistry } from "../index";
-import {
-  NavigateToPageTool,
-  OpenModalTool,
-  NavigateToSectionTool,
-} from "../navigation-tools";
 
 describe("Navigation Tools Integration", () => {
   beforeEach(() => {

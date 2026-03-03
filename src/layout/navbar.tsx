@@ -9,7 +9,6 @@ import ThemeSwitch from "@/components/utility/theme-switch";
 import MobileMenu from "@/components/utility/mobile-menu";
 import { classNames } from "@/utility/classNames";
 import ContactButton from "@/components/contact-form/contact-button";
-import { useChatContext } from "@/contexts/chat-context";
 
 export type NavbarRoute = {
   title: string;
@@ -26,7 +25,6 @@ export interface NavbarProps {
 export default function Navbar({ routes }: NavbarProps) {
   const pathName = usePathname();
   const { resolvedTheme } = useTheme();
-  const { isExitingFullScreen } = useChatContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   // Hover tracking state removed with animations

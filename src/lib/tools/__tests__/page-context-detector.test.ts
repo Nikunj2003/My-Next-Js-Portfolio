@@ -315,8 +315,6 @@ describe("PageContextDetector", () => {
     });
 
     it("should get context changes since date", async () => {
-      const baseTime = new Date();
-
       // Add some contexts
       detector.trackContext(
         {

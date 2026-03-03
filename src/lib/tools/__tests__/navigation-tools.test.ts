@@ -69,7 +69,7 @@ describe("NavigateToPageTool", () => {
 
     it("should reject invalid page", async () => {
       const result = await tool.execute(
-        { page: "invalid" as any },
+        { page: "invalid" as unknown as "home" },
         mockContext
       );
 
@@ -211,7 +211,7 @@ describe("OpenModalTool", () => {
 
     it("should reject invalid modal type", async () => {
       const result = await tool.execute(
-        { modal: "invalid" as any },
+        { modal: "invalid" as unknown as "contact" },
         mockContext
       );
 

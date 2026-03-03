@@ -36,7 +36,10 @@ export async function validateGetProjectsTool(): Promise<boolean> {
 
     // Test with limit
     const result2 = await tool.execute({ limit: 3 }, mockContext);
-    if (!result2.success || (result2.data as any)?.projects?.length > 3) {
+    const result2Data = result2.data as
+      | { projects?: unknown[] }
+      | undefined;
+    if (!result2.success || (result2Data?.projects?.length ?? 0) > 3) {
       console.error("❌ Limit parameter failed");
       return false;
     }

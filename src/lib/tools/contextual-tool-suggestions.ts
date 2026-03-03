@@ -127,10 +127,7 @@ export class ContextualToolSuggestions {
 
     // Get intent-based suggestions if user message is provided
     if (userMessage) {
-      const intentSuggestions = this.getIntentBasedSuggestions(
-        userMessage,
-        context
-      );
+      const intentSuggestions = this.getIntentBasedSuggestions(userMessage);
       suggestions.push(...intentSuggestions);
     }
 
@@ -189,9 +186,8 @@ export class ContextualToolSuggestions {
    */
   getContextualHelp(context: ToolContext): ContextualHelp {
     const page = context.currentPage.toLowerCase();
-    const section = context.currentSection?.toLowerCase();
 
-    const helpData = this.getPageHelpData(page, section);
+    const helpData = this.getPageHelpData(page);
 
     return {
       pageDescription: helpData.description,
@@ -209,16 +205,14 @@ export class ContextualToolSuggestions {
     recentToolUsage: string[],
     userMessage?: string
   ): ToolSuggestion[] {
+    void userMessage;
     const suggestions: ToolSuggestion[] = [];
 
     // Analyze recent tool usage patterns
     const usagePatterns = this.analyzeUsagePatterns(recentToolUsage);
 
     // Get complementary tools based on recent usage
-    const complementaryTools = this.getComplementaryTools(
-      usagePatterns,
-      context
-    );
+    const complementaryTools = this.getComplementaryTools(usagePatterns);
     suggestions.push(...complementaryTools);
 
     // Get workflow-based suggestions
@@ -304,10 +298,7 @@ export class ContextualToolSuggestions {
   /**
    * Get intent-based tool suggestions from user message
    */
-  private getIntentBasedSuggestions(
-    message: string,
-    context: ToolContext
-  ): ToolSuggestion[] {
+  private getIntentBasedSuggestions(message: string): ToolSuggestion[] {
     const suggestions: ToolSuggestion[] = [];
     const lowerMessage = message.toLowerCase();
 
@@ -443,10 +434,7 @@ export class ContextualToolSuggestions {
   /**
    * Get page-specific help data
    */
-  private getPageHelpData(
-    page: string,
-    section?: string
-  ): {
+  private getPageHelpData(page: string): {
     description: string;
     actions: string[];
     questions: string[];
@@ -595,8 +583,7 @@ export class ContextualToolSuggestions {
    * Get complementary tools based on usage patterns
    */
   private getComplementaryTools(
-    usagePatterns: Map<string, number>,
-    context: ToolContext
+    usagePatterns: Map<string, number>
   ): ToolSuggestion[] {
     const suggestions: ToolSuggestion[] = [];
 

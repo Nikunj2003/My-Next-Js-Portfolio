@@ -461,7 +461,7 @@ export default function ChatWindow({
               try {
                 element = document.querySelector(selector);
                 if (element) break;
-              } catch (e) {
+              } catch {
                 // Invalid selector, continue to next
                 continue;
               }

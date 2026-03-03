@@ -14,7 +14,8 @@ import {
   PortfolioTool,
   ToolContext,
   ToolResult,
-  ToolCall,
+  ToolAction,
+  ToolExecutionConfig,
 } from "@/types/tools";
 
 /**
@@ -93,7 +94,7 @@ export class ContextAwareToolRegistry extends ToolRegistry {
     toolName: string,
     args: Record<string, unknown>,
     context: ToolContext,
-    config?: any
+    config?: ToolExecutionConfig
   ): Promise<ToolResult> {
     // Track context before execution
     this.contextDetector.trackContext(context, `tool-execution:${toolName}`);
@@ -127,7 +128,7 @@ export class ContextAwareToolRegistry extends ToolRegistry {
   getContextualFunctionDefinitions(context: ToolContext): Array<{
     name: string;
     description: string;
-    parameters: any;
+    parameters: Record<string, unknown>;
     relevance?: number;
     context?: string;
   }> {
@@ -268,7 +269,7 @@ export class ContextAwareToolRegistry extends ToolRegistry {
    */
   private updateContextFromActions(
     currentContext: ToolContext,
-    actions: any[]
+    actions: ToolAction[]
   ): ToolContext | null {
     let updatedContext: ToolContext | null = null;
 

@@ -3,7 +3,6 @@
  * These tools handle interface interactions like theme switching and downloads
  */
 
-import { JSONSchema7 } from "json-schema";
 import { BaseTool } from "./base-tool";
 import { ToolContext, ToolResult, ToolAction } from "@/types/tools";
 
@@ -30,7 +29,7 @@ export class ToggleThemeTool extends BaseTool {
   }
 
   protected async executeInternal(
-    args: Record<string, any>,
+    args: Record<string, unknown>,
     context: ToolContext
   ): Promise<ToolResult> {
     const { theme = "toggle" } = args;
@@ -131,9 +130,10 @@ export class TriggerDownloadTool extends BaseTool {
   }
 
   protected async executeInternal(
-    args: Record<string, any>,
+    args: Record<string, unknown>,
     context: ToolContext
   ): Promise<ToolResult> {
+    void context;
     const { file, format = "pdf", trackDownload = true } = args;
 
     try {
@@ -270,7 +270,7 @@ export class ManageUIStateTool extends BaseTool {
   }
 
   protected async executeInternal(
-    args: Record<string, any>,
+    args: Record<string, unknown>,
     context: ToolContext
   ): Promise<ToolResult> {
     const { action: rawAction, target, options = {} } = args;
@@ -318,7 +318,7 @@ export class ManageUIStateTool extends BaseTool {
 
       // Create UI state action
       const uiAction: ToolAction = {
-        type: normalizedAction as any, // Type assertion since we validated above
+        type: normalizedAction as ToolAction["type"], // Type assertion since we validated above
         target,
         data: {
           smooth,

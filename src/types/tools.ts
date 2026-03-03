@@ -55,7 +55,16 @@ export interface ToolError {
  */
 export interface ToolAction {
   /** Type of action to perform */
-  type: "navigate" | "modal" | "theme" | "download" | "scroll";
+  type:
+    | "navigate"
+    | "modal"
+    | "theme"
+    | "download"
+    | "scroll"
+    | "focus"
+    | "highlight"
+    | "show"
+    | "hide";
   /** Target for the action */
   target: string;
   /** Additional data for the action */

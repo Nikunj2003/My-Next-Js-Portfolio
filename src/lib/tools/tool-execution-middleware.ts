@@ -107,6 +107,7 @@ export class ToolExecutionMiddleware {
     context: ToolContext,
     config?: ToolExecutionConfig
   ): Promise<ToolResult> {
+    void config;
     const startTime = Date.now();
 
     try {
@@ -223,8 +224,9 @@ export class ToolExecutionMiddleware {
    */
   private async validateSecurity(
     args: Record<string, unknown>,
-    _context: ToolContext
+    context: ToolContext
   ): Promise<{ valid: boolean; message?: string }> {
+    void context;
     if (!this.config.security) {
       return { valid: true };
     }

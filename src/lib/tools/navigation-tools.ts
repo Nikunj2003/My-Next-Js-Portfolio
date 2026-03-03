@@ -213,9 +213,13 @@ export class OpenModalTool extends BaseTool {
   }
 
   protected async executeInternal(
-    args: { modal: "contact" | "project-details"; data?: Record<string, any> },
-    _context: ToolContext
+    args: {
+      modal: "contact" | "project-details";
+      data?: Record<string, unknown>;
+    },
+    context: ToolContext
   ): Promise<ToolResult> {
+    void context;
     const { modal, data = {} } = args;
 
     // Additional validation beyond schema (schema already validates enum)
@@ -261,7 +265,7 @@ export class OpenModalTool extends BaseTool {
    */
   private generateModalMessage(
     modal: string,
-    data: Record<string, any>
+    data: Record<string, unknown>
   ): string {
     switch (modal) {
       case "contact":

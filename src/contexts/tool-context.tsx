@@ -13,7 +13,11 @@ import React, {
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
 import { ToolContext } from "@/types/tools";
-import { ToolContextManager, ToolContextUtils } from "@/lib/tools/tool-context";
+import {
+  ToolContextManager,
+  ToolContextUtils,
+  ToolContextValidator,
+} from "@/lib/tools/tool-context";
 
 /**
  * Tool context provider props
@@ -230,7 +234,6 @@ export const ToolContextDebug = {
    */
   validateAndLog: (context: ToolContext) => {
     if (process.env.NODE_ENV === "development") {
-      const { ToolContextValidator } = require("@/lib/tools/tool-context");
       const validation = ToolContextValidator.validate(context);
 
       if (!validation.valid) {

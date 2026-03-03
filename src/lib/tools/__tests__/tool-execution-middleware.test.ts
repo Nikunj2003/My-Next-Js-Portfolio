@@ -333,7 +333,7 @@ describe("ToolExecutionMiddleware", () => {
   describe("Error handling", () => {
     it("should handle malformed JSON in arguments", async () => {
       // This would typically come from JSON.parse errors in real usage
-      const circularObj: any = {};
+      const circularObj: Record<string, unknown> = {};
       circularObj.self = circularObj;
 
       const result = await middleware.executeWithMiddleware(
@@ -350,7 +350,7 @@ describe("ToolExecutionMiddleware", () => {
     it("should handle schema compilation errors", async () => {
       const invalidTool: PortfolioTool = {
         ...mockTool,
-        parameters: { type: "invalid-type" } as any, // Invalid schema
+        parameters: { type: "invalid-type" } as unknown as JSONSchema7, // Invalid schema
       };
 
       const result = await middleware.executeWithMiddleware(

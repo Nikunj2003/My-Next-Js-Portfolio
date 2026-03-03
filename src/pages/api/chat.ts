@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import OpenAI from "openai";
 import { AI_MODEL, SYSTEM_PROMPT, SUGGESTION_SYSTEM_PROMPT } from "@/config/ai";
 import { rateLimiterApi, getUserId } from "@/utility/rate-limiter";
-import { toolRegistry, initializeAllTools } from "@/lib/tools";
+import { initializeAllTools } from "@/lib/tools";
 import { contextAwareToolRegistry } from "@/lib/tools/context-aware-tool-registry";
 import { ToolContext, ToolCall, ToolResult } from "@/types/tools";
 
@@ -281,8 +281,6 @@ export default async function handler(
 
     let aiResponse = choice.message?.content || "";
     let toolCallResults: ToolCall[] = [];
-    // capture original user message for suggestion generation later
-    const originalUserMessage = message;
 
     // Handle tool calls if present
     if (choice.message?.tool_calls && choice.message.tool_calls.length > 0) {
@@ -399,7 +397,7 @@ export default async function handler(
         let parsed: unknown = [];
         try {
           parsed = JSON.parse(raw);
-        } catch (e) {
+        } catch {
           // Attempt to extract JSON array substring
           const match = raw.match(/\[[\s\S]*\]/);
           if (match) {

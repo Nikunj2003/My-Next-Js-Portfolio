@@ -79,13 +79,33 @@ const handler = async (
 
     const response = await sendMail(name, email, subject, message);
     res.status(response.status).send(response);
-  } catch (error: any) {
-    if (error?.status === 429) {
+  } catch (error: unknown) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "status" in error &&
+      (error as { status?: number }).status === 429
+    ) {
       res.status(429).json({ status: 429, message: "Rate limit exceeded" });
     } else {
-      res.status(error.status || 500).json({
-        status: error.status || 500,
-        message: error.message || "Internal server error",
+      const status =
+        typeof error === "object" &&
+        error !== null &&
+        "status" in error &&
+        typeof (error as { status?: unknown }).status === "number"
+          ? (error as { status: number }).status
+          : 500;
+      const message =
+        typeof error === "object" &&
+        error !== null &&
+        "message" in error &&
+        typeof (error as { message?: unknown }).message === "string"
+          ? (error as { message: string }).message
+          : "Internal server error";
+
+      res.status(status).json({
+        status,
+        message,
       });
     }
   }

@@ -37,7 +37,7 @@ export default function ContactButton() {
 
   // Listen for global event to open contact modal programmatically (e.g., from AI chat)
   useEffect(() => {
-    const handler = (e: Event) => {
+    const handler = () => {
       setIsOpenModal(true);
     };
     window.addEventListener("open-contact-modal", handler as EventListener);

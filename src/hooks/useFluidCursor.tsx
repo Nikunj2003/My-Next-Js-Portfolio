@@ -1,9 +1,8 @@
-// @ts-nocheck
 const useFluidCursor = () => {
   const canvas = document.getElementById("fluid");
   resizeCanvas();
 
-  let config = {
+  const config = {
     SIM_RESOLUTION: 128,
     DYE_RESOLUTION: 1440,
     CAPTURE_RESOLUTION: 1512,
@@ -41,7 +40,7 @@ const useFluidCursor = () => {
       accentPalette = found
         .map((triplet) => hslTripletToRGB(triplet))
         .map((rgb) => ({ r: rgb.r / 255, g: rgb.g / 255, b: rgb.b / 255 }));
-    } catch (e) {
+    } catch {
       // ignore, fallback will be used
     }
   }
@@ -210,7 +209,7 @@ const useFluidCursor = () => {
 
       let program = this.programs[hash];
       if (program == null) {
-        let fragmentShader = compileShader(
+        const fragmentShader = compileShader(
           gl.FRAGMENT_SHADER,
           this.fragmentShaderSource,
           keywords
@@ -243,7 +242,7 @@ const useFluidCursor = () => {
   }
 
   function createProgram(vertexShader, fragmentShader) {
-    let program = gl.createProgram();
+    const program = gl.createProgram();
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
     gl.linkProgram(program);
@@ -255,10 +254,10 @@ const useFluidCursor = () => {
   }
 
   function getUniforms(program) {
-    let uniforms = [];
-    let uniformCount = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+    const uniforms = [];
+    const uniformCount = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
     for (let i = 0; i < uniformCount; i++) {
-      let uniformName = gl.getActiveUniform(program, i).name;
+      const uniformName = gl.getActiveUniform(program, i).name;
       uniforms[uniformName] = gl.getUniformLocation(program, uniformName);
     }
     return uniforms;
@@ -311,17 +310,18 @@ const useFluidCursor = () => {
    `
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const blurVertexShader = compileShader(
     gl.VERTEX_SHADER,
     `
        precision highp float;
-   
+
        attribute vec2 aPosition;
        varying vec2 vUv;
        varying vec2 vL;
        varying vec2 vR;
        uniform vec2 texelSize;
-   
+
        void main () {
            vUv = aPosition * 0.5 + 0.5;
            float offset = 1.33333333;
@@ -332,17 +332,18 @@ const useFluidCursor = () => {
    `
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const blurShader = compileShader(
     gl.FRAGMENT_SHADER,
     `
        precision mediump float;
        precision mediump sampler2D;
-   
+
        varying vec2 vUv;
        varying vec2 vL;
        varying vec2 vR;
        uniform sampler2D uTexture;
-   
+
        void main () {
            vec4 sum = texture2D(uTexture, vUv) * 0.29411764;
            sum += texture2D(uTexture, vL) * 0.35294117;
@@ -383,6 +384,7 @@ const useFluidCursor = () => {
    `
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const colorShader = compileShader(
     gl.FRAGMENT_SHADER,
     `
@@ -709,8 +711,8 @@ const useFluidCursor = () => {
   const displayMaterial = new Material(baseVertexShader, displayShaderSource);
 
   function initFramebuffers() {
-    let simRes = getResolution(config.SIM_RESOLUTION);
-    let dyeRes = getResolution(config.DYE_RESOLUTION);
+    const simRes = getResolution(config.SIM_RESOLUTION);
+    const dyeRes = getResolution(config.DYE_RESOLUTION);
 
     const texType = ext.halfFloatTexType;
     const rgba = ext.formatRGBA;
@@ -788,7 +790,7 @@ const useFluidCursor = () => {
 
   function createFBO(w, h, internalFormat, format, type, param) {
     gl.activeTexture(gl.TEXTURE0);
-    let texture = gl.createTexture();
+    const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, param);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, param);
@@ -806,7 +808,7 @@ const useFluidCursor = () => {
       null
     );
 
-    let fbo = gl.createFramebuffer();
+    const fbo = gl.createFramebuffer();
     gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
     gl.framebufferTexture2D(
       gl.FRAMEBUFFER,
@@ -818,8 +820,8 @@ const useFluidCursor = () => {
     gl.viewport(0, 0, w, h);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    let texelSizeX = 1.0 / w;
-    let texelSizeY = 1.0 / h;
+    const texelSizeX = 1.0 / w;
+    const texelSizeY = 1.0 / h;
 
     return {
       texture,
@@ -858,7 +860,7 @@ const useFluidCursor = () => {
         fbo2 = value;
       },
       swap() {
-        let temp = fbo1;
+        const temp = fbo1;
         fbo1 = fbo2;
         fbo2 = temp;
       },
@@ -866,7 +868,7 @@ const useFluidCursor = () => {
   }
 
   function resizeFBO(target, w, h, internalFormat, format, type, param) {
-    let newFBO = createFBO(w, h, internalFormat, format, type, param);
+    const newFBO = createFBO(w, h, internalFormat, format, type, param);
     copyProgram.bind();
     gl.uniform1i(copyProgram.uniforms.uTexture, target.attach(0));
     blit(newFBO);
@@ -892,8 +894,9 @@ const useFluidCursor = () => {
     return target;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function createTextureAsync(url) {
-    let texture = gl.createTexture();
+    const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
@@ -911,7 +914,7 @@ const useFluidCursor = () => {
       new Uint8Array([255, 255, 255])
     );
 
-    let obj = {
+    const obj = {
       texture,
       width: 1,
       height: 1,
@@ -922,7 +925,7 @@ const useFluidCursor = () => {
       },
     };
 
-    let image = new Image();
+    const image = new Image();
     image.onload = () => {
       obj.width = image.width;
       obj.height = image.height;
@@ -935,7 +938,7 @@ const useFluidCursor = () => {
   }
 
   function updateKeywords() {
-    let displayKeywords = [];
+    const displayKeywords = [];
     if (config.SHADING) displayKeywords.push("SHADING");
     displayMaterial.setKeywords(displayKeywords);
   }
@@ -958,7 +961,7 @@ const useFluidCursor = () => {
   }
 
   function calcDeltaTime() {
-    let now = Date.now();
+    const now = Date.now();
     let dt = (now - lastUpdateTime) / 1000;
     dt = Math.min(dt, 0.016666);
     lastUpdateTime = now;
@@ -966,8 +969,8 @@ const useFluidCursor = () => {
   }
 
   function resizeCanvas() {
-    let width = scaleByPixelRatio(canvas.clientWidth);
-    let height = scaleByPixelRatio(canvas.clientHeight);
+    const width = scaleByPixelRatio(canvas.clientWidth);
+    const height = scaleByPixelRatio(canvas.clientHeight);
     if (canvas.width != width || canvas.height != height) {
       canvas.width = width;
       canvas.height = height;
@@ -1077,7 +1080,7 @@ const useFluidCursor = () => {
         velocity.texelSizeX,
         velocity.texelSizeY
       );
-    let velocityId = velocity.read.attach(0);
+    const velocityId = velocity.read.attach(0);
     gl.uniform1i(advectionProgram.uniforms.uVelocity, velocityId);
     gl.uniform1i(advectionProgram.uniforms.uSource, velocityId);
     gl.uniform1f(advectionProgram.uniforms.dt, dt);
@@ -1111,8 +1114,8 @@ const useFluidCursor = () => {
   }
 
   function drawDisplay(target) {
-    let width = target == null ? gl.drawingBufferWidth : target.width;
-    let height = target == null ? gl.drawingBufferHeight : target.height;
+    const width = target == null ? gl.drawingBufferWidth : target.width;
+    const height = target == null ? gl.drawingBufferHeight : target.height;
 
     displayMaterial.bind();
     if (config.SHADING)
@@ -1132,8 +1135,8 @@ const useFluidCursor = () => {
   }
 
   function splatPointer(pointer) {
-    let dx = pointer.deltaX * config.SPLAT_FORCE;
-    let dy = pointer.deltaY * config.SPLAT_FORCE;
+    const dx = pointer.deltaX * config.SPLAT_FORCE;
+    const dy = pointer.deltaY * config.SPLAT_FORCE;
     splat(pointer.texcoordX, pointer.texcoordY, dx, dy, pointer.color);
   }
 
@@ -1142,8 +1145,8 @@ const useFluidCursor = () => {
     color.r *= 10.0;
     color.g *= 10.0;
     color.b *= 10.0;
-    let dx = 10 * (Math.random() - 0.5);
-    let dy = 30 * (Math.random() - 0.5);
+    const dx = 10 * (Math.random() - 0.5);
+    const dy = 30 * (Math.random() - 0.5);
     splat(pointer.texcoordX, pointer.texcoordY, dx, dy, color);
   }
 
@@ -1170,24 +1173,24 @@ const useFluidCursor = () => {
   }
 
   function correctRadius(radius) {
-    let aspectRatio = canvas.width / canvas.height;
+    const aspectRatio = canvas.width / canvas.height;
     if (aspectRatio > 1) radius *= aspectRatio;
     return radius;
   }
 
   window.addEventListener("mousedown", (e) => {
-    let pointer = pointers[0];
-    let posX = scaleByPixelRatio(e.clientX);
-    let posY = scaleByPixelRatio(e.clientY);
+    const pointer = pointers[0];
+    const posX = scaleByPixelRatio(e.clientX);
+    const posY = scaleByPixelRatio(e.clientY);
     updatePointerDownData(pointer, -1, posX, posY);
     clickSplat(pointer);
   });
 
   document.body.addEventListener("mousemove", function handleFirstMouseMove(e) {
-    let pointer = pointers[0];
-    let posX = scaleByPixelRatio(e.clientX);
-    let posY = scaleByPixelRatio(e.clientY);
-    let color = generateColor();
+    const pointer = pointers[0];
+    const posX = scaleByPixelRatio(e.clientX);
+    const posY = scaleByPixelRatio(e.clientY);
+    const color = generateColor();
 
     update();
     updatePointerMoveData(pointer, posX, posY, color);
@@ -1197,10 +1200,10 @@ const useFluidCursor = () => {
   });
 
   window.addEventListener("mousemove", (e) => {
-    let pointer = pointers[0];
-    let posX = scaleByPixelRatio(e.clientX);
-    let posY = scaleByPixelRatio(e.clientY);
-    let color = pointer.color;
+    const pointer = pointers[0];
+    const posX = scaleByPixelRatio(e.clientX);
+    const posY = scaleByPixelRatio(e.clientY);
+    const color = pointer.color;
 
     updatePointerMoveData(pointer, posX, posY, color);
   });
@@ -1209,11 +1212,11 @@ const useFluidCursor = () => {
     "touchstart",
     function handleFirstTouchStart(e) {
       const touches = e.targetTouches;
-      let pointer = pointers[0];
+      const pointer = pointers[0];
 
       for (let i = 0; i < touches.length; i++) {
-        let posX = scaleByPixelRatio(touches[i].clientX);
-        let posY = scaleByPixelRatio(touches[i].clientY);
+        const posX = scaleByPixelRatio(touches[i].clientX);
+        const posY = scaleByPixelRatio(touches[i].clientY);
 
         update();
         updatePointerDownData(pointer, touches[i].identifier, posX, posY);
@@ -1226,10 +1229,10 @@ const useFluidCursor = () => {
 
   window.addEventListener("touchstart", (e) => {
     const touches = e.targetTouches;
-    let pointer = pointers[0];
+    const pointer = pointers[0];
     for (let i = 0; i < touches.length; i++) {
-      let posX = scaleByPixelRatio(touches[i].clientX);
-      let posY = scaleByPixelRatio(touches[i].clientY);
+      const posX = scaleByPixelRatio(touches[i].clientX);
+      const posY = scaleByPixelRatio(touches[i].clientY);
       updatePointerDownData(pointer, touches[i].identifier, posX, posY);
     }
   });
@@ -1238,10 +1241,10 @@ const useFluidCursor = () => {
     "touchmove",
     (e) => {
       const touches = e.targetTouches;
-      let pointer = pointers[0];
+      const pointer = pointers[0];
       for (let i = 0; i < touches.length; i++) {
-        let posX = scaleByPixelRatio(touches[i].clientX);
-        let posY = scaleByPixelRatio(touches[i].clientY);
+        const posX = scaleByPixelRatio(touches[i].clientX);
+        const posY = scaleByPixelRatio(touches[i].clientY);
         updatePointerMoveData(pointer, posX, posY, pointer.color);
       }
     },
@@ -1250,7 +1253,7 @@ const useFluidCursor = () => {
 
   window.addEventListener("touchend", (e) => {
     const touches = e.changedTouches;
-    let pointer = pointers[0];
+    const pointer = pointers[0];
 
     for (let i = 0; i < touches.length; i++) {
       updatePointerUpData(pointer);
@@ -1288,13 +1291,13 @@ const useFluidCursor = () => {
   }
 
   function correctDeltaX(delta) {
-    let aspectRatio = canvas.width / canvas.height;
+    const aspectRatio = canvas.width / canvas.height;
     if (aspectRatio < 1) delta *= aspectRatio;
     return delta;
   }
 
   function correctDeltaY(delta) {
-    let aspectRatio = canvas.width / canvas.height;
+    const aspectRatio = canvas.width / canvas.height;
     if (aspectRatio > 1) delta /= aspectRatio;
     return delta;
   }
@@ -1312,9 +1315,9 @@ const useFluidCursor = () => {
       // Jitter within cool spectrum (shift towards violet or cyan)
       const jitterScale = useViolet ? 0.08 : 0.12; // slightly tighter jitter for violets
       const jitter = () => (Math.random() - 0.5) * jitterScale; // small variation
-      let r = clamp01(base.r + jitter());
-      let g = clamp01(base.g + jitter());
-      let b = clamp01(base.b + jitter());
+      const r = clamp01(base.r + jitter());
+      const g = clamp01(base.g + jitter());
+      const b = clamp01(base.b + jitter());
       // Intensity scaling: brighter on dark theme, subtler on light
       const intensity = isDark ? 0.22 : 0.15; // dimmer for subtler appearance
       return { r: r * intensity, g: g * intensity, b: b * intensity };
@@ -1324,7 +1327,7 @@ const useFluidCursor = () => {
     const hue = 210 + Math.random() * 65; // 210-275
     const saturation = 0.55 + Math.random() * 0.35;
     const value = 0.75 + Math.random() * 0.25;
-    let c = HSVtoRGB(hue / 360, saturation, value);
+    const c = HSVtoRGB(hue / 360, saturation, value);
     const intensity = isDark ? 0.2 : 0.14; // dimmer fallback
     c.r *= intensity;
     c.g *= intensity;
@@ -1379,31 +1382,43 @@ const useFluidCursor = () => {
   }
 
   function HSVtoRGB(h, s, v) {
-    let r, g, b, i, f, p, q, t;
-    i = Math.floor(h * 6);
-    f = h * 6 - i;
-    p = v * (1 - s);
-    q = v * (1 - f * s);
-    t = v * (1 - (1 - f) * s);
+    let r, g, b;
+    const i = Math.floor(h * 6);
+    const f = h * 6 - i;
+    const p = v * (1 - s);
+    const q = v * (1 - f * s);
+    const t = v * (1 - (1 - f) * s);
 
     switch (i % 6) {
       case 0:
-        (r = v), (g = t), (b = p);
+        r = v;
+        g = t;
+        b = p;
         break;
       case 1:
-        (r = q), (g = v), (b = p);
+        r = q;
+        g = v;
+        b = p;
         break;
       case 2:
-        (r = p), (g = v), (b = t);
+        r = p;
+        g = v;
+        b = t;
         break;
       case 3:
-        (r = p), (g = q), (b = v);
+        r = p;
+        g = q;
+        b = v;
         break;
       case 4:
-        (r = t), (g = p), (b = v);
+        r = t;
+        g = p;
+        b = v;
         break;
       case 5:
-        (r = v), (g = p), (b = q);
+        r = v;
+        g = p;
+        b = q;
         break;
     }
 

@@ -21,7 +21,7 @@ export default function PageTransitionAnimation() {
   const [isLowPerf, setIsLowPerf] = useState(false);
   useEffect(() => {
     if (typeof navigator !== "undefined") {
-      const cores = (navigator as any).hardwareConcurrency || 8;
+      const cores = navigator.hardwareConcurrency || 8;
       // Treat <=4 cores as potentially low-perf (mobile / older device)
       if (cores <= 4) setIsLowPerf(true);
     }

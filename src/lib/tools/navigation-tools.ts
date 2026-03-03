@@ -4,12 +4,11 @@
 
 import { BaseTool } from "./base-tool";
 import { ToolContext, ToolResult, ToolAction } from "@/types/tools";
-import { JSONSchema7 } from "json-schema";
 
 /**
  * Valid portfolio pages that can be navigated to
  */
-const VALID_PAGES = ["home", "about", "projects", "resume"] as const;
+const VALID_PAGES = ["home", "about", "projects"] as const;
 type ValidPage = (typeof VALID_PAGES)[number];
 
 /**
@@ -24,7 +23,6 @@ const PAGE_SECTIONS: Record<ValidPage, string[]> = {
   home: ["hero", "stats", "skills"],
   about: ["hero", "experience", "background"],
   projects: ["showcase", "filters"],
-  resume: ["display", "download"],
 };
 
 /**
@@ -88,7 +86,6 @@ export class NavigateToPageTool extends BaseTool {
       home: "/",
       about: "/about",
       projects: "/projects",
-      resume: "/resume",
     };
 
     const targetRoute = pageRoutes[page];
@@ -126,7 +123,6 @@ export class NavigateToPageTool extends BaseTool {
     if (currentPage === "/" || currentPage === "/home") return "home";
     if (currentPage.startsWith("/about")) return "about";
     if (currentPage.startsWith("/projects")) return "projects";
-    if (currentPage.startsWith("/resume")) return "resume";
     return "home"; // fallback
   }
 
@@ -194,7 +190,7 @@ export class OpenModalTool extends BaseTool {
 
   protected async executeInternal(
     args: { modal: "contact" | "project-details"; data?: Record<string, any> },
-    context: ToolContext
+    _context: ToolContext
   ): Promise<ToolResult> {
     const { modal, data = {} } = args;
 
@@ -347,7 +343,6 @@ export class NavigateToSectionTool extends BaseTool {
         home: "/",
         about: "/about",
         projects: "/projects",
-        resume: "/resume",
       };
 
       actions.push({
@@ -391,7 +386,6 @@ export class NavigateToSectionTool extends BaseTool {
     if (currentPage === "/" || currentPage === "/home") return "home";
     if (currentPage.startsWith("/about")) return "about";
     if (currentPage.startsWith("/projects")) return "projects";
-    if (currentPage.startsWith("/resume")) return "resume";
     return "home"; // fallback
   }
 

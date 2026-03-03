@@ -14,6 +14,7 @@ import { useChatContext } from "@/contexts/chat-context";
 export type NavbarRoute = {
   title: string;
   href: string;
+  external?: boolean;
 };
 
 export type NavbarRoutes = NavbarRoute[];
@@ -44,7 +45,7 @@ export default function Navbar({ routes }: NavbarProps) {
   if (!mounted) return null;
 
   return (
-    <header className="sticky top-0 z-50 mt-2 px-6 py-8 sm:mt-8 sm:px-14 md:px-20">
+    <header className="sticky top-0 z-50 mt-0 px-6 py-4 sm:mt-2 sm:px-14 sm:py-5 md:px-20">
       <div className="mx-auto flex items-center justify-between lg:max-w-7xl">
         {/* Mobile Menu Logo for Small Screens */}
         <div className="md:hidden">
@@ -62,22 +63,31 @@ export default function Navbar({ routes }: NavbarProps) {
           }}
         >
           <ul className="flex gap-2 text-sm font-medium">
-            {routes.map(({ title, href }, index) => {
-              const isActive = pathName === href;
+            {routes.map(({ title, href, external }, index) => {
+              const isActive = !external && pathName === href;
+              const linkClass = classNames(
+                isActive
+                  ? `font-semibold ${textColor} rounded-full bg-[#56A5A9] px-4 py-3 shadow-lg shadow-[#56A5A9]/30`
+                  : "text-[#56A5A9] hover:text-[#4A9196]",
+                "relative mx-3 rounded-full px-4 py-3"
+              );
 
               return (
                 <li key={index} className="relative">
-                  <Link
-                    href={href}
-                    className={classNames(
-                      isActive
-                        ? `font-semibold ${textColor} rounded-full bg-[#56A5A9] px-4 py-3 shadow-lg shadow-[#56A5A9]/30`
-                        : "text-[#56A5A9] hover:text-[#4A9196]",
-                      "relative mx-3 rounded-full px-4 py-3"
-                    )}
-                  >
-                    {title}
-                  </Link>
+                  {external ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={linkClass}
+                    >
+                      {title}
+                    </a>
+                  ) : (
+                    <Link href={href} className={linkClass}>
+                      {title}
+                    </Link>
+                  )}
                 </li>
               );
             })}

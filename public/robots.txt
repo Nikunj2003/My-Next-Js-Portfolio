@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://nikunj.tech/sitemap.xml
+Sitemap: https://nikunj.codenex.dev/sitemap.xml

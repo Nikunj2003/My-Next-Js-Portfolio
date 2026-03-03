@@ -168,14 +168,14 @@ export default function ResumeDisplay({ className = "" }: ResumeDisplayProps) {
               <span>+91 9540234616</span>
             </a>
             <a
-              href="https://nikunj.tech"
+              href="https://nikunj.codenex.dev"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-accent underline-offset-4 hover:underline"
               aria-label="Visit website"
             >
               <Globe size={16} />
-              <span className="truncate">nikunj.tech</span>
+              <span className="truncate">nikunj.codenex.dev</span>
             </a>
             <a
               href="https://github.com/Nikunj2003"

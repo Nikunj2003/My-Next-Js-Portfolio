@@ -9,7 +9,7 @@ import { useAnimationGate } from "@/contexts/animation-gate";
 
 export interface ProjectCardProps {
   name: string;
-  favicon: string;
+  favicon?: string;
   imageUrl: string[];
   description: string;
   sourceCodeHref: string;
@@ -46,7 +46,9 @@ export default function ProjectCard(props: ProjectCardProps) {
         <Corosel images={props.imageUrl} aspectRatio={1.9} />
         <div className="p-4 text-foreground sm:p-6">
           <div className="flex items-center gap-3">
-            <span className="relative h-6 w-6 text-2xl">{props.favicon}</span>
+            {props.favicon && (
+              <span className="relative h-6 w-6 text-2xl">{props.favicon}</span>
+            )}
             <span className="text-lg font-semibold">{props.name}</span>
           </div>
           <div className="mt-3">
@@ -104,7 +106,9 @@ export default function ProjectCard(props: ProjectCardProps) {
       <Corosel images={props.imageUrl} aspectRatio={1.9} />
       <div className="p-4 text-foreground sm:p-6">
         <div className="flex items-center gap-3">
-          <span className="relative h-6 w-6 text-2xl">{props.favicon}</span>
+          {props.favicon && (
+            <span className="relative h-6 w-6 text-2xl">{props.favicon}</span>
+          )}
           <span className="text-lg font-semibold">{props.name}</span>
         </div>
         <div className="mt-3">

@@ -74,7 +74,26 @@ export default function MobileMenu({
                 initial="hidden"
                 animate="show"
               >
-                {routes.map((link, i) => (
+                {routes.map((link, i) =>
+                  link.external ? (
+                    <motion.a
+                      key={i}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setOpenMenu(false)}
+                      className="group relative py-2 text-3xl font-medium"
+                      variants={{
+                        hidden: { opacity: 0, y: 14, scale: 0.98 },
+                        show: { opacity: 1, y: 0, scale: 1 },
+                      }}
+                      transition={{ type: "spring", stiffness: 320, damping: 24 }}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <span className="relative z-10">{link.title}</span>
+                    </motion.a>
+                  ) : (
                   <motion.button
                     key={i}
                     className="group relative py-2 text-3xl font-medium"
@@ -89,14 +108,15 @@ export default function MobileMenu({
                   >
                     <motion.span
                       className={classNames(
-                        pathName === link.href ? "w-full" : "w-0",
+                        !link.external && pathName === link.href ? "w-full" : "w-0",
                         "absolute -bottom-1 left-0 h-1 rounded-lg bg-accent transition-[width] duration-300 group-hover:w-full"
                       )}
                       layoutId="mobileActiveIndicator"
                     />
                     <span className="relative z-10">{link.title}</span>
                   </motion.button>
-                ))}
+                  )
+                )}
 
                 <motion.div
                   variants={{

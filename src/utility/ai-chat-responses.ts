@@ -46,7 +46,7 @@ export async function getAIResponse(
       userMessage.toLowerCase().includes("contact") ||
       userMessage.toLowerCase().includes("email")
     ) {
-      return `You can reach Nikunj at:\n\n📧 **Email:** njkhitha2003@gmail.com\n💼 **LinkedIn:** https://www.linkedin.com/in/Nikunj-Khitha/\n🐙 **GitHub:** https://github.com/Nikunj2003\n🌐 **Website:** https://nikunj.tech`;
+      return `You can reach Nikunj at:\n\n📧 **Email:** njkhitha2003@gmail.com\n💼 **LinkedIn:** https://www.linkedin.com/in/Nikunj-Khitha/\n🐙 **GitHub:** https://github.com/Nikunj2003\n🌐 **Website:** https://nikunj.codenex.dev`;
     }
 
     return "I apologize, but I'm having trouble connecting to the AI service right now. Please try asking your question again, or feel free to explore Nikunj's portfolio directly!";

@@ -509,7 +509,7 @@ export default async function handler(
 
     if (message.includes("contact") || message.includes("email")) {
       return res.status(200).json({
-        response: `# Contact Nikunj Khitha\n\nYou can connect with Nikunj through various channels:\n\n## 📧 **Email**\n[njkhitha2003@gmail.com](mailto:njkhitha2003@gmail.com)\n\n## 📱 **Phone**\n+91 9540234616\n\n## 💼 **LinkedIn**\n[Connect on LinkedIn](https://www.linkedin.com/in/nikunj-khitha)\n\n## 🐙 **GitHub**\n[View Projects on GitHub](https://github.com/Nikunj2003)\n\n## 🌐 **Portfolio Website**\n[nikunj.tech](https://nikunj.tech)\n\n---\n\n> **Currently:** Associate Engineer at Armorcode Inc.\n> \n> **Interests:** Generative AI platforms, full-stack engineering, and enterprise solutions\n> \n> Feel free to reach out for collaborations, job opportunities, or tech discussions!`,
+        response: `# Contact Nikunj Khitha\n\nYou can connect with Nikunj through various channels:\n\n## 📧 **Email**\n[njkhitha2003@gmail.com](mailto:njkhitha2003@gmail.com)\n\n## 📱 **Phone**\n+91 9540234616\n\n## 💼 **LinkedIn**\n[Connect on LinkedIn](https://www.linkedin.com/in/nikunj-khitha)\n\n## 🐙 **GitHub**\n[View Projects on GitHub](https://github.com/Nikunj2003)\n\n## 🌐 **Portfolio Website**\n[nikunj.codenex.dev](https://nikunj.codenex.dev)\n\n---\n\n> **Currently:** Associate Engineer at Armorcode Inc.\n> \n> **Interests:** Generative AI platforms, full-stack engineering, and enterprise solutions\n> \n> Feel free to reach out for collaborations, job opportunities, or tech discussions!`,
       });
     }
 

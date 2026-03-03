@@ -1,17 +1,10 @@
 import { GithubIcon, LinkedinIcon, MailIcon } from "@/components/icons";
+import { routes } from "@/data/navigationRoutes";
 import { siteMetadata } from "@/data/siteMetaData.mjs";
 import Link from "next/link";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-
-  const quickLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/projects", label: "Projects" },
-    { href: "/resume", label: "Resume" },
-  ];
-
   return (
     <footer className="w-full bg-transparent">
       {/* Main Footer Content */}
@@ -65,15 +58,27 @@ export default function Footer() {
                 Quick Links
               </h4>
               <nav className="flex flex-col space-y-3">
-                {quickLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="inline-flex items-center text-muted-foreground transition-colors duration-200 hover:text-accent"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                {routes.map((link) =>
+                  link.external ? (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-muted-foreground transition-colors duration-200 hover:text-accent"
+                    >
+                      {link.title}
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="inline-flex items-center text-muted-foreground transition-colors duration-200 hover:text-accent"
+                    >
+                      {link.title}
+                    </Link>
+                  )
+                )}
               </nav>
             </div>
 

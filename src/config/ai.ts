@@ -20,7 +20,7 @@ You are an AI assistant for Nikunj Khitha's portfolio website. Your role is to p
 - Phone: +91 9540234616
 - GitHub: https://github.com/Nikunj2003
 - LinkedIn: https://www.linkedin.com/in/nikunj-khitha
-- Website: https://nikunj.tech
+- Website: https://nikunj.codenex.dev
 
 ### Current Experience:
 **Associate Engineer at Armorcode Inc. (Dec 2025 - Present)**

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { NextSeo } from "next-seo";
 import { useState, useMemo } from "react";
 
@@ -5,6 +6,12 @@ import ProjectCard from "@/components/projects/project-card";
 import { PROJECTS_CARD } from "@/data/projects";
 import SectionDivider from "@/components/section-divider";
 import { siteMetadata } from "@/data/siteMetaData.mjs";
+import {
+  getProjectsBreadcrumbSchema,
+  getProjectsCollectionPageSchema,
+  getProjectsItemListSchema,
+  toJsonLd,
+} from "@/lib/seo/schema";
 
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -54,14 +61,27 @@ export default function Projects() {
         twitter={{
           cardType: "summary_large_image",
         }}
-        additionalMetaTags={[
-          {
-            property: "keywords",
-            content:
-              "Projects, Portfolio, AI Specialist, FullStack Developer, MERN Stack, Web Development, Mobile App Development, DevOps, Azure AI, Cloud Solutions, Flutter, JavaScript, TypeScript, HTML, CSS, Responsive Design",
-          },
-        ]}
       />
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: toJsonLd(getProjectsCollectionPageSchema()),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: toJsonLd(getProjectsItemListSchema()),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: toJsonLd(getProjectsBreadcrumbSchema()),
+          }}
+        />
+      </Head>
       <section className="mx-auto mb-40 mt-6 w-full gap-20 px-6 sm:mt-12 sm:px-14 md:px-20">
         <div className="mx-auto max-w-7xl">
           <div className="rounded-2xl border border-border bg-muted/20 p-6 shadow-lg ring-1 ring-zinc-200/50 backdrop-blur-lg dark:ring-accent/20 sm:p-8 md:p-12">
@@ -80,6 +100,12 @@ export default function Projects() {
                 Curated work showcasing engineering, AI, and product craft
               </span>
             </div>
+
+            <p className="mb-6 max-w-3xl text-base font-medium leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-lg">
+              This page lists selected software projects by Nikunj Khitha,
+              including AI products, backend systems, and full-stack
+              applications with links to source repositories.
+            </p>
 
             {/* Category Filter Buttons */}
             <div className="mb-8 flex flex-wrap gap-3">

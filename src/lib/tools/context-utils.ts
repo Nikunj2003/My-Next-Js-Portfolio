@@ -192,6 +192,10 @@ export class ContextTransformer {
       .replace(/^\/+|\/+$/g, "")
       .toLowerCase();
 
+    if (cleanPath === "nikunj_resume.pdf") {
+      return { page: "resume" };
+    }
+
     if (!cleanPath || cleanPath === "index") {
       return { page: "home" };
     }
@@ -213,6 +217,10 @@ export class ContextTransformer {
 
     if (sanitizedPage === "home") {
       return "/";
+    }
+
+    if (sanitizedPage === "resume") {
+      return "/Nikunj_Resume.pdf";
     }
 
     let path = `/${sanitizedPage}`;

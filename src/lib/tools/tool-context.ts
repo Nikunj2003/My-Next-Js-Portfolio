@@ -282,7 +282,15 @@ export class ToolContextUtils {
    * Extract page information from URL or path
    */
   static extractPageFromPath(path: string): { page: string; section?: string } {
-    const cleanPath = path.replace(/^\/+|\/+$/g, "").toLowerCase();
+    const cleanPath = path
+      .split("?")[0]
+      .split("#")[0]
+      .replace(/^\/+|\/+$/g, "")
+      .toLowerCase();
+
+    if (cleanPath === "nikunj_resume.pdf") {
+      return { page: "resume" };
+    }
 
     if (!cleanPath || cleanPath === "index") {
       return { page: "home" };

@@ -58,6 +58,15 @@ describe("NavigateToPageTool", () => {
       expect(result.data?.message).toContain("already on");
     });
 
+    it("should treat conceptual page key as current page", async () => {
+      mockContext.currentPage = "resume";
+      const result = await tool.execute({ page: "resume" }, mockContext);
+
+      expect(result.success).toBe(true);
+      expect(result.data?.isCurrentPage).toBe(true);
+      expect(result.data?.message).toBe("You're already viewing the resume PDF.");
+    });
+
     it("should reject invalid page", async () => {
       const result = await tool.execute(
         { page: "invalid" as any },
@@ -124,9 +133,17 @@ describe("NavigateToPageTool", () => {
       expect(result.data?.route).toBe("/projects");
     });
 
-    it("should map resume to /resume", async () => {
+    it("should map resume to /Nikunj_Resume.pdf", async () => {
       const result = await tool.execute({ page: "resume" }, mockContext);
-      expect(result.data?.route).toBe("/resume");
+      expect(result.data?.route).toBe("/Nikunj_Resume.pdf");
+    });
+
+    it("should treat resume PDF route with query as current resume page", async () => {
+      mockContext.currentPage = "/Nikunj_Resume.pdf?download=1";
+      const result = await tool.execute({ page: "resume" }, mockContext);
+
+      expect(result.success).toBe(true);
+      expect(result.data?.isCurrentPage).toBe(true);
     });
   });
 });

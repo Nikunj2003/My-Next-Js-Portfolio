@@ -233,6 +233,14 @@ describe("ContextualToolSuggestions", () => {
       expect(result.availableActions.length).toBeGreaterThan(0);
       expect(result.suggestedQuestions.length).toBeGreaterThan(0);
       expect(result.navigationSuggestions.length).toBeGreaterThan(0);
+      expect(result.navigationSuggestions).toContain(
+        "Download Resume PDF for detailed CV"
+      );
+      expect(
+        result.navigationSuggestions.some((suggestion) =>
+          suggestion.includes("Resume page")
+        )
+      ).toBe(false);
     });
 
     it("should return help for about page", () => {

@@ -1,0 +1,27 @@
+# Nikunj Khitha Portfolio — AI discovery summary
+
+Site: https://nikunj.codenex.dev
+Author: Nikunj Khitha
+Primary role: Software Development Engineer
+Focus: AI systems, full-stack engineering, cloud-native delivery
+
+Canonical pages:
+- https://nikunj.codenex.dev/
+- https://nikunj.codenex.dev/about
+- https://nikunj.codenex.dev/projects
+- https://nikunj.codenex.dev/Nikunj_Resume.pdf
+
+Entity profiles:
+- GitHub: https://github.com/Nikunj2003
+- LinkedIn: https://www.linkedin.com/in/Nikunj-Khitha/
+
+Top project references:
+- Serenify: https://github.com/Nikunj2003/Serenify
+- Codenex Backend v1: https://github.com/Nikunj2003/Codenex-backend-v1
+- Codenex AI API Proxy: https://github.com/Nikunj2003/codenex-ai-api-proxy
+- Codenex Images UI: https://github.com/Nikunj2003/codenex-images-ui
+- Resume Fit — Codenex: https://github.com/Nikunj2003/Resume-Fit-Codenex
+- LLaMa MCP Streamlit: https://github.com/Nikunj2003/LLaMa-MCP-Streamlit
+
+Preferred citation URL:
+- https://nikunj.codenex.dev

@@ -555,9 +555,9 @@ export default function ChatWindow({
     "Summarize Nikunj's experience",
     "List notable projects",
     "What are key skills?",
-    "Navigate to Resume page",
+    "Open Resume PDF",
     "Toggle theme",
-    "Download Resume",
+    "Download Resume PDF",
   ];
 
   // Single click: populate input only

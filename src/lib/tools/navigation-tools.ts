@@ -8,7 +8,7 @@ import { ToolContext, ToolResult, ToolAction } from "@/types/tools";
 /**
  * Valid portfolio pages that can be navigated to
  */
-const VALID_PAGES = ["home", "about", "projects"] as const;
+const VALID_PAGES = ["home", "about", "projects", "resume"] as const;
 type ValidPage = (typeof VALID_PAGES)[number];
 
 /**
@@ -23,6 +23,7 @@ const PAGE_SECTIONS: Record<ValidPage, string[]> = {
   home: ["hero", "stats", "skills"],
   about: ["hero", "experience", "background"],
   projects: ["showcase", "filters"],
+  resume: [],
 };
 
 /**
@@ -86,6 +87,7 @@ export class NavigateToPageTool extends BaseTool {
       home: "/",
       about: "/about",
       projects: "/projects",
+      resume: "/Nikunj_Resume.pdf",
     };
 
     const targetRoute = pageRoutes[page];
@@ -120,9 +122,27 @@ export class NavigateToPageTool extends BaseTool {
    * Extract page name from current route
    */
   private getCurrentPageFromRoute(currentPage: string): ValidPage {
-    if (currentPage === "/" || currentPage === "/home") return "home";
-    if (currentPage.startsWith("/about")) return "about";
-    if (currentPage.startsWith("/projects")) return "projects";
+    const normalizedPage = currentPage.toLowerCase().split("?")[0].split("#")[0];
+
+    if (
+      normalizedPage === "/" ||
+      normalizedPage === "/home" ||
+      normalizedPage === "home"
+    )
+      return "home";
+    if (normalizedPage.startsWith("/about") || normalizedPage === "about")
+      return "about";
+    if (
+      normalizedPage.startsWith("/projects") ||
+      normalizedPage === "projects"
+    )
+      return "projects";
+    if (
+      normalizedPage === "resume" ||
+      normalizedPage === "/nikunj_resume.pdf" ||
+      normalizedPage === "nikunj_resume.pdf"
+    )
+      return "resume";
     return "home"; // fallback
   }
 
@@ -137,11 +157,15 @@ export class NavigateToPageTool extends BaseTool {
     if (isCurrentPage && section) {
       return `Scrolling to the ${section} section on the current page.`;
     } else if (isCurrentPage && !section) {
-      return `You're already on the ${page} page.`;
+      return page === "resume"
+        ? "You're already viewing the resume PDF."
+        : `You're already on the ${page} page.`;
     } else if (section) {
       return `Navigating to the ${page} page and scrolling to the ${section} section.`;
     } else {
-      return `Navigating to the ${page} page.`;
+      return page === "resume"
+        ? "Opening the resume PDF."
+        : `Navigating to the ${page} page.`;
     }
   }
 }
@@ -343,6 +367,7 @@ export class NavigateToSectionTool extends BaseTool {
         home: "/",
         about: "/about",
         projects: "/projects",
+        resume: "/Nikunj_Resume.pdf",
       };
 
       actions.push({
@@ -383,9 +408,27 @@ export class NavigateToSectionTool extends BaseTool {
    * Extract page name from current route
    */
   private getCurrentPageFromRoute(currentPage: string): ValidPage {
-    if (currentPage === "/" || currentPage === "/home") return "home";
-    if (currentPage.startsWith("/about")) return "about";
-    if (currentPage.startsWith("/projects")) return "projects";
+    const normalizedPage = currentPage.toLowerCase().split("?")[0].split("#")[0];
+
+    if (
+      normalizedPage === "/" ||
+      normalizedPage === "/home" ||
+      normalizedPage === "home"
+    )
+      return "home";
+    if (normalizedPage.startsWith("/about") || normalizedPage === "about")
+      return "about";
+    if (
+      normalizedPage.startsWith("/projects") ||
+      normalizedPage === "projects"
+    )
+      return "projects";
+    if (
+      normalizedPage === "resume" ||
+      normalizedPage === "/nikunj_resume.pdf" ||
+      normalizedPage === "nikunj_resume.pdf"
+    )
+      return "resume";
     return "home"; // fallback
   }
 

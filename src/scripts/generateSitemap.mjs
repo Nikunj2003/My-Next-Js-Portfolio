@@ -1,4 +1,4 @@
-import { writeFileSync } from "fs";
+import { statSync, writeFileSync } from "fs";
 import { globby } from "globby";
 import prettier from "prettier";
 import { siteMetadata } from "../data/siteMetaData.mjs";
@@ -30,8 +30,11 @@ async function generateSitemap() {
                   return "";
                 }
 
+                const lastModified = statSync(page).mtime.toISOString();
+
                 return `<url>
                             <loc>${siteMetadata.siteUrl}${path}</loc>
+                            <lastmod>${lastModified}</lastmod>
                         </url>
                     `;
               })

@@ -137,7 +137,7 @@ Route | Purpose
 `/` (Home) | Landing hero, skills snapshot, featured sections, AI chat entry
 `/about` | Detailed background, narrative profile
 `/projects` | Project gallery sourced from `src/data/projects.ts`
-`/resume` | Interactive animated resume (`resume-display.tsx`)
+`/Nikunj_Resume.pdf` | Downloadable resume PDF
 `/404` | Custom not‑found with consistent styling
 API routes (`/api/*`) | Chat endpoint, email sending (rate limited)
 
@@ -182,6 +182,23 @@ Add a new tool:
 1. Run generation manually: `npm run sitemap` (or via build hook)
 2. Dynamic `[slug]` / bracket paths automatically excluded
 3. Update Google site verification token in `src/data/siteMetaData.mjs`
+
+### SEO + GEO measurement playbook
+1. **Google Search Console**
+   - Submit sitemap: `https://nikunj.codenex.dev/sitemap.xml`
+   - Validate canonical status for `/`, `/about`, `/projects` and verify `/Nikunj_Resume.pdf` is reachable
+   - Review indexing coverage and rich-result enhancements monthly
+2. **Bing Webmaster Tools**
+   - Submit same sitemap and monitor crawl/index diagnostics
+   - Check URL inspection for canonical and structured data recognition
+3. **AI referrer tracking (GA4)**
+   - Build exploration/report segments for AI-sourced referrers (for example: `chatgpt.com`, `openai.com`, `claude.ai`, `perplexity.ai`, `copilot.microsoft.com`, `gemini.google.com`)
+   - Track landing pages, engagement, and conversion from these sources monthly
+4. **Monthly citation spot-check prompts**
+   - Run factual prompts in major answer engines and verify citations point to canonical portfolio pages and project repos
+   - Keep findings in a monthly SEO/GEO log and update on-page summaries or schema when repeated citation misses appear
+5. **AI discovery artifacts**
+   - Ensure `/llms.txt` and `/llms-full.txt` stay aligned with `siteMetaData` and `src/data/projects.ts`
 
 ---
 

@@ -44,6 +44,16 @@ describe("PageContextDetector", () => {
       expect(result.source).toBe("url");
     });
 
+    it("should detect resume page from resume PDF URL", () => {
+      const result = detector.detectFromUrl(
+        "https://example.com/Nikunj_Resume.pdf"
+      );
+
+      expect(result.page).toBe("resume");
+      expect(result.confidence).toBeGreaterThan(0.9);
+      expect(result.source).toBe("url");
+    });
+
     it("should detect section from hash fragment", () => {
       const result = detector.detectFromUrl(
         "https://example.com/about#experience"

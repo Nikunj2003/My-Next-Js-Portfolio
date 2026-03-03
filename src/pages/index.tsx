@@ -11,6 +11,7 @@ import { siteMetadata } from "@/data/siteMetaData.mjs";
 import FadeUp from "@/animation/fade-up";
 import { AnimatePresence } from "framer-motion";
 import SectionDivider from "@/components/section-divider";
+import { getPersonSchema, getWebsiteSchema, toJsonLd } from "@/lib/seo/schema";
 
 export default function Home() {
   return (
@@ -36,56 +37,33 @@ export default function Home() {
         twitter={{
           cardType: "summary_large_image",
         }}
-        additionalMetaTags={[
-          {
-            property: "keywords",
-            content:
-              "Nikunj Khitha, FullStack Developer, AI Specialist, Portfolio, Projects, MERN Stack, Next.js, Flutter Developer, DevOps, Azure AI, Microservices, Web Development, Responsive Design, JavaScript, TypeScript, HTML, CSS",
-          },
-        ]}
       />
       <Head>
-        {siteMetadata.googleSiteVerification && (
-          <meta
-            name="google-site-verification"
-            content={siteMetadata.googleSiteVerification}
-          />
-        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: siteMetadata.siteName,
-              url: siteMetadata.siteUrl,
-              potentialAction: {
-                "@type": "SearchAction",
-                target: `${siteMetadata.siteUrl}/?q={search_term_string}`,
-                "query-input": "required name=search_term_string",
-              },
-            }),
+            __html: toJsonLd(getWebsiteSchema()),
           }}
         />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: siteMetadata.author,
-              url: siteMetadata.siteUrl,
-              sameAs: [siteMetadata.github, siteMetadata.linkedin],
-              jobTitle: siteMetadata.description,
-              image: `${siteMetadata.siteUrl}${siteMetadata.image}`,
-              email: siteMetadata.email,
-            }),
+            __html: toJsonLd(getPersonSchema()),
           }}
         />
       </Head>
 
       {/* Enhanced Hero Section */}
       <LandingHero />
+
+      <section className="px-6 pb-4 sm:px-14 md:px-20">
+        <div className="mx-auto max-w-7xl">
+          <p className="max-w-3xl text-base font-medium leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-lg">
+            Nikunj Khitha is a software development engineer specializing in AI,
+            full-stack development, and cloud-native product engineering.
+          </p>
+        </div>
+      </section>
 
       <SectionDivider />
 

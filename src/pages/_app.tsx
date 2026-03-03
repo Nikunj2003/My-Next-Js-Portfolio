@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "next-themes";
+import { DefaultSeo } from "next-seo";
 import { AnimatePresence, motion } from "framer-motion";
 import MainLayout from "@/layout/main-layout";
 import {
@@ -11,6 +12,7 @@ import {
   useAnimationGate,
 } from "@/contexts/animation-gate";
 import { ChatProvider } from "@/contexts/chat-context";
+import { siteMetadata } from "@/data/siteMetaData.mjs";
 import "@/styles/globals.css";
 
 // Dynamic imports for heavy animation components to reduce initial bundle
@@ -61,6 +63,8 @@ function AppContent({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isTransitioning, setIsTransitioning] = useState(false);
   const { setAnimationsReady, animationsReady } = useAnimationGate();
+  const canonicalPath = router.asPath.split("?")[0].split("#")[0];
+  const defaultCanonical = `${siteMetadata.siteUrl}${canonicalPath === "/" ? "" : canonicalPath}`;
 
   useEffect(() => {
     const handleRouteChangeStart = () => {
@@ -89,6 +93,35 @@ function AppContent({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <DefaultSeo
+        defaultTitle={siteMetadata.title}
+        description={siteMetadata.description}
+        canonical={defaultCanonical}
+        openGraph={{
+          type: "website",
+          locale: siteMetadata.locale,
+          url: siteMetadata.siteUrl,
+          siteName: siteMetadata.siteName,
+          title: siteMetadata.title,
+          description: siteMetadata.description,
+          images: [
+            {
+              url: `${siteMetadata.siteUrl}${siteMetadata.image}`,
+              alt: `${siteMetadata.author} portfolio preview`,
+            },
+          ],
+        }}
+        twitter={{
+          cardType: "summary_large_image",
+        }}
+        additionalMetaTags={[
+          {
+            name: "google-site-verification",
+            content: siteMetadata.googleSiteVerification,
+          },
+        ]}
+      />
+
       <FluidCursor />
 
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

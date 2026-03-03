@@ -473,7 +473,7 @@ export class ContextualToolSuggestions {
         navigation: [
           "Go to About page for detailed background",
           "Visit Projects page for portfolio",
-          "Check Resume page for downloadable CV",
+          "Download Resume PDF for detailed CV",
           "Open Contact form to get in touch",
         ],
       },
@@ -484,7 +484,7 @@ export class ContextualToolSuggestions {
           "View detailed experience",
           "Explore skills by category",
           "Navigate to specific sections",
-          "Download resume",
+          "Download resume PDF",
           "Contact for opportunities",
         ],
         questions: [
@@ -557,7 +557,7 @@ export class ContextualToolSuggestions {
           "View contact information",
           "Connect on social platforms",
           "Schedule a call",
-          "Download resume",
+          "Download resume PDF",
         ],
         questions: [
           "How can I contact you?",

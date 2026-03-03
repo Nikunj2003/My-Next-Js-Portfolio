@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { FiExternalLink } from "react-icons/fi";
-import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
 import Corosel from "@/components/utility/corosel";
@@ -20,22 +19,13 @@ export interface ProjectCardProps {
 
 export default function ProjectCard(props: ProjectCardProps) {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const { animationsReady } = useAnimationGate();
 
-  // Ensure theme is mounted to avoid mismatches on first render
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Define background color based on theme (dark/light) after the component has mounted
+  // Define background color based on resolved theme.
   const backgroundColor =
     resolvedTheme === "dark"
       ? "bg-black/20 backdrop-blur-lg" // Dark theme background with blur
       : "bg-white/20 backdrop-blur-lg"; // Light theme background with blur
-
-  // Prevent rendering before the theme is resolved (avoiding mismatched colors during SSR or initial page load)
-  if (!mounted) return null;
 
   // If gate not ready yet, render non-animated static markup so that whileInView fires after gate opens.
   if (!animationsReady) {

@@ -104,7 +104,7 @@ export default function ContactForm() {
                       {...field}
                       type="email"
                       placeholder="Enter your email address"
-                      className="h-12 border border-border bg-muted text-foreground transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-background"
+                      className="h-12 border border-border/60 bg-white/10 text-foreground backdrop-blur-sm transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-white/20 dark:bg-black/25 dark:focus:bg-black/35"
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="mt-1 text-xs font-medium text-destructive">
@@ -132,7 +132,7 @@ export default function ContactForm() {
                       {...field}
                       type="text"
                       placeholder="Enter your full name"
-                      className="h-12 border border-border bg-muted text-foreground transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-background"
+                      className="h-12 border border-border/60 bg-white/10 text-foreground backdrop-blur-sm transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-white/20 dark:bg-black/25 dark:focus:bg-black/35"
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="mt-1 text-xs font-medium text-destructive">
@@ -160,7 +160,7 @@ export default function ContactForm() {
                       {...field}
                       type="text"
                       placeholder="What would you like to discuss?"
-                      className="h-12 border border-border bg-muted text-foreground transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-background"
+                      className="h-12 border border-border/60 bg-white/10 text-foreground backdrop-blur-sm transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-white/20 dark:bg-black/25 dark:focus:bg-black/35"
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="mt-1 text-xs font-medium text-destructive">
@@ -188,7 +188,7 @@ export default function ContactForm() {
                       {...field}
                       placeholder="Tell me about your project or idea..."
                       rows={5}
-                      className="resize-none border border-border bg-muted text-foreground transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-background"
+                      className="resize-none border border-border/60 bg-white/10 text-foreground backdrop-blur-sm transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-white/20 dark:bg-black/25 dark:focus:bg-black/35"
                     />
                     {Boolean(meta.touched && meta.error) && (
                       <span className="mt-1 text-xs font-medium text-destructive">
@@ -204,7 +204,7 @@ export default function ContactForm() {
             <button
               aria-label="Send message"
               type="submit"
-              className="mt-6 w-full rounded-xl bg-accent px-6 py-4 text-center text-lg font-semibold text-accent-foreground transition-all duration-200 hover:scale-[1.02] hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+              className="mt-6 w-full rounded-xl bg-accent px-6 py-4 text-center text-lg font-semibold text-accent-foreground shadow-lg shadow-accent/20 transition-all duration-200 hover:scale-[1.02] hover:bg-accent/90 hover:shadow-xl hover:shadow-accent/30 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
               disabled={!isValid || isSendingMail}
             >
               {isSendingMail ? (

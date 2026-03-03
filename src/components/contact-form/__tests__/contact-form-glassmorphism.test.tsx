@@ -61,11 +61,11 @@ describe("Contact form glassmorphism styles", () => {
       "Tell me about your project or idea..."
     );
 
-    expect(emailInput).toHaveClass("bg-white/10");
+    expect(emailInput).toHaveClass("bg-white/20");
     expect(emailInput).toHaveClass("dark:bg-black/25");
     expect(emailInput).toHaveClass("backdrop-blur-sm");
 
-    expect(messageTextarea).toHaveClass("bg-white/10");
+    expect(messageTextarea).toHaveClass("bg-white/20");
     expect(messageTextarea).toHaveClass("dark:bg-black/25");
     expect(messageTextarea).toHaveClass("backdrop-blur-sm");
   });

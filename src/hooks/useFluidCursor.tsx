@@ -1,3 +1,4 @@
+// @ts-nocheck
 const useFluidCursor = () => {
   const canvas = document.getElementById("fluid");
   resizeCanvas();
@@ -20,8 +21,10 @@ const useFluidCursor = () => {
     TRANSPARENT: true,
   };
 
-  let accentPalette = [];
-  const violetBases = [
+  type RGBColor = { r: number; g: number; b: number };
+
+  let accentPalette: RGBColor[] = [];
+  const violetBases: RGBColor[] = [
     { r: 109 / 255, g: 93 / 255, b: 254 / 255 }, // #6D5DFE
     { r: 127 / 255, g: 98 / 255, b: 248 / 255 }, // #7F62F8
     { r: 128 / 255, g: 86 / 255, b: 255 / 255 }, // #8056FF

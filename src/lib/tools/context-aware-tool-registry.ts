@@ -17,6 +17,7 @@ import {
   ToolAction,
   ToolExecutionConfig,
 } from "@/types/tools";
+import { JSONSchema7 } from "json-schema";
 
 /**
  * Enhanced tool registry with contextual awareness
@@ -128,7 +129,7 @@ export class ContextAwareToolRegistry extends ToolRegistry {
   getContextualFunctionDefinitions(context: ToolContext): Array<{
     name: string;
     description: string;
-    parameters: Record<string, unknown>;
+    parameters: JSONSchema7;
     relevance?: number;
     context?: string;
   }> {
@@ -278,7 +279,10 @@ export class ContextAwareToolRegistry extends ToolRegistry {
         updatedContext = {
           ...currentContext,
           currentPage: action.target,
-          currentSection: action.data?.section,
+          currentSection:
+            typeof action.data?.section === "string"
+              ? action.data.section
+              : undefined,
         };
       } else if (action.type === "theme" && action.target) {
         updatedContext = {

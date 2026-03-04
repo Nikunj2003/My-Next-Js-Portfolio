@@ -273,8 +273,18 @@ export class ManageUIStateTool extends BaseTool {
     args: Record<string, unknown>,
     context: ToolContext
   ): Promise<ToolResult> {
-    const { action: rawAction, target, options = {} } = args;
-    const { smooth = true, duration = 300, offset = 0 } = options;
+    const rawAction = typeof args.action === "string" ? args.action : "";
+    const target = typeof args.target === "string" ? args.target : "";
+    const options =
+      args.options && typeof args.options === "object"
+        ? (args.options as Record<string, unknown>)
+        : {};
+
+    const smooth =
+      typeof options.smooth === "boolean" ? options.smooth : true;
+    const duration =
+      typeof options.duration === "number" ? options.duration : 300;
+    const offset = typeof options.offset === "number" ? options.offset : 0;
 
     try {
       // Normalize common alias variants the LLM might produce

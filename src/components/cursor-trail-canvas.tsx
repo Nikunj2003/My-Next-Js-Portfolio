@@ -57,10 +57,11 @@ export function cursorTrail(props: CursorTrail) {
     colorRaw ? colorRaw.split(" ").join(",") : "0, 0%, 0%"
   }, 0.35)`;
   const { ref, color } = props;
-  const ctx = ref.current?.getContext("2d");
-  if (!ctx) {
+  const context = ref.current?.getContext("2d");
+  if (!context) {
     throw new Error("Unable to initialize 2d canvas context");
   }
+  const ctx: CanvasRenderingContext2D = context;
 
   // Adjusting animation features for increased density based on screen size
   const isMobile = window.innerWidth < 768; // Example breakpoint for mobile
